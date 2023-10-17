@@ -57,6 +57,7 @@ public class SignupServlet extends HttpServlet {
 		String password_confirmed = request.getParameter("cpassword");
 		String name = request.getParameter("name");
 		String birthday = request.getParameter("birthday"); 
+		String email = request.getParameter("email"); 
 		String password_hass = BCrypt.hashpw(password, BCrypt.gensalt(12)); //비밀번호 암호화(BCrypt 해시함수) 
 		Timestamp joindate = new Timestamp(System.currentTimeMillis()); //현재 날짜
 		
@@ -73,7 +74,7 @@ public class SignupServlet extends HttpServlet {
   	    	//비밀번호와 비밀번호 확인이 같은지 검사
   	    	if(password.equals(password_confirmed))
   	    	{
-  	    		MemberDTO memberdto = new MemberDTO(id, password_hass, name, birthday, joindate); 
+  	    		MemberDTO memberdto = new MemberDTO(id, password_hass, name, birthday, joindate, email); 
   	    		MemberDAO memberdao = new MemberDAO(JDBC_Driver, db_url, db_id, db_pw); 
   	    		
   	    		int result = memberdao.insertMember(memberdto);

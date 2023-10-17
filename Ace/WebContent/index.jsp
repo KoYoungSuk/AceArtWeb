@@ -7,9 +7,15 @@
 <c:import url="IndexContent/introduction.jsp" var="introcontent"></c:import> 
 <c:import url="IndexContent/works.jsp" var="workscontent"></c:import>
 <c:import url="IndexContent/selectedmember.jsp" var="selectedmembercontent"></c:import>
+<c:import url="IndexContent/findidandpw.jsp" var="findidandpwcontent"></c:import>
+<c:import url="IndexContent/modifymember.jsp" var="modifymembercontent"></c:import> 
+<c:import url="IndexContent/error403.jsp" var="error403content"></c:import> 
+<c:import url="IndexContent/error404.jsp" var="error404content"></c:import> 
+<c:import url="IndexContent/error500.jsp" var="error500content"></c:import> 
+<c:import url="IndexContent/findid.jsp" var="findidcontent"></c:import> 
 <!--  파라미터에 따라 사이트 제목 정하기 -->
 <c:choose>
- <c:when test="${param.page == 1}"><c:set var="titlename" value="에이스조형연구소에 오신 것을 환영합니다." /></c:when>
+ <c:when test="${param.page == 1}"><c:set var="titlename" value="에이스도시조형에 오신 것을 환영합니다." /></c:when>
  <c:when test="${param.page == 2}"><c:set var="titlename" value="로 그 인" /></c:when>
  <c:when test="${param.page == 3}"><c:set var="titlename" value="회원 가입" /></c:when> 
  <c:when test="${param.page == 4}"><c:set var="titlename" value="회사소개&연혁" /></c:when> 
@@ -17,8 +23,15 @@
  <c:when test="${param.page == 6}"><c:set var="titlename" value="공지사항" /></c:when> 
  <c:when test="${param.page == 7}"><c:set var="titlename" value="자료실" /></c:when> 
  <c:when test="${param.page == 8}"><c:set var="titlename" value="관리자 모드" /></c:when> 
- <c:when test="${param.page == 8}"><c:set var="titlename" value="회원 정보" /></c:when> 
- <c:otherwise><c:set var="titlename" value="에이스도시조형에 오신 것을 환영합니다. " /></c:otherwise> 
+ <c:when test="${param.page == 9}"><c:set var="titlename" value="회원 정보" /></c:when> 
+ <c:when test="${param.page == 10}"><c:set var="titlename" value="회원 정보 수정" /></c:when>
+ <c:when test="${param.page == 11}"><c:set var="titlename" value="아이디/비밀번호 찾기" /></c:when>
+ <c:when test="${param.page == 12}"><c:set var="titlename" value="아이디 찾기" /></c:when>
+ <c:when test="${param.page == 13}"><c:set var="titlename" value="비밀번호 찾기" /></c:when>
+ <c:when test="${param.page == 403}"><c:set var="titlename" value="403 Forbidden" /></c:when>
+ <c:when test="${param.page == 404}"><c:set var="titlename" value="404 Not Found" /></c:when>
+ <c:when test="${param.page == 500}"><c:set var="titlename" value="500 Internal Server Error" /></c:when> 
+ <c:otherwise><c:set var="titlename" value="에이스도시조형 홈 페이지에 오신 것을 환영합니다. " /></c:otherwise> 
 </c:choose>
 <!DOCTYPE html>
 <html>
@@ -57,7 +70,7 @@
 </head>
 <body>
 <div class="jumbotron" >
-   <H1> 에이스도시조형 </H1> 
+   <a href="index.jsp?page=1"><img src="Source/logo.png" style="width: 280px; height: 70px; " /></a> 
 </div>
 <nav class="navbar navbar-expand-lg navbar-light bg-light"> 
    <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -67,6 +80,7 @@
      <div class="collapse navbar-collapse" id="ToggleMenu">
        <div class="navbar-nav">
              <a class="nav-item nav-link active" href="index.jsp?page=4">회사소개&연혁</a>
+             <a class="nav-item nav-link active" href="index.jsp?page=15">작가소개</a>
              <a class="nav-item nav-link active" href="index.jsp?page=5">작품</a>
              <a class="nav-item nav-link active" href="index.jsp?page=6">공지사항</a>
              <a class="nav-item nav-link active" href="index.jsp?page=7">자료실</a>
@@ -92,7 +106,7 @@
       </div>
 </div>
 </nav>
-<div class="container-fluid">
+<div class="container-fixed ">
      <c:choose>
        <c:when test="${param.page == 1}">
          ${defaultcontent}
@@ -121,17 +135,45 @@
        <c:when test="${param.page == 9}">
          ${selectedmembercontent}
        </c:when>
+       <c:when test="${param.page == 10}">
+         ${modifymembercontent} 
+       </c:when>
+       <c:when test="${param.page == 11}">
+        ${findidandpwcontent}
+       </c:when> 
+       <c:when test="${param.page == 12}">
+        ${findidcontent}
+       </c:when>
+       <c:when test="${param.page == 13}">
+       
+       </c:when> 
+       <c:when test="${param.page == 14}">
+       
+       </c:when>
+       <c:when test="${param.page == 15}">
+       
+       </c:when>
+       <c:when test="${param.page == 403}">
+        ${error403content}
+       </c:when>
+       <c:when test="${param.page == 404}">
+        ${error404content}
+       </c:when>
+       <c:when test="${parma.page == 500}">
+        ${error500content}
+       </c:when> 
        <c:otherwise>
          ${defaultcontent}
        </c:otherwise>
      </c:choose>
 </div>
 <div class="footer">
-  <H5> 대표번호: 010-3596-2140 </H5>
-  <H5> 주소: 부산광역시                   </H5>
+  <H5> 대표 전화번호:  051-941-3127 </H5>
+  <H5> 대표 휴대폰 번호: 010-3596-2140 </H5>
+  <H5> 주소: 부산광역시 강서구 미음산단로 327, 303호  </H5>
   <H5> <a href="personalinformation.jsp"> 개인정보처리방침 </a> </H5>
   <br> 
-  <H6> Last Updated: 2023-09-05 Created By KYS  </H6> 
+  <H6> Last Updated: 2023-10-28 Created By KYS  </H6> 
   <H6> <a href="technology.jsp"> 웹사이트 제작기술 안내 </a> </H6>
 </div>
 </body>

@@ -3,8 +3,8 @@
 <div class="row">
 <c:choose>
 <c:when test="${sessionScope.id eq null}">
-<div class="col-sm-4" style="padding: 10px; margin: 90px; ">
-   <H2>로그인 </H2>
+<div class="col-xl-4" style="padding: 10px; margin: 90px; ">
+   <H2 style="font-weight: bold; ">로그인 </H2>
    <hr> 
    <form action="login.do" method="POST">
      <table class="table">
@@ -21,6 +21,7 @@
 	  <button type="button" class="btn btn-secondary btn-sm" onclick="history.go(-1);" ><span class="material-symbols-outlined">arrow_back_ios</span>뒤로가기</button>&nbsp;&nbsp; 
 	  <button type="submit" class="btn btn-secondary btn-sm" ><span class="material-symbols-outlined">login</span>로그인</button>&nbsp;&nbsp; 
 	  <button class="btn btn-secondary btn-sm" type="button" onclick="location.href='./index.jsp?page=3'"><span class="material-symbols-outlined">person_add</span>회원가입</button>
+	  <button class="btn btn-secondary btn-sm" type="button" onclick="location.href='./index.jsp?page=11'"><span class="material-symbols-outlined">search</span>아이디/비밀번호 찾기</button>
 	 </div>
    </form>
 </div>

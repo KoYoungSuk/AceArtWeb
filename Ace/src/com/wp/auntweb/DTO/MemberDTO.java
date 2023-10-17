@@ -35,13 +35,20 @@ public class MemberDTO {
 		this.joindate = joindate;
 	}
 	
-	public MemberDTO(String id, String password, String name, String birthday, Timestamp joindate)
+	public String getEmail() {
+		return email; 
+	}
+	public void setEmail(String email) {
+		this.email = email; 
+	}
+	public MemberDTO(String id, String password, String name, String birthday, Timestamp joindate, String email)
 	{
 		this.id = id;
 		this.password = password;
 		this.name = name; 
 		this.birthday = birthday;
 		this.joindate = joindate; 
+		this.email = email; 
 	}
 	
 	public MemberDTO()
@@ -52,5 +59,5 @@ public class MemberDTO {
     String name;
     String birthday;
     Timestamp joindate;
-    
+    String email; 
 }

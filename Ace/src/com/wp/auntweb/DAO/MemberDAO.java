@@ -50,13 +50,14 @@ public class MemberDAO {
 	   {
 		   int result = 0;
 		   connectDB();
-		   String sql = "insert into member (id, password, name, birthday, joindate) values (?,?,?,?,?)"; 
+		   String sql = "insert into member (id, password, name, birthday, joindate, email) values (?,?,?,?,?,?)"; 
 		   PreparedStatement psm = conn.prepareStatement(sql);
 		   psm.setString(1, memberdto.getId());
 		   psm.setString(2, memberdto.getPassword());
 		   psm.setString(3, memberdto.getName());
 		   psm.setString(4, memberdto.getBirthday());
 		   psm.setTimestamp(5, memberdto.getJoindate()); 
+		   psm.setString(6, memberdto.getEmail());
 		   result = psm.executeUpdate();
 		   psm.close();
 		   disconnectDB();
@@ -68,12 +69,42 @@ public class MemberDAO {
 	   {
 		   int result = 0;
 		   connectDB();
-		   String sql = "update member set password=?, name=?, birthday=? where id=?";
+		   String sql = "update member set name=?, birthday=?, email=? where id=?";
 		   PreparedStatement psm = conn.prepareStatement(sql);
-		   psm.setString(1, memberdto.getPassword());
-		   psm.setString(2, memberdto.getName());
-		   psm.setString(3, memberdto.getBirthday());
+		   psm.setString(1, memberdto.getName());
+		   psm.setString(2, memberdto.getBirthday());
+		   psm.setString(3, memberdto.getEmail());
 		   psm.setString(4, memberdto.getId());
+		   result = psm.executeUpdate();
+		   psm.close();
+		   disconnectDB();
+		   return result; 
+	   }
+	   
+	   //Update Password
+	   public int updatePassword(String id, String password) throws ClassNotFoundException, SQLException
+	   {
+		   int result = 0;
+		   connectDB();
+		   String sql = "update member set password=? where id = ?";
+		   PreparedStatement psm = conn.prepareStatement(sql);
+		   psm.setString(1, password);
+		   psm.setString(2, id);
+		   result = psm.executeUpdate();
+		   psm.close();
+		   disconnectDB();
+		   return result; 
+	   }
+	   
+	   //Clear Password (Password Find Mode)
+	   public int clearPassword(String id, String password, String email) throws ClassNotFoundException, SQLException{
+		   int result = 0;
+		   connectDB();
+		   String sql = "update member set password=? where id = ? and email = ?"; 
+		   PreparedStatement psm = conn.prepareStatement(sql); 
+		   psm.setString(1, password);
+		   psm.setString(2, id);
+		   psm.setString(3, email);
 		   result = psm.executeUpdate();
 		   psm.close();
 		   disconnectDB();
@@ -115,6 +146,7 @@ public class MemberDAO {
 				   memberdo.setName(rs.getString("name"));
 				   memberdo.setBirthday(rs.getString("birthday"));
 				   memberdo.setJoindate(rs.getTimestamp("joindate"));
+				   memberdo.setEmail(rs.getString("email"));
 				   memberlist.add(memberdo);
 			   }
 		   }
@@ -140,10 +172,30 @@ public class MemberDAO {
 			   memberlist.put("name", rs.getString("name"));
 			   memberlist.put("birthday", rs.getString("birthday"));
 			   memberlist.put("joindate", rs.getTimestamp("joindate").toString());
+			   memberlist.put("email", rs.getString("email")); 
 		   }
 		   rs.close();
 		   psm.close();
 		   disconnectDB();
 		   return memberlist; 
 	   }
+	   
+	   //Find ID 
+	   public String findid(String email) throws ClassNotFoundException, SQLException{
+		   String id = null;
+		   connectDB();
+		   String sql = "select id from member where email = ?";
+		   PreparedStatement psm = conn.prepareStatement(sql);
+		   psm.setString(1, email);
+		   ResultSet rs = psm.executeQuery();
+		   if(rs.next()) {
+			   id = rs.getString("id"); 
+		   }
+		   rs.close();
+		   psm.close();
+		   disconnectDB();
+		   return id; 
+	   }
+	   
+	   
 }
