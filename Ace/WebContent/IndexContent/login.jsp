@@ -3,7 +3,7 @@
 <div class="row">
 <c:choose>
 <c:when test="${sessionScope.id eq null}">
-<div class="col-xl-4" style="padding: 10px; margin: 90px; ">
+<div class="col-lg-4" style="padding: 10px; margin: 90px; ">
    <H2 style="font-weight: bold; ">로그인 </H2>
    <hr> 
    <form action="login.do" method="POST">

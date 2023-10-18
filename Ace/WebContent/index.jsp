@@ -9,10 +9,17 @@
 <c:import url="IndexContent/selectedmember.jsp" var="selectedmembercontent"></c:import>
 <c:import url="IndexContent/findidandpw.jsp" var="findidandpwcontent"></c:import>
 <c:import url="IndexContent/modifymember.jsp" var="modifymembercontent"></c:import> 
+<c:import url="IndexContent/deletemember.jsp" var="deletemembercontent"></c:import> 
+<c:import url="IndexContent/admin.jsp" var="admincontent"></c:import> 
 <c:import url="IndexContent/error403.jsp" var="error403content"></c:import> 
 <c:import url="IndexContent/error404.jsp" var="error404content"></c:import> 
 <c:import url="IndexContent/error500.jsp" var="error500content"></c:import> 
 <c:import url="IndexContent/findid.jsp" var="findidcontent"></c:import> 
+<c:import url="IndexContent/findpw.jsp" var="findpwcontent"></c:import> 
+<c:import url="IndexContent/changepw.jsp" var="changepwcontent"></c:import> 
+<c:import url="IndexContent/artist.jsp" var="artistcontent"></c:import> 
+<c:import url="IndexContent/noticeboardlist.jsp" var="noticeboardcontent"></c:import> 
+<c:import url="IndexContent/boardlist.jsp" var="boardlistcontent"></c:import> 
 <!--  파라미터에 따라 사이트 제목 정하기 -->
 <c:choose>
  <c:when test="${param.page == 1}"><c:set var="titlename" value="에이스도시조형에 오신 것을 환영합니다." /></c:when>
@@ -28,6 +35,9 @@
  <c:when test="${param.page == 11}"><c:set var="titlename" value="아이디/비밀번호 찾기" /></c:when>
  <c:when test="${param.page == 12}"><c:set var="titlename" value="아이디 찾기" /></c:when>
  <c:when test="${param.page == 13}"><c:set var="titlename" value="비밀번호 찾기" /></c:when>
+ <c:when test="${param.page == 14}"><c:set var="titlename" value="비밀번호 변경" /></c:when> 
+ <c:when test="${param.page == 15}"><c:set var="titlename" value="작가 소개 " /></c:when>
+ <c:when test="${param.page == 16}"><c:set var="titlename" value="회원정보 삭제" /></c:when> 
  <c:when test="${param.page == 403}"><c:set var="titlename" value="403 Forbidden" /></c:when>
  <c:when test="${param.page == 404}"><c:set var="titlename" value="404 Not Found" /></c:when>
  <c:when test="${param.page == 500}"><c:set var="titlename" value="500 Internal Server Error" /></c:when> 
@@ -86,7 +96,7 @@
              <a class="nav-item nav-link active" href="index.jsp?page=7">자료실</a>
              <c:choose>
              <c:when test="${sessionScope.id eq 'admin'}">
-             <a class="nav-item nav-link active" href="index.jsp?page=8">관리자용</a>
+             <a class="nav-item nav-link active" href="index.jsp?page=8">관리자 모드 </a>
              </c:when>
              <c:otherwise>
              </c:otherwise> 
@@ -108,51 +118,54 @@
 </nav>
 <div class="container-fixed ">
      <c:choose>
-       <c:when test="${param.page == 1}">
+       <c:when test="${param.page == 1}"> <!-- 메인화면 -->
          ${defaultcontent}
        </c:when>
-       <c:when test="${param.page == 2}">
+       <c:when test="${param.page == 2}"> <!-- 로그인  -->
          ${logincontent}
        </c:when>
-       <c:when test="${param.page == 3}">
+       <c:when test="${param.page == 3}"> <!-- 회원가입 -->
          ${signupcontent}
        </c:when> 
-       <c:when test="${param.page == 4}">
+       <c:when test="${param.page == 4}"> <!-- 소개  -->
          ${introcontent}
        </c:when>
-       <c:when test="${param.page == 5}">
+       <c:when test="${param.page == 5}"> <!-- 작품 게시판  -->
          ${workscontent}
        </c:when>
-       <c:when test="${param.page == 6}">
-         
+       <c:when test="${param.page == 6}"> <!-- 공지사항 게시판 -->
+         ${noticeboardcontent}
        </c:when>
-       <c:when test="${param.page == 7}">
-         
+       <c:when test="${param.page == 7}"> <!-- 자료실 게시판  -->
+         ${boardlistcontent}
        </c:when>
-       <c:when test="${param.page == 8}">
-       
+       <c:when test="${param.page == 8}"> <!-- 관리자용 -->
+        ${admincontent}
        </c:when>
-       <c:when test="${param.page == 9}">
+       <c:when test="${param.page == 9}"> <!-- 회원정보 출력  -->
          ${selectedmembercontent}
        </c:when>
-       <c:when test="${param.page == 10}">
+       <c:when test="${param.page == 10}"> <!-- 회원정보 수정 -->
          ${modifymembercontent} 
        </c:when>
-       <c:when test="${param.page == 11}">
+       <c:when test="${param.page == 11}"> <!-- 아이디/비밀번호 찾기 -->
         ${findidandpwcontent}
        </c:when> 
-       <c:when test="${param.page == 12}">
+       <c:when test="${param.page == 12}"> <!--  아이디 찾기 -->
         ${findidcontent}
        </c:when>
-       <c:when test="${param.page == 13}">
-       
+       <c:when test="${param.page == 13}"> <!-- 비밀번호 찾기 -->
+        ${findpwcontent}
        </c:when> 
-       <c:when test="${param.page == 14}">
-       
+       <c:when test="${param.page == 14}"> <!-- 비밀번호 변경 -->
+        ${changepwcontent}
        </c:when>
-       <c:when test="${param.page == 15}">
-       
+       <c:when test="${param.page == 15}"> <!--  작가소개  -->
+        ${artistcontent}
        </c:when>
+       <c:when test="${param.page == 16}"> <!-- 회원정보 삭제  -->
+        ${deletemembercontent}
+       </c:when> 
        <c:when test="${param.page == 403}">
         ${error403content}
        </c:when>

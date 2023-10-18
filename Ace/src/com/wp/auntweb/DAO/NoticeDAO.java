@@ -4,14 +4,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class ArtistDAO {
-	   public Connection conn = null;
+public class NoticeDAO {
+	public Connection conn = null;
 	   private String jdbc_driver;
 	   private String db_url;
 	   private String db_id;
 	   private String db_pw;
 	   
-	   public ArtistDAO(String jdbc_driver, String db_url, String db_id, String db_pw)
+	   public NoticeDAO(String jdbc_driver, String db_url, String db_id, String db_pw)
 	   {
 		   this.jdbc_driver = jdbc_driver;
 		   this.db_url = db_url;
@@ -36,6 +36,5 @@ public class ArtistDAO {
 		   }
 	   }
 	   
-	   
-	   
+	  
 }

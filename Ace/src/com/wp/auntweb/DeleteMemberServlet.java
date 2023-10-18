@@ -13,19 +13,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.wp.auntweb.DAO.MemberDAO;
-import com.wp.auntweb.DTO.MemberDTO;
 
 /**
- * Servlet implementation class ModifyMemberServlet
+ * Servlet implementation class DeleteMemberServlet
  */
-@WebServlet("/modifymember.do")
-public class ModifyMemberServlet extends HttpServlet {
+@WebServlet("/deletemember.do")
+public class DeleteMemberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ModifyMemberServlet() {
+    public DeleteMemberServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -59,7 +58,7 @@ public class ModifyMemberServlet extends HttpServlet {
   	    	
   	    	if(memberlist != null)
   	    	{
-  	    		viewName = "index.jsp?page=10"; 
+  	    		viewName = "index.jsp?page=16";  
   	    		session.setAttribute("birthday", memberlist.get("birthday"));
   	    		session.setAttribute("joindate", memberlist.get("joindate"));
   	    		session.setAttribute("email", memberlist.get("email")); 
@@ -92,17 +91,12 @@ public class ModifyMemberServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.setCharacterEncoding("UTF-8");
-		request.setCharacterEncoding("UTF-8"); 
-		Global g = new Global(response);
+		request.setCharacterEncoding("UTF-8");
+		Global g = new Global(response); 
 		String viewName = null;
-		HttpSession session = request.getSession(); 
-		
-		String id = (String)session.getAttribute("id"); 
-		
-		//Parameters from HTML
-		String name = request.getParameter("name");
-		String birthday = request.getParameter("birthday");
-		String email = request.getParameter("email"); 
+	    HttpSession session = request.getSession();
+	    
+	    String id = (String)session.getAttribute("id"); 
 		
 		ServletContext application = request.getSession().getServletContext();
 		//START - 데이터베이스 연결 준비 (web.xml) 
@@ -112,29 +106,28 @@ public class ModifyMemberServlet extends HttpServlet {
   	    String db_pw = application.getInitParameter("db_password");
   	    //END - 데이터베이스 연결 준비 (web.xml)
   	    
-		try
-		{
-			MemberDTO memberdto = new MemberDTO(id, null, name, birthday, null, email); 
-			MemberDAO memberdao = new MemberDAO(JDBC_Driver, db_url, db_id, db_pw);
-			int result = memberdao.updateMember(memberdto);
-			
-			if(result != 0) {
-				viewName = "index.jsp?page=1";
-			}
-			else {
-				g.jsmessage("Unknown Error Message."); 
-			}
-		}
-		catch(Exception ex) {
-			g.jsmessage(ex.getMessage());
-		}
-		
-		if(viewName != null) {
-			response.sendRedirect(viewName);
-		}
-		else {
-			g.jsmessage("회원 정보 수정 도중 오류가 발생하였습니다."); 
-		}
+  	    try {
+  	    	MemberDAO memberdao = new MemberDAO(JDBC_Driver, db_url, db_id, db_pw); 
+  	    	int result = memberdao.deleteMember(id);
+  	    	
+  	    	if(result != 0) {
+  	    		session.invalidate();
+  	    		viewName = "index.jsp?page=1"; 
+  	    	}
+  	    	else {
+  	    		g.jsmessage("Unknown Error Message");
+  	    	}
+  	    }
+  	    catch(Exception ex) {
+  	    	g.jsmessage(ex.getMessage());
+  	    }
+  	    
+  	    if(viewName != null) {
+  	    	response.sendRedirect(viewName); 
+  	    }
+  	    else {
+  	    	g.jsmessage("삭제에 실패하였습니다.");
+  	    }
 	}
 
 }

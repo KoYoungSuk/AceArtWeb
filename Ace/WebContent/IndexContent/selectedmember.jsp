@@ -11,8 +11,8 @@
             <td>${sessionScope.id}</td>
          </tr>
          <tr>
-            <td>비밀번호 수정</td>
-            <td><button class="btn btn-secondary btn-sm" onclick="location.href=''"><span class="material-symbols-outlined">key</span>비밀번호 수정</button> 
+            <td>비밀번호 변경</td>
+            <td><button class="btn btn-secondary btn-sm" onclick="location.href='index.jsp?page=14'"><span class="material-symbols-outlined">key</span>비밀번호 수정</button> 
          </tr>
          <tr>
             <td>이름:</td>
@@ -33,8 +33,8 @@
     </table>
     <hr>
     <button class="btn btn-secondary btn-sm" type="button" onclick="history.go(-1);"><span class="material-symbols-outlined">arrow_back_ios</span>뒤로가기</button>
-    <button class="btn btn-secondary btn-sm" onclick="location.href='index.jsp?page=10'"><span class="material-symbols-outlined">create</span>회원정보 수정</button>            
-    <button class="btn btn-danger btn-sm"onclick="location.href='index.jsp?page=11'"><span class="material-symbols-outlined">delete</span>회원정보 삭제</button>
+    <button class="btn btn-secondary btn-sm" onclick="location.href='modifymember.do'"><span class="material-symbols-outlined">create</span>회원정보 수정</button>            
+    <button class="btn btn-danger btn-sm"onclick="location.href='deletemember.do'"><span class="material-symbols-outlined">delete</span>회원정보 삭제</button>
     </c:when>
     <c:otherwise> <!--  로그인하지 않았을 때  -->
      <p>회원정보를 확인하려면 먼저 로그인해 주세요.</p> 
