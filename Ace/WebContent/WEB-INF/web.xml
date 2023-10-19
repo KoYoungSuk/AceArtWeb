@@ -23,24 +23,26 @@
   </context-param>
   <context-param>
     <param-name>db_password</param-name>
-    <param-value>Password Censored.</param-value>
+    <param-value>CENSORED</param-value>
+  </context-param>
+  <context-param>
+    <param-name>email_id</param-name>
+    <param-value>vheh1936@gmail.com</param-value>
+  </context-param>
+  <context-param>
+    <param-name>email_pw</param-name>
+    <param-value>CENSORED</param-value>
   </context-param>
   <error-page>
     <error-code>403</error-code>
-    <location>/error_403.html</location>
+    <location>/index.jsp?page=403</location>
   </error-page>
-  <!-- 
   <error-page>
     <error-code>404</error-code>
-    <location>/error.jsp?page=404</location>
+    <location>/index.jsp?page=404</location>
   </error-page>
   <error-page>
     <error-code>500</error-code>
-    <location>/error.jsp?page=500</location>
+    <location>/index.jsp?page=500</location>
   </error-page>
-  <error-page>
-    <error-code>3217</error-code>
-    <location>/error.jsp?page=3217</location>
-  </error-page>
-  --> 
 </web-app>
