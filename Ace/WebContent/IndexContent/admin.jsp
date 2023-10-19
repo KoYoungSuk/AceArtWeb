@@ -7,7 +7,7 @@
    <H2 style="font-weight: bold; ">관리자 모드 </H2>
    <hr>
    <div style="text-align: center; ">
-     <button class="btn btn-secondary btn-sm" type="button" onclick="location.href='./manager/status'"><span class="material-symbols-outlined">dns</span>Server Status</button> 
+     <button class="btn btn-secondary btn-sm" type="button" onclick="location.href='../manager/status'"><span class="material-symbols-outlined">dns</span>Server Status</button> 
      <button class="btn btn-secondary btn-sm" type="button" onclick="location.href='totalmemberlist.do'"><span class="material-symbols-outlined">person</span>Member Management</button>
    </div> 
   </c:when>

@@ -19,7 +19,11 @@
 <c:import url="IndexContent/changepw.jsp" var="changepwcontent"></c:import> 
 <c:import url="IndexContent/artist.jsp" var="artistcontent"></c:import> 
 <c:import url="IndexContent/noticeboardlist.jsp" var="noticeboardcontent"></c:import> 
+<c:import url="IndexContent/detailnoticeboard.jsp" var="detailnoticecontent"></c:import> 
+<c:import url="IndexContent/deletenoticeboard.jsp" var="deletenoticecontent"></c:import> 
+<c:import url="IndexContent/modifynoticeboard.jsp" var="modifynoticecontent"></c:import> 
 <c:import url="IndexContent/boardlist.jsp" var="boardlistcontent"></c:import> 
+<c:import url="IndexContent/writenotice.jsp" var="writenoticecontent"></c:import> 
 <!--  파라미터에 따라 사이트 제목 정하기 -->
 <c:choose>
  <c:when test="${param.page == 1}"><c:set var="titlename" value="에이스도시조형에 오신 것을 환영합니다." /></c:when>
@@ -38,6 +42,10 @@
  <c:when test="${param.page == 14}"><c:set var="titlename" value="비밀번호 변경" /></c:when> 
  <c:when test="${param.page == 15}"><c:set var="titlename" value="작가 소개 " /></c:when>
  <c:when test="${param.page == 16}"><c:set var="titlename" value="회원정보 삭제" /></c:when> 
+ <c:when test="${param.page == 17}"><c:set var="titlename" value="공지사항 추가" /></c:when> 
+ <c:when test="${param.page == 18}"><c:set var="titlename" value="공지사항" /></c:when> 
+ <c:when test="${param.page == 19}"><c:set var="titlename" value="공지사항 삭제" /></c:when>
+ <c:when test="${param.page == 20}"><c:set var="titlename" value="공지사항 수정" /></c:when> 
  <c:when test="${param.page == 403}"><c:set var="titlename" value="403 Forbidden" /></c:when>
  <c:when test="${param.page == 404}"><c:set var="titlename" value="404 Not Found" /></c:when>
  <c:when test="${param.page == 500}"><c:set var="titlename" value="500 Internal Server Error" /></c:when> 
@@ -92,10 +100,10 @@
              <a class="nav-item nav-link active" href="index.jsp?page=4">회사소개&연혁</a>
              <a class="nav-item nav-link active" href="index.jsp?page=15">작가소개</a>
              <a class="nav-item nav-link active" href="index.jsp?page=5">작품</a>
-             <a class="nav-item nav-link active" href="index.jsp?page=6">공지사항</a>
+             <a class="nav-item nav-link active" href="noticeboardlist.do?desc=0">공지사항</a>
              <a class="nav-item nav-link active" href="index.jsp?page=7">자료실</a>
              <c:choose>
-             <c:when test="${sessionScope.id eq 'admin'}">
+             <c:when test="${sessionScope.id eq 'admin'}"> <!-- 관리자 모드 -->
              <a class="nav-item nav-link active" href="index.jsp?page=8">관리자 모드 </a>
              </c:when>
              <c:otherwise>
@@ -104,7 +112,7 @@
        </div> 
        <div class="navbar-nav ml-auto">
             <c:choose>
-            <c:when test="${sessionScope.id eq null}">
+            <c:when test="${sessionScope.id eq null}"> <!-- 로그인하지 않았을 때  -->
              <button class="btn btn-secondary btn-sm" type="button" onclick="location.href='index.jsp?page=2'"><span class="material-symbols-outlined">login</span>로그인</button>&nbsp;&nbsp;
              <button class="btn btn-secondary btn-sm" type="button" onclick="location.href='./index.jsp?page=3'"><span class="material-symbols-outlined">person_add</span>회원가입</button>
              </c:when>
@@ -166,13 +174,25 @@
        <c:when test="${param.page == 16}"> <!-- 회원정보 삭제  -->
         ${deletemembercontent}
        </c:when> 
-       <c:when test="${param.page == 403}">
+       <c:when test="${param.page == 17}"> <!-- 공지사항 추가 -->
+        ${writenoticecontent}
+       </c:when>
+       <c:when test="${param.page == 18}"> <!-- 공지사항 세부정보 -->
+        ${detailnoticecontent}
+       </c:when>
+       <c:when test="${param.page == 19}"> <!-- 공지사항 삭제  -->
+        ${deletenoticecontent}
+       </c:when>
+       <c:when test="${param.page == 20}"> <!-- 공지사항 수정  -->
+        ${modifynoticecontent}
+       </c:when>
+       <c:when test="${param.page == 403}"> <!-- Error 403 -->
         ${error403content}
        </c:when>
-       <c:when test="${param.page == 404}">
+       <c:when test="${param.page == 404}"> <!-- Error 404 -->
         ${error404content}
        </c:when>
-       <c:when test="${parma.page == 500}">
+       <c:when test="${param.page == 500}"> <!-- Error 500 -->
         ${error500content}
        </c:when> 
        <c:otherwise>
