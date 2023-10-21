@@ -17,12 +17,17 @@
 <c:import url="IndexContent/findid.jsp" var="findidcontent"></c:import> 
 <c:import url="IndexContent/findpw.jsp" var="findpwcontent"></c:import> 
 <c:import url="IndexContent/changepw.jsp" var="changepwcontent"></c:import> 
+<c:import url="IndexContent/totalmemberlist.jsp" var="totalmembercontent"></c:import> 
 <c:import url="IndexContent/artist.jsp" var="artistcontent"></c:import> 
 <c:import url="IndexContent/noticeboardlist.jsp" var="noticeboardcontent"></c:import> 
 <c:import url="IndexContent/detailnoticeboard.jsp" var="detailnoticecontent"></c:import> 
 <c:import url="IndexContent/deletenoticeboard.jsp" var="deletenoticecontent"></c:import> 
 <c:import url="IndexContent/modifynoticeboard.jsp" var="modifynoticecontent"></c:import> 
 <c:import url="IndexContent/boardlist.jsp" var="boardlistcontent"></c:import> 
+<c:import url="IndexContent/writeboard.jsp" var="writeboardcontent"></c:import> 
+<c:import url="IndexContent/detailboard.jsp" var="detailboardcontent"></c:import> 
+<c:import url="IndexContent/deleteboard.jsp" var="deleteboardcontent"></c:import> 
+<c:import url="IndexContent/modifyboard.jsp" var="modifyboardcontent"></c:import> 
 <c:import url="IndexContent/writenotice.jsp" var="writenoticecontent"></c:import> 
 <!--  파라미터에 따라 사이트 제목 정하기 -->
 <c:choose>
@@ -46,6 +51,11 @@
  <c:when test="${param.page == 18}"><c:set var="titlename" value="공지사항" /></c:when> 
  <c:when test="${param.page == 19}"><c:set var="titlename" value="공지사항 삭제" /></c:when>
  <c:when test="${param.page == 20}"><c:set var="titlename" value="공지사항 수정" /></c:when> 
+ <c:when test="${param.page == 21}"><c:set var="titlename" value="전체 회원정보 관리" /></c:when> 
+ <c:when test="${param.page == 22}"><c:set var="titlename" value="자료실 등록" /></c:when>
+ <c:when test="${param.page == 23}"><c:set var="titlename" value="자료실" /></c:when> 
+ <c:when test="${param.page == 24}"><c:set var="titlename" value="자료실 삭제" /></c:when> 
+ <c:when test="${param.page == 25}"><c:set var="titlename" value="자료실 수정" /></c:when> 
  <c:when test="${param.page == 403}"><c:set var="titlename" value="403 Forbidden" /></c:when>
  <c:when test="${param.page == 404}"><c:set var="titlename" value="404 Not Found" /></c:when>
  <c:when test="${param.page == 500}"><c:set var="titlename" value="500 Internal Server Error" /></c:when> 
@@ -101,7 +111,7 @@
              <a class="nav-item nav-link active" href="index.jsp?page=15">작가소개</a>
              <a class="nav-item nav-link active" href="index.jsp?page=5">작품</a>
              <a class="nav-item nav-link active" href="noticeboardlist.do?desc=0">공지사항</a>
-             <a class="nav-item nav-link active" href="index.jsp?page=7">자료실</a>
+             <a class="nav-item nav-link active" href="totalboardlist.do?desc=0">자료실</a> <!-- index.jsp?page=7 -->
              <c:choose>
              <c:when test="${sessionScope.id eq 'admin'}"> <!-- 관리자 모드 -->
              <a class="nav-item nav-link active" href="index.jsp?page=8">관리자 모드 </a>
@@ -186,6 +196,21 @@
        <c:when test="${param.page == 20}"> <!-- 공지사항 수정  -->
         ${modifynoticecontent}
        </c:when>
+       <c:when test="${param.page == 21}"> <!-- 전체 회원정보 관리 -->
+        ${totalmembercontent}
+       </c:when>
+       <c:when test="${param.page == 22}"> <!-- 자료실 등록  -->
+        ${writeboardcontent}
+       </c:when> 
+       <c:when test="${param.page == 23}"> <!--  자료실 세부정보  -->
+        ${detailboardcontent}
+       </c:when>
+       <c:when test="${param.page == 24}"> <!--  자료실 정보 삭제 -->
+        ${deleteboardcontent}
+       </c:when> 
+       <c:when test="${param.page == 25}"> <!-- 자료실 정보 수정  -->
+        ${modifyboardcontent}
+       </c:when> 
        <c:when test="${param.page == 403}"> <!-- Error 403 -->
         ${error403content}
        </c:when>
