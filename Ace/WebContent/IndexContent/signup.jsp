@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <div class="row">
-<div class="col-lg-6" style="padding: 10px; margin: 90px; ">
+<div class="col-lg-8" style="padding: 10px; margin: 90px; ">
 <c:choose> 
 <c:when test="${sessionScope.id eq null}"> <!--  로그인 되어 있지 않을때  -->
-<form class="signup-content" method="post" action="./checksignup.do">
+<form class="signup-content" method="post" action="./signup.do">
 <H2>회원 가입</H2>
 <hr>
 <H5>회원 정보를 입력해 주세요. 이름과 생년월일은 선택이며, 그 외 정보는 필수입니다. </H5>

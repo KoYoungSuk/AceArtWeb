@@ -35,7 +35,7 @@ public class SendMailClass {
        //I typed this code because JavaMail 1.4.7 doesn't support TLS1.2, But OpenJDK 11 only supports TLS1.2 or higher. 
 		//JDK 8 support old TLS Version. But using old TLS version is dangerous for security reason.  
 		
-		Authenticator auth = new SMTPAuthenticator(request);
+		Authenticator auth = new SMTPAuthenticator(request); //자식 클래스의 생성자를 불러온다. 
 		
 		Session session = Session.getInstance(p, auth); 
 		

@@ -1,6 +1,9 @@
 package com.wp.auntweb;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.util.Enumeration;
 
@@ -52,9 +55,6 @@ public class WriteBoardServlet extends HttpServlet {
 		Global g = new Global(response);
 		String viewName = null;
 		
-		//String location = "C:\\Temp"; //Windows Server
-		String location= "/mnt/hdd3/TextFiles"; //Linux
-		
 		int maxSize = 1024 * 1024 * 1024 * 5; //KiloByte * MegaByte * GigaByte (5GB)
 		
 		
@@ -72,6 +72,60 @@ public class WriteBoardServlet extends HttpServlet {
   	    
 		try {
 			if(id.equals("admin")) {
+				
+                //개발환경: Windows 10(Windows 11)
+				//서버환경: Linux(Ubuntu 20.04 LTS)
+				//맥북 사면 맥북에서도 개발할 예정.
+				
+			    String os = System.getProperty("os.name"); //OS Check 
+			  	
+			    System.out.println("OSName: " + os);
+			    
+			    BoardDAO boarddao = new BoardDAO(JDBC_Driver, db_url, db_id, db_pw);
+				    
+				int maxnum = boarddao.getMaxNumBoard();
+				
+				maxnum = maxnum + 1;
+				
+				String location = null; 
+				
+				System.out.println("maxnum: " + maxnum);
+				
+				if(os.equals("Linux"))
+				{
+					location = "/mnt/hdd3/TextFiles/Board/" + maxnum ; //Linux 
+				}
+				else if(os.equals("Windows 10"))
+				{
+					location = "C:\\Temp\\Board\\" + maxnum; //Windows 10&11 
+				}
+				else if(os.equals("Mac")) {
+					//맥에서는 아직 개발을 안했음. 맥북 살려고 넣었음. 
+				}
+				
+				System.out.println("location1: " + location);
+				
+				Path directoryPath = Paths.get(location);
+				
+				if(!Files.exists(directoryPath))
+				{
+					Files.createDirectory(directoryPath); //디렉터리 생성 
+				}
+			    
+                
+				if(os.equals("Linux"))
+				{
+					location = location + "/";  //Linux 
+				}
+				else if(os.equals("Win"))
+				{
+					location = location + "\\"; //Windows 
+				}
+				else if(os.equals("Mac")) {
+					//맥에서는 아직 개발을 안했음. 맥북 살려고 넣었음. 
+				}
+				 
+			  	 
 				MultipartRequest multi = new MultipartRequest(request,
 		 			      location,
 						  maxSize,
@@ -92,18 +146,12 @@ public class WriteBoardServlet extends HttpServlet {
 			    	filesystemName = multi.getFilesystemName(element);
 			    }
 			    
-			    BoardDAO boarddao = new BoardDAO(JDBC_Driver, db_url, db_id, db_pw);
-			    
-			    int maxnum = boarddao.getMaxNumBoard();
-			    
-			  
-			    BoardDTO boarddto = new BoardDTO(maxnum+1, title, content, access, filesystemName, savedate, null); 
+			    BoardDTO boarddto = new BoardDTO(maxnum, title, content, access, filesystemName, savedate, null); 
 			    
 			    int result = boarddao.insertBoard(boarddto);
 			    
 			    if(result != 0) {
 			    	viewName = "totalboardlist.do?desc=0";
-			    	
 			    }
 			    else {
 			    	g.jsmessage("Unknown Error Message"); 

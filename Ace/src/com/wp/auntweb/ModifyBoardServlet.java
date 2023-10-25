@@ -2,6 +2,13 @@ package com.wp.auntweb;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.CopyOption;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.sql.Timestamp;
+import java.util.Enumeration;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -13,9 +20,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.tomcat.util.http.fileupload.FileUtils;
+
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.wp.auntweb.DAO.BoardDAO;
+import com.wp.auntweb.DTO.BoardDTO;
 
 /**
  * Servlet implementation class ModifyBoardServlet
@@ -63,6 +73,9 @@ public class ModifyBoardServlet extends HttpServlet {
 					session.setAttribute("detailboardlist", boardlist);
 					viewName = "index.jsp?page=25"; 
 				}
+				else {
+					g.jsmessage("Unknown Error Message");
+				}
 			}
 			else {
 				g.jsmessage("관리자 계정으로만 자료실 정보를 수정할 수 있습니다."); 
@@ -93,7 +106,7 @@ public class ModifyBoardServlet extends HttpServlet {
 		String viewName = null;
 		
 	    String id = (String)session.getAttribute("id"); 
-	    int num = Integer.parseInt(request.getParameter("num"));
+	    
 	    
 	    
 		ServletContext application = request.getSession().getServletContext();
@@ -104,21 +117,25 @@ public class ModifyBoardServlet extends HttpServlet {
   	    String db_pw = application.getInitParameter("db_password");
   	    //END - 데이터베이스 연결 준비 (web.xml)
   	    
+  	    String os = System.getProperty("os.name"); //OS Check 
+        String location = null; 
+        
+  	    if(os.equals("Windows 10")) {
+  	    	location = "C:\\Temp\\Board\\"; 
+  	    }
+  	    else if(os.equals("Linux")) {
+  	    	location = "/mnt/hdd3/TextFiles/Board/"; 
+  	    }
+  	    else if(os.equals("Mac")) {
+  	    	//맥북사면 코드 수정예정 
+  	    }
+  	   
 		try {
 			if(id.equals("admin")) {
+				
 				int maxSize = 1024 * 1024 * 1024 * 5;
 				
-				String filename = request.getParameter("filename");
-				
-				String location = "C:\\Temp\\" + filename; //Windows
-			    //String location = "/mnt/hdd3/TextFiles/" + filename;  //Linux
-				
-				File files = new File(location);
-				
-				if(files.exists()) {
-					files.delete();  //이전 파일 삭제  
-				}
-				
+				//먼저 파일 업로드 
 				MultipartRequest multi = new MultipartRequest(request,
 		 			      location,
 						  maxSize,
@@ -126,17 +143,89 @@ public class ModifyBoardServlet extends HttpServlet {
 						  new DefaultFileRenamePolicy());
 				
 				String title = multi.getParameter("title");
+				int num = Integer.parseInt(multi.getParameter("num")); 
+				String content = multi.getParameter("content");
+				//String access = multi.getParameter("access");
 				
+				Timestamp modifydate = new Timestamp(System.currentTimeMillis()); //현재 날짜
 				
+				Enumeration<?> files = multi.getFileNames();
+				    
+				String element = "";
+				String filesystemName = "";
+				 
+				if(files.hasMoreElements()) {
+				      element = (String)files.nextElement();
+				      filesystemName = multi.getFilesystemName(element); //서버에 업로드한 파일명 
+				}
+				 
+			    String newlocation = null;
+			    
+			    if(filesystemName != null) { //파일을 수정했을 경우 그 수정한 파일이 업로드되는데, 그 경로를 바꿔줘야 한다. 
+			    	 //번호에 맞춰서 경로를 바꿔준다. 
+			    	 
+			    	 if(os.equals("Windows 10")) {
+					    	newlocation = location + num; 
+					 }
+					 else if(os.equals("Linux"))	{
+					    	newlocation = location + num; 
+					 }
+					 else if(os.equals("Mac")) {
+					    	//맥북사면 수정예정 
+					 }
+					 
+			    	 File file = new File(newlocation);
+			    	 
+			    	 if(file.exists()) {
+			    		 FileUtils.cleanDirectory(file); //기존에 있는 파일들은 삭제 
+			    	 }
+			    	 
+			    	 if(os.equals("Windows 10")) {
+			    		 newlocation = newlocation + "\\" + filesystemName; 
+			    	 }
+			    	 else if(os.equals("Linux")) {
+			    		 newlocation = newlocation + "/" + filesystemName;  
+			    	 }
+			    	 else if(os.equals("Mac")) {
+			    		 //맥북사면 수정예정 
+			    	 }
+			    	 
+			    	 location = location + filesystemName;  
+			    	 
+					 Path oldfile = Paths.get(location);
+					 Path newfile = Paths.get(newlocation); 
+
+					 //번호 경로로 옮기기 
+					 Files.move(oldfile, newfile, StandardCopyOption.REPLACE_EXISTING); 
+					 
+			   }
+			   
+			   BoardDAO boarddao = new BoardDAO(JDBC_Driver, db_url, db_id, db_pw); 
+			   BoardDTO boarddto = new BoardDTO(num, title, content, null, filesystemName, null, modifydate);
+			   
+			   int result = boarddao.updateBoard(boarddto);
+			   
+			   if(result != 0) {
+				   viewName = "totalboardlist.do?desc=0";  
+			   }
+			   else {
+				   g.jsmessage("Unknown Error Message"); 
+			   }
 			}
 			else {
 				g.jsmessage("관리자 계정으로만 자료실 정보를 수정할 수 있습니다.");
 			}
 		}
 		catch(Exception ex) {
-			g.jsmessage(ex.getMessage()); 
+			g.jsmessage(ex.getLocalizedMessage()); 
 		}
 		
+		if(viewName != null) {
+			response.sendRedirect(viewName);
+		}
+		else {
+			g.jsmessage("자료실 정보를 수정하는데 오류가 발생하였습니다.");
+		}
 	}
 
 }

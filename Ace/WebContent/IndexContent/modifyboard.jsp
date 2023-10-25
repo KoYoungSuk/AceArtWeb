@@ -21,6 +21,7 @@
          <td><label for="content">내용</label></td>
          <td><textarea class="form-control" rows="20" cols="100" autofocus name="content" wrap="hard" >${sessionScope.detailboardlist['content']}</textarea></td>
         </tr>
+        <!-- 
         <tr>
          <td><label for="access">권한 설정</label></td>
          <td style="text-align: center;">
@@ -34,6 +35,7 @@
            <label class="custom-control-label" for="jb-radio-3">NonMember Mode</label>
         </td>
         </tr>
+        --> 
         <tr>
          <td><label for="files">파일 업로드</label></td>
          <td><input type="file" name="file">${sessionScope.detailboardlist['files']}</td> 

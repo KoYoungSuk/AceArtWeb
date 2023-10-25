@@ -29,7 +29,7 @@
    </tr>
    <tr>
     <td><label for="file">파일 다운로드 </label></td>
-    <td><a href="downloadboard.do?filename=${sessionScope.detailboardlist['files']}">파일 다운로드(파일명: ${sessionScope.detailboardlist['files']})</a></td> 
+    <td><a href="downloadboard.do?num=${sessionScope.detailboardlist['num']}&filename=${sessionScope.detailboardlist['files']}">파일 다운로드(파일명: ${sessionScope.detailboardlist['files']})</a></td> 
    </tr> 
    <tr>
     <td><label for="savedate">작성 날짜 </label></td>

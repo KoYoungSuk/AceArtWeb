@@ -12,7 +12,7 @@
       </c:when>
       <c:otherwise></c:otherwise> 
     </c:choose> 
-    <button class="btn btn-secondary btn-sm" onclick="location.href='totalboardlist.do'"><span class="material-symbols-outlined">refresh</span>새로고침</button>
+    <button class="btn btn-secondary btn-sm" onclick="location.href='totalboardlist.do?desc=0'"><span class="material-symbols-outlined">refresh</span>새로고침</button>
  </div> 
  <table class="table">
    <thead>

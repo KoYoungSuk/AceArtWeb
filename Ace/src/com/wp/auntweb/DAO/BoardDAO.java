@@ -66,16 +66,27 @@ public class BoardDAO {
 	   
 	   public int updateBoard(BoardDTO boarddto) throws ClassNotFoundException, SQLException {
 		   connectDB();
-		   String sql = "update board set title=?, content=?, access=?, files=?,  modifydate=? where num=? ";
+		   String sql = null;
+		   if(boarddto.getFiles() == null) { //파일을 바꾸지 않는다. 
+			   sql = "update board set title=?, content=?, modifydate=? where num=?"; 
+		   }
+		   else { //파일을 바꾼다. 
+			   sql = "update board set title=?, content=?, files=?, modifydate=? where num=?"; 
+		   }
 		   int result = 0;
 		   PreparedStatement psm = null;
 		   psm = conn.prepareStatement(sql); 
 		   psm.setString(1, boarddto.getTitle());
 		   psm.setString(2, boarddto.getContent());
-		   psm.setString(3, boarddto.getAccess());
-		   psm.setString(4, boarddto.getFiles()); 
-		   psm.setTimestamp(5, boarddto.getModifydate());
-		   psm.setInt(6, boarddto.getNum());
+		   if(boarddto.getFiles() == null) {
+			   psm.setTimestamp(3, boarddto.getModifydate());
+			   psm.setInt(4, boarddto.getNum());
+		   }
+		   else {
+			   psm.setString(3, boarddto.getFiles()); 
+			   psm.setTimestamp(4, boarddto.getModifydate());
+			   psm.setInt(5, boarddto.getNum());
+		   }
 		   result = psm.executeUpdate();
 		   psm.close(); 
 		   disconnectDB(); 

@@ -5,7 +5,7 @@ import javax.mail.PasswordAuthentication;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
-public class SMTPAuthenticator extends Authenticator{
+public class SMTPAuthenticator extends Authenticator{  //부모 클래스: Authenticator //자식 클래스: SMTPAuthenticator 
    HttpServletRequest request = null;
    
    public SMTPAuthenticator(HttpServletRequest request) {

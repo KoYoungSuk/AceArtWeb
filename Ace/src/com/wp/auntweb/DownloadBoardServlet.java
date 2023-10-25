@@ -36,13 +36,22 @@ public class DownloadBoardServlet extends HttpServlet {
 		Global g = new Global(response);
 				
 		try {
-			
+			int num = Integer.parseInt(request.getParameter("num")); 
 			String filename = request.getParameter("filename"); 
+			String os = System.getProperty("os.name"); 
 			
-			System.out.println("before filename: " + filename);
+			String location = null; 
+			if(os.equals("Windows 10")) {
+				location = "C:\\Temp\\Board\\" + num + "\\" + filename; 
+			}
+			else if(os.equals("Linux")) {
+				location = "/mnt/hdd3/TextFiles/Board/" + num + "/" + filename; 
+			}
+			else if(os.equals("Mac")) {
+				//¸ÆºÏ »ç¸é ÄÚµå ¼öÁ¤¿¹Á¤ 
+			}
 			
-			//String location = "C:\\Temp\\" + filename; //Windows 
-			String location = "/mnt/hdd3/TextFiles/" + filename;  //Linux 
+		
 			
 			File file = new File(location);
 			FileInputStream in = new FileInputStream(location);
@@ -53,17 +62,17 @@ public class DownloadBoardServlet extends HttpServlet {
 			response.setContentType("application/octet-stream");
 			response.setHeader("Content-Disposition", "attachment; filename=" + filename);
 			
-			OutputStream os = response.getOutputStream();
+			OutputStream output = response.getOutputStream();
 			
 			int length;
 			byte[] b = new byte[(int)file.length()];
 			
 			while((length = in.read(b)) > 0) {
-				os.write(b,0,length);
+				output.write(b,0,length);
 			}
-			os.flush();
+			output.flush();
 			
-			os.close();
+			output.close();
 			in.close();
 
 			

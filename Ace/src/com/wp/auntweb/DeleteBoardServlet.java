@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.tomcat.util.http.fileupload.FileUtils;
+
 import com.wp.auntweb.DAO.BoardDAO;
 
 /**
@@ -96,7 +98,7 @@ public class DeleteBoardServlet extends HttpServlet {
 		
 		//Parameters from HTML
 		int num = Integer.parseInt(request.getParameter("num"));
-		String filename = request.getParameter("filename");
+		//String filename = request.getParameter("filename");
 		
 		
 		ServletContext application = request.getSession().getServletContext();
@@ -110,13 +112,26 @@ public class DeleteBoardServlet extends HttpServlet {
   	    try {
   	    	if(id.equals("admin")) {
   	    		
-  	    		//String location = "C:\\Temp\\" + filename; //Windows
-  	    		String location = "/mnt/hdd3/TextFiles/" + filename; //Linux
+  	    	    String os = System.getProperty("os.name"); //OS Check 
+  	    	    String location = null;
+  	    	    
+  	    	    if(os.equals("Windows 10")) {
+  	    	    	location = "C:\\Temp\\Board\\" + num; 
+  	    	    }
+  	    	    else if(os.equals("Linux")) {
+  	    	    	location = "/mnt/hdd3/TextFiles/Board/" + num; 
+  	    	    }
+  	    	    else if(os.equals("Mac")) {
+  	    	    	//맥북 사면 수정예정 
+  	    	    }
   	    		
   	    		File file = new File(location);
   	    		
   	    		if(file.exists()) {
-  	    			file.delete(); //업로드한 파일을 서버에서 삭제 
+  	    			FileUtils.cleanDirectory(file); 
+  	                if(file.isDirectory()) {
+  	                	file.delete(); 
+  	                }
   	    		}
   	    		
   	    		BoardDAO boarddao = new BoardDAO(JDBC_Driver, db_url, db_id, db_pw);
