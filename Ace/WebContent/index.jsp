@@ -6,6 +6,10 @@
 <c:import url="IndexContent/signup.jsp" var="signupcontent"></c:import> 
 <c:import url="IndexContent/introduction.jsp" var="introcontent"></c:import> 
 <c:import url="IndexContent/works.jsp" var="workscontent"></c:import>
+<c:import url="IndexContent/writeworks.jsp" var="writeworkscontent"></c:import>
+<c:import url="IndexContent/detailworks.jsp" var="detailworkscontent"></c:import> 
+<c:import url="IndexContent/modifyworks.jsp" var="modifyworkscontent"></c:import>
+<c:import url="IndexContent/deleteworks.jsp" var="deleteworkscontent"></c:import> 
 <c:import url="IndexContent/selectedmember.jsp" var="selectedmembercontent"></c:import>
 <c:import url="IndexContent/findidandpw.jsp" var="findidandpwcontent"></c:import>
 <c:import url="IndexContent/modifymember.jsp" var="modifymembercontent"></c:import> 
@@ -56,6 +60,10 @@
  <c:when test="${param.page == 23}"><c:set var="titlename" value="자료실" /></c:when> 
  <c:when test="${param.page == 24}"><c:set var="titlename" value="자료실 삭제" /></c:when> 
  <c:when test="${param.page == 25}"><c:set var="titlename" value="자료실 수정" /></c:when> 
+ <c:when test="${param.page == 26}"><c:set var="titlename" value="작품 등록" /></c:when> 
+ <c:when test="${param.page == 27}"><c:set var="titlename" value="작품 상세정보" /></c:when> 
+ <c:when test="${param.page == 28}"><c:set var="titlename" value="작품 수정" /></c:when>
+ <c:when test="${param.page == 29}"><c:set var="titlename" value="작품 삭제" /></c:when> 
  <c:when test="${param.page == 403}"><c:set var="titlename" value="403 Forbidden" /></c:when>
  <c:when test="${param.page == 404}"><c:set var="titlename" value="404 Not Found" /></c:when>
  <c:when test="${param.page == 500}"><c:set var="titlename" value="500 Internal Server Error" /></c:when> 
@@ -109,7 +117,7 @@
        <div class="navbar-nav">
              <a class="nav-item nav-link active" href="index.jsp?page=4">회사소개&연혁</a>
              <a class="nav-item nav-link active" href="index.jsp?page=15">작가소개</a>
-             <a class="nav-item nav-link active" href="index.jsp?page=5">작품</a>
+             <a class="nav-item nav-link active" href="workslist.do?desc=0">작품</a>
              <a class="nav-item nav-link active" href="noticeboardlist.do?desc=0">공지사항</a>
              <a class="nav-item nav-link active" href="totalboardlist.do?desc=0">자료실</a> <!-- index.jsp?page=7 -->
              <c:choose>
@@ -211,6 +219,18 @@
        <c:when test="${param.page == 25}"> <!-- 자료실 정보 수정  -->
         ${modifyboardcontent}
        </c:when> 
+       <c:when test="${param.page == 26}"> <!--  작품 등록 --> 
+        ${writeworkscontent} 
+       </c:when> 
+       <c:when test="${param.page == 27}"> <!--  작품 상세정보 --> 
+        ${detailworkscontent}
+       </c:when> 
+       <c:when test="${param.page == 28}"> <!-- 작품 수정 -->
+        ${modifyworkscontent}
+       </c:when>
+       <c:when test="${param.page == 29}"> <!-- 작품 삭제 -->
+        ${deleteworkscontent}
+       </c:when>
        <c:when test="${param.page == 403}"> <!-- Error 403 -->
         ${error403content}
        </c:when>

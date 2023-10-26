@@ -2,7 +2,6 @@ package com.wp.auntweb;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -164,16 +163,8 @@ public class ModifyBoardServlet extends HttpServlet {
 			    if(filesystemName != null) { //파일을 수정했을 경우 그 수정한 파일이 업로드되는데, 그 경로를 바꿔줘야 한다. 
 			    	 //번호에 맞춰서 경로를 바꿔준다. 
 			    	 
-			    	 if(os.equals("Windows 10")) {
-					    	newlocation = location + num; 
-					 }
-					 else if(os.equals("Linux"))	{
-					    	newlocation = location + num; 
-					 }
-					 else if(os.equals("Mac")) {
-					    	//맥북사면 수정예정 
-					 }
-					 
+			    	 newlocation = location + num; 
+
 			    	 File file = new File(newlocation);
 			    	 
 			    	 if(file.exists()) {
@@ -192,8 +183,8 @@ public class ModifyBoardServlet extends HttpServlet {
 			    	 
 			    	 location = location + filesystemName;  
 			    	 
-					 Path oldfile = Paths.get(location);
-					 Path newfile = Paths.get(newlocation); 
+					 Path oldfile = Paths.get(location); //임시로 파일을 업로드한 경로 
+					 Path newfile = Paths.get(newlocation); ///옮겨야 할 경로 (번호 경로) 
 
 					 //번호 경로로 옮기기 
 					 Files.move(oldfile, newfile, StandardCopyOption.REPLACE_EXISTING); 

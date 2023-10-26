@@ -50,14 +50,11 @@ public class DownloadBoardServlet extends HttpServlet {
 			else if(os.equals("Mac")) {
 				//맥북 사면 코드 수정예정 
 			}
-			
-		
-			
-			File file = new File(location);
+					
+			File file = new File(location); //서버 파일 경로 설정 
 			FileInputStream in = new FileInputStream(location);
 			
 			filename = new String(filename.getBytes("utf-8"), "8859_1"); //한글파일 처리 
-			
 			
 			response.setContentType("application/octet-stream");
 			response.setHeader("Content-Disposition", "attachment; filename=" + filename);
@@ -68,7 +65,7 @@ public class DownloadBoardServlet extends HttpServlet {
 			byte[] b = new byte[(int)file.length()];
 			
 			while((length = in.read(b)) > 0) {
-				output.write(b,0,length);
+				output.write(b,0,length); //서버에서 바이트 배열로 받아온 파일 작성 
 			}
 			output.flush();
 			
