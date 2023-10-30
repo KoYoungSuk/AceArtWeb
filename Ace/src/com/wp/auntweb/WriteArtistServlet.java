@@ -17,20 +17,20 @@ import javax.servlet.http.HttpSession;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
-import com.wp.auntweb.DAO.WorksDAO;
-import com.wp.auntweb.DTO.WorksDTO;
+import com.wp.auntweb.DAO.ArtistDAO;
+import com.wp.auntweb.DTO.ArtistDTO;
 
 /**
- * Servlet implementation class WriteWorksServlet
+ * Servlet implementation class WriteArtistServlet
  */
-@WebServlet("/writeworks.do")
-public class WriteWorksServlet extends HttpServlet {
+@WebServlet("/writeartist.do")
+public class WriteArtistServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public WriteWorksServlet() {
+    public WriteArtistServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -49,13 +49,15 @@ public class WriteWorksServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		String viewName = null;
+		Global g = new Global(response);
 		HttpSession session = request.getSession();
-		Global g = new Global(response); 
 		
 		String id = (String)session.getAttribute("id");
+		
+		Timestamp savedate = new Timestamp(System.currentTimeMillis()); //현재 날짜
 		
 		ServletContext application = request.getSession().getServletContext();
 		//START - 데이터베이스 연결 준비 (web.xml) 
@@ -67,28 +69,28 @@ public class WriteWorksServlet extends HttpServlet {
   	    
 		try {
 			if(id.equals("admin")) {
-				Timestamp savedate = new Timestamp(System.currentTimeMillis()); //현재 날짜
+                ArtistDAO artistdao = new ArtistDAO(JDBC_Driver, db_url, db_id, db_pw);
+				
+				int maxnum = artistdao.getMaxnum();
+				
+				maxnum = maxnum + 1;
 				
 				int maxSize = 1024 * 1024 * 1024 * 5;
 				
-				String os = System.getProperty("os.name"); 
-				String location = null;
+				String location = null; 
+				String os = System.getProperty("os.name");
 				
-                WorksDAO worksdao = new WorksDAO(JDBC_Driver, db_url, db_id, db_pw);
-				
-				int maxnum = worksdao.getMaxNum();
-				maxnum = maxnum + 1;
-				if(os.equals("Windows 10")){
-					location = "C:\\Temp\\Works\\" + maxnum; 
+				if(os.equals("Windows 10")) {
+					location = "C:\\Temp\\Artist\\" + maxnum; 
 				}
 				else if(os.equals("Linux")) {
-					location = "/mnt/hdd3/TextFiles/Pictures/" + maxnum; 
+					location = "/mnt/hdd3/TextFiles/Artist/" + maxnum; 
 				}
 				else if(os.equals("Mac")) {
-					//맥북부터 일단 사자... 
+					
 				}
 				
-				Path directoryPath = Paths.get(location); //디렉터리 경로 설정 
+	            Path directoryPath = Paths.get(location); //디렉터리 경로 설정 
 				
 				if(!Files.exists(directoryPath)) 
 				{
@@ -102,53 +104,65 @@ public class WriteWorksServlet extends HttpServlet {
 					location = location + "/"; 
 				}
 				else if(os.equals("Mac")) {
-				    //맥북 사고싶다.... 
+					
 				}
 				
-				MultipartRequest multi = new MultipartRequest(request,
-		 			      location,
-						  maxSize,
-						  "utf-8",
-						  new DefaultFileRenamePolicy());
+				MultipartRequest multi = new MultipartRequest(
+						request, 
+						location, 
+					    maxSize, 
+						"UTF-8", 
+						new DefaultFileRenamePolicy());
+				
+			   Enumeration<?> files = multi.getFileNames();
+				    
+			   String element = "";
+			   String filesystemName = "";
+				
+			   String[] filesystemName_list = new String[2];
 			   
-				String name = multi.getParameter("name");
-				String description = multi.getParameter("description");
-				String installdate = multi.getParameter("installdate");
+			   int i = 0;
+			   
+			   while(files.hasMoreElements()) {
+				   element = (String)files.nextElement();
+				   filesystemName = multi.getFilesystemName(element);
+				   filesystemName_list[i] = filesystemName;
+				   i++; 
+				}
+			   
+			   System.out.println("filesystemName_list[0]: " + filesystemName_list[0]);
+			   System.out.println("filesystemName_list[1]: " + filesystemName_list[1]);
+			   
+			   String name = multi.getParameter("name");
+			   String career = multi.getParameter("career");
+			    
+
+				ArtistDTO artistDTO = new ArtistDTO(maxnum, name, career, filesystemName_list[1], filesystemName_list[0], savedate, null);
 				
-			    Enumeration<?> files = multi.getFileNames();
-				    
-				String element = "";
-				String filesystemName = "";
-				    
-				if(files.hasMoreElements()) {
-				    element = (String)files.nextElement();
-				    filesystemName = multi.getFilesystemName(element);
-			    }
-			
-				WorksDTO worksdto = new WorksDTO(maxnum, name, filesystemName, installdate, savedate, null, description);
-				
-				int result = worksdao.insertWorks(worksdto);
+				int result = artistdao.insertArtist(artistDTO);
 				
 				if(result != 0) {
-					viewName = "workslist.do?desc=0"; 
+					viewName = "totalartistlist.do?desc=0";
 				}
 				else {
-					g.jsmessage("Unknown Error Message"); 
+					g.jsmessage("Unknown Error Message");
 				}
+				
 			}
 			else {
-				g.jsmessage("관리자만 작품 등록이 가능합니다.");
+				g.jsmessage("관리자만 작가정보 추가가 가능합니다.");
 			}
 		}
 		catch(Exception ex) {
-			g.jsmessage(ex.getStackTrace().toString()); 
+			g.jsmessage(ex.getMessage());
 		}
 		
+
 		if(viewName != null) {
-			response.sendRedirect(viewName);
+			response.sendRedirect(viewName); 
 		}
 		else {
-			g.jsmessage("작품 정보 등록을 하는데 오류가 발생하였습니다.");
+			g.jsmessage("작가 정보를 추가하는데 오류가 발생하였습니다."); 
 		}
 	}
 

@@ -23,6 +23,9 @@
 <c:import url="IndexContent/changepw.jsp" var="changepwcontent"></c:import> 
 <c:import url="IndexContent/totalmemberlist.jsp" var="totalmembercontent"></c:import> 
 <c:import url="IndexContent/artist.jsp" var="artistcontent"></c:import> 
+<c:import url="IndexContent/writeartist.jsp" var="writeartistcontent"></c:import> 
+<c:import url="IndexContent/detailartist.jsp" var="detailartistcontent"></c:import> 
+<c:import url="IndexContent/modifyartist.jsp" var="modifyartistcontent"></c:import> 
 <c:import url="IndexContent/noticeboardlist.jsp" var="noticeboardcontent"></c:import> 
 <c:import url="IndexContent/detailnoticeboard.jsp" var="detailnoticecontent"></c:import> 
 <c:import url="IndexContent/deletenoticeboard.jsp" var="deletenoticecontent"></c:import> 
@@ -33,6 +36,7 @@
 <c:import url="IndexContent/deleteboard.jsp" var="deleteboardcontent"></c:import> 
 <c:import url="IndexContent/modifyboard.jsp" var="modifyboardcontent"></c:import> 
 <c:import url="IndexContent/writenotice.jsp" var="writenoticecontent"></c:import> 
+<c:import url="IndexContent/question.jsp" var="questioncontent"></c:import> 
 <!--  파라미터에 따라 사이트 제목 정하기 -->
 <c:choose>
  <c:when test="${param.page == 1}"><c:set var="titlename" value="에이스도시조형에 오신 것을 환영합니다." /></c:when>
@@ -64,6 +68,10 @@
  <c:when test="${param.page == 27}"><c:set var="titlename" value="작품 상세정보" /></c:when> 
  <c:when test="${param.page == 28}"><c:set var="titlename" value="작품 수정" /></c:when>
  <c:when test="${param.page == 29}"><c:set var="titlename" value="작품 삭제" /></c:when> 
+ <c:when test="${param.page == 30}"><c:set var="titlename" value="작가 추가" /></c:when> 
+ <c:when test="${param.page == 31}"><c:set var="titlename" value="작가 세부 정보" /></c:when> 
+ <c:when test="${param.page == 32}"><c:set var="titlename" value="작가 정보 수정" /></c:when> 
+ <c:when test="${param.page == 33}"><c:set var="titlename" value="질문과 답변 게시판" /></c:when> 
  <c:when test="${param.page == 403}"><c:set var="titlename" value="403 Forbidden" /></c:when>
  <c:when test="${param.page == 404}"><c:set var="titlename" value="404 Not Found" /></c:when>
  <c:when test="${param.page == 500}"><c:set var="titlename" value="500 Internal Server Error" /></c:when> 
@@ -116,10 +124,11 @@
      <div class="collapse navbar-collapse" id="ToggleMenu">
        <div class="navbar-nav">
              <a class="nav-item nav-link active" href="index.jsp?page=4">회사소개&연혁</a>
-             <a class="nav-item nav-link active" href="index.jsp?page=15">작가소개</a>
+             <a class="nav-item nav-link active" href="totalartistlist.do?desc=0">작가소개</a>
              <a class="nav-item nav-link active" href="workslist.do?desc=0">작품</a>
              <a class="nav-item nav-link active" href="noticeboardlist.do?desc=0">공지사항</a>
              <a class="nav-item nav-link active" href="totalboardlist.do?desc=0">자료실</a> <!-- index.jsp?page=7 -->
+             <a class="nav-item nav-link active" href="index.jsp?page=33">질문과 답변</a>
              <c:choose>
              <c:when test="${sessionScope.id eq 'admin'}"> <!-- 관리자 모드 -->
              <a class="nav-item nav-link active" href="index.jsp?page=8">관리자 모드 </a>
@@ -231,6 +240,18 @@
        <c:when test="${param.page == 29}"> <!-- 작품 삭제 -->
         ${deleteworkscontent}
        </c:when>
+       <c:when test="${param.page == 30}"> <!-- 작가 정보 등록 -->
+        ${writeartistcontent}
+       </c:when> 
+       <c:when test="${param.page == 31}"> <!-- 작가 정보 확인 -->
+        ${detailartistcontent}
+       </c:when> 
+       <c:when test="${param.page == 32}"> <!-- 작가 정보 수정 -->
+        ${modifyartistcontent}
+       </c:when> 
+       <c:when test="${param.page == 33}"> <!-- 질문과 답변 게시판 -->
+        ${questioncontent}
+       </c:when> 
        <c:when test="${param.page == 403}"> <!-- Error 403 -->
         ${error403content}
        </c:when>
@@ -249,10 +270,11 @@
   <H5> 대표 전화번호:  051-941-3127 </H5>
   <H5> 대표 휴대폰 번호: 010-3596-2140 </H5>
   <H5> 주소: 부산광역시 강서구 미음산단로 327, 303호  </H5>
-  <H5> <a href="personalinformation.jsp"> 개인정보처리방침 </a> </H5>
+  <H5> <a href="pdf.jsp?pdfname=personalinformation.pdf"> 개인정보처리방침 </a> </H5>
   <br> 
-  <H6> Last Updated: 2023-10-28 Created By KYS  </H6> 
-  <H6> <a href="technology.jsp"> 웹사이트 제작기술 안내 </a> </H6>
+  <H6> Last Updated: 2023-11-04 Created By KYS  </H6> 
+  <H6> <a href="pdf.jsp?pdfname=Environment.pdf"> 웹사이트 제작기술 안내 </a> </H6>
+  <H6> <a href= "https://github.com/KoYoungSuk/AceArtWeb.git">GitHub</a></H6>
 </div>
 </body>
 </html>

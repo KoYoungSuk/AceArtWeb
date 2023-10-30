@@ -9,6 +9,7 @@
    <div style="text-align: center; ">
      <button class="btn btn-secondary btn-sm" type="button" onclick="location.href='../manager/status'"><span class="material-symbols-outlined">dns</span>Server Status</button> 
      <button class="btn btn-secondary btn-sm" type="button" onclick="location.href='totalmemberlist.do'"><span class="material-symbols-outlined">person</span>Member Management</button>
+     <button class="btn btn-secondary btn-sm" type="button" onclick="location.href='pdfupload.jsp'"><span class="material-symbols-outlined">picture_as_pdf</span>PDF Upload</button> 
    </div> 
   </c:when>
   <c:otherwise>
