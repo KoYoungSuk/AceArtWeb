@@ -117,6 +117,8 @@
    <a href="index.jsp?page=1"><img src="Source/logo.png" style="width: 280px; height: 70px; " /></a> 
 </div>
 <nav class="navbar navbar-expand-lg navbar-light bg-light"> 
+    <a class="nav-item navbar-brand" href="./index.jsp?page=1"><img src="./Source/logo_lesser.png" width="45" height="45" /></a>
+    <!-- Hamburger Button -->
    <button class="navbar-toggler" type="button" data-toggle="collapse"
     data-target="#ToggleMenu" aria-controls="ToggleMenu" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon">></span></button>

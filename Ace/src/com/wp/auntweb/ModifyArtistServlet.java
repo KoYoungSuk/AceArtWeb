@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 
+import com.nhncorp.lucy.security.xss.XssPreventer;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.wp.auntweb.DAO.ArtistDAO;
@@ -171,6 +172,7 @@ public class ModifyArtistServlet extends HttpServlet {
 			   int num = Integer.parseInt(multi.getParameter("num"));
 			   String name = multi.getParameter("name");
 			   String career = multi.getParameter("career"); 
+			   career = XssPreventer.escape(career); 
 			   String old_work1 = multi.getParameter("oldFile1");
 			   String old_work2 = multi.getParameter("oldFile2"); 
 					  

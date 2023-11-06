@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.nhncorp.lucy.security.xss.XssPreventer;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.wp.auntweb.DAO.ArtistDAO;
@@ -130,13 +131,11 @@ public class WriteArtistServlet extends HttpServlet {
 				   i++; 
 				}
 			   
-			   System.out.println("filesystemName_list[0]: " + filesystemName_list[0]);
-			   System.out.println("filesystemName_list[1]: " + filesystemName_list[1]);
-			   
 			   String name = multi.getParameter("name");
 			   String career = multi.getParameter("career");
 			    
-
+               career = XssPreventer.escape(career); 
+               
 				ArtistDTO artistDTO = new ArtistDTO(maxnum, name, career, filesystemName_list[1], filesystemName_list[0], savedate, null);
 				
 				int result = artistdao.insertArtist(artistDTO);

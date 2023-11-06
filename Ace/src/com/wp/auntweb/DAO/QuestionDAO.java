@@ -2,7 +2,10 @@ package com.wp.auntweb.DAO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
+import com.wp.auntweb.DTO.QuestionDTO;
 
 public class QuestionDAO {
 	   public Connection conn = null;
@@ -35,4 +38,24 @@ public class QuestionDAO {
 			   conn = null;
 		   }
 	   }
+	   
+	   public int insertQuestion(QuestionDTO questiondto) throws ClassNotFoundException, SQLException {
+		   connectDB();
+		   int result = 0;
+		   String sql = "insert into question values (?,?,?,?,?,?,?)"; 
+		   PreparedStatement psm = null;
+		   psm = conn.prepareStatement(sql);
+		   psm.setInt(1, questiondto.getNum());
+		   psm.setString(2, questiondto.getTitle());
+		   psm.setString(3, questiondto.getContent());
+		   psm.setString(4, questiondto.getUser());
+		   psm.setString(5, questiondto.getAccess());
+		   psm.setTimestamp(6, questiondto.getSavedate());
+		   psm.setTimestamp(7, questiondto.getModifydate()); 
+		   result = psm.executeUpdate();
+		   psm.close();
+		   disconnectDB(); 
+		   return result; 
+	   }
+	   
 }

@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.nhncorp.lucy.security.xss.XssPreventer;
 import com.wp.auntweb.DTO.ArtistDTO;
 
 public class ArtistDAO {
@@ -152,7 +153,7 @@ public class ArtistDAO {
 				  artistdto.setNum(rs.getInt("num"));
 				  artistdto.setName(rs.getString("name"));
 				  if(br) {
-					  artistdto.setCareer(rs.getString("career").replace(System.getProperty("line.separator"), "<br>"));
+					  artistdto.setCareer(rs.getString("career").replace(System.getProperty("line.separator"), XssPreventer.unescape("&lt;br&gt;")));
 				  }
 				  else {
 					  artistdto.setCareer(rs.getString("career")); 

@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.nhncorp.lucy.security.xss.XssPreventer;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.wp.auntweb.DAO.WorksDAO;
@@ -114,6 +115,8 @@ public class WriteWorksServlet extends HttpServlet {
 				String name = multi.getParameter("name");
 				String description = multi.getParameter("description");
 				String installdate = multi.getParameter("installdate");
+				
+				description = XssPreventer.escape(description);
 				
 			    Enumeration<?> files = multi.getFileNames();
 				    

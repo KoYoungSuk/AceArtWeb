@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.nhncorp.lucy.security.xss.XssPreventer;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.wp.auntweb.DAO.BoardDAO;
@@ -129,6 +130,8 @@ public class WriteBoardServlet extends HttpServlet {
 			    String title = multi.getParameter("title");
 			    String content = multi.getParameter("content");
 			    String access = multi.getParameter("access"); 
+			    
+			    content = XssPreventer.escape(content);
 			    
 			    Enumeration<?> files = multi.getFileNames();
 			    

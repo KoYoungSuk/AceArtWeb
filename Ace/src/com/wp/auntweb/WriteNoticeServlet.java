@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.nhncorp.lucy.security.xss.XssPreventer;
 import com.wp.auntweb.DAO.NoticeDAO;
 import com.wp.auntweb.DTO.NoticeDTO;
 
@@ -65,20 +66,22 @@ public class WriteNoticeServlet extends HttpServlet {
   	    
   	    try {
   	    	if(id.equals("admin")) {
+  	    		content = XssPreventer.escape(content); //Lucy XSS Filter 적용(크로스사이트 스크립팅 방지: 스크립트 태그를 HTML로 인식못하게 변환) 
+  	    	
   	    		NoticeDAO noticedao = new NoticeDAO(JDBC_Driver, db_url, db_id, db_pw); 
-  	    		
-  	    		int maxnumber = noticedao.getMaxBoardNumber();
-  	    		
-  	            NoticeDTO noticedto = new NoticeDTO(maxnumber + 1, title, content, joindate, null);
-  	            
-  	            int result = noticedao.insertBoard(noticedto);
-  	            
-  	            if(result != 0) {
-  	            	viewName = "noticeboardlist.do?desc=0"; 
-  	            }
-  	            else {
-  	            	g.jsmessage("Unknown Error Message");
-  	            }
+  	  	    		
+  	  	    	int maxnumber = noticedao.getMaxBoardNumber();
+  	  	    		
+  	  	        NoticeDTO noticedto = new NoticeDTO(maxnumber + 1, title, content, joindate, null);
+  	  	            
+  	  	        int result = noticedao.insertBoard(noticedto);
+  	  	            
+  	  	        if(result != 0) {
+  	  	            viewName = "noticeboardlist.do?desc=0"; 
+  	  	        }
+  	  	        else {
+  	  	            g.jsmessage("Unknown Error Message");
+  	  	        }
   	    	}
   	    	else {
   	    		g.jsmessage("Administrator Only!");

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.nhncorp.lucy.security.xss.XssPreventer;
 import com.wp.auntweb.DAO.NoticeDAO;
 import com.wp.auntweb.DTO.NoticeDTO;
 
@@ -104,6 +105,7 @@ public class ModifyNoticeServlet extends HttpServlet {
 		int num = Integer.parseInt(request.getParameter("num"));
 		String title = request.getParameter("title"); 
 	    String content = request.getParameter("content"); 
+	    content = XssPreventer.escape(content);
 	    
         Timestamp modifydate = new Timestamp(System.currentTimeMillis()); //현재 날짜
 		

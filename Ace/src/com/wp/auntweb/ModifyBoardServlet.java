@@ -21,6 +21,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 
+import com.nhncorp.lucy.security.xss.XssPreventer;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.wp.auntweb.DAO.BoardDAO;
@@ -144,7 +145,7 @@ public class ModifyBoardServlet extends HttpServlet {
 				String title = multi.getParameter("title");
 				int num = Integer.parseInt(multi.getParameter("num")); 
 				String content = multi.getParameter("content");
-				//String access = multi.getParameter("access");
+				content = XssPreventer.escape(content);
 				
 				Timestamp modifydate = new Timestamp(System.currentTimeMillis()); //현재 날짜
 				

@@ -21,6 +21,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 
+import com.nhncorp.lucy.security.xss.XssPreventer;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.wp.auntweb.DAO.WorksDAO;
@@ -145,6 +146,7 @@ public class ModifyWorksServlet extends HttpServlet {
 				int num = Integer.parseInt(multi.getParameter("num")); 
 				String name = multi.getParameter("name");
 				String description = multi.getParameter("description");
+				description = XssPreventer.escape(description); 
 				String installdate = multi.getParameter("installdate");
 				
 			    Enumeration<?> files = multi.getFileNames();
