@@ -37,6 +37,11 @@
 <c:import url="IndexContent/modifyboard.jsp" var="modifyboardcontent"></c:import> 
 <c:import url="IndexContent/writenotice.jsp" var="writenoticecontent"></c:import> 
 <c:import url="IndexContent/question.jsp" var="questioncontent"></c:import> 
+<c:import url="IndexContent/writequestion.jsp" var="writequestioncontent"></c:import> 
+<c:import url="IndexContent/detailquestion.jsp" var="detailquestioncontent"></c:import> 
+<c:import url="IndexContent/modifyquestion.jsp" var="modifyquestioncontent"></c:import> 
+<c:import url="IndexContent/deletequestion.jsp" var="deletequestioncontent"></c:import> 
+<c:import url="IndexContent/writeanswer.jsp" var="writeanswercontent"></c:import> 
 <!--  파라미터에 따라 사이트 제목 정하기 -->
 <c:choose>
  <c:when test="${param.page == 1}"><c:set var="titlename" value="에이스도시조형에 오신 것을 환영합니다." /></c:when>
@@ -71,7 +76,12 @@
  <c:when test="${param.page == 30}"><c:set var="titlename" value="작가 추가" /></c:when> 
  <c:when test="${param.page == 31}"><c:set var="titlename" value="작가 세부 정보" /></c:when> 
  <c:when test="${param.page == 32}"><c:set var="titlename" value="작가 정보 수정" /></c:when> 
- <c:when test="${param.page == 33}"><c:set var="titlename" value="질문과 답변 게시판" /></c:when> 
+ <c:when test="${param.page == 33}"><c:set var="titlename" value="Question&Answer" /></c:when> 
+ <c:when test="${param.page == 34}"><c:set var="titlename" value="질문하기" /></c:when> 
+ <c:when test="${param.page == 35}"><c:set var="titlename" value="질문 상세" /></c:when> 
+ <c:when test="${param.page == 36}"><c:set var="titlename" value="질문 수정" /></c:when> 
+ <c:when test="${param.page == 37}"><c:set var="titlename" value="질문 삭제" /></c:when>
+ <c:when test="${param.page == 38}"><c:set var="titlename" value="답변하기" /></c:when>
  <c:when test="${param.page == 403}"><c:set var="titlename" value="403 Forbidden" /></c:when>
  <c:when test="${param.page == 404}"><c:set var="titlename" value="404 Not Found" /></c:when>
  <c:when test="${param.page == 500}"><c:set var="titlename" value="500 Internal Server Error" /></c:when> 
@@ -82,6 +92,7 @@
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />	
+<!-- Mobile Friendly Meta -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="./BS/bootstrap.min.css">
 <link rel="stylesheet" href="./BS/bootstrap.css">
@@ -91,7 +102,7 @@
 <script src="./JS/bootstrap.min.js" ></script>
 <!--  Span Icon By Google -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-<title> <c:out value="${titlename}" /> </title>
+<title> <c:out value="${titlename}" />  | 에이스도시조형 </title>
 <style>
   .jumbotron{
       text-align: center; 
@@ -126,18 +137,16 @@
      <div class="collapse navbar-collapse" id="ToggleMenu">
        <div class="navbar-nav">
              <a class="nav-item nav-link active" href="index.jsp?page=4">회사소개&연혁</a>
+             <a class="nav-item nav-link active">|</a>
              <a class="nav-item nav-link active" href="totalartistlist.do?desc=0">작가소개</a>
+             <a class="nav-item nav-link active">|</a>
              <a class="nav-item nav-link active" href="workslist.do?desc=0">작품</a>
+             <a class="nav-item nav-link active">|</a>
              <a class="nav-item nav-link active" href="noticeboardlist.do?desc=0">공지사항</a>
-             <a class="nav-item nav-link active" href="totalboardlist.do?desc=0">자료실</a> <!-- index.jsp?page=7 -->
-             <a class="nav-item nav-link active" href="index.jsp?page=33">질문과 답변</a>
-             <c:choose>
-             <c:when test="${sessionScope.id eq 'admin'}"> <!-- 관리자 모드 -->
-             <a class="nav-item nav-link active" href="index.jsp?page=8">관리자 모드 </a>
-             </c:when>
-             <c:otherwise>
-             </c:otherwise> 
-             </c:choose>
+             <a class="nav-item nav-link active">|</a>
+             <a class="nav-item nav-link active" href="totalboardlist.do?desc=0">자료실</a> 
+             <a class="nav-item nav-link active">|</a>
+             <a class="nav-item nav-link active" href="totalquestionlist.do">Q&A</a>
        </div> 
        <div class="navbar-nav ml-auto">
             <c:choose>
@@ -146,6 +155,12 @@
              <button class="btn btn-secondary btn-sm" type="button" onclick="location.href='./index.jsp?page=3'"><span class="material-symbols-outlined">person_add</span>회원가입</button>
              </c:when>
              <c:otherwise>
+             <c:choose>
+              <c:when test="${sessionScope.id eq 'admin'}">
+                <button class="btn btn-secondary btn-sm" type="button" onclick="location.href='index.jsp?page=8'"><span class="material-symbols-outlined">lock</span>관리자 모드</button>&nbsp;&nbsp;
+              </c:when>
+              <c:otherwise></c:otherwise> 
+             </c:choose> 
              <button class="btn btn-secondary btn-sm" type="button" onclick="location.href='selectedmember.do'">현재 접속한 사용자: ${sessionScope.id}</button>&nbsp;&nbsp; 
              <button class="btn btn-secondary btn-sm" type="button" onclick="location.href='logout.do'"><span class="material-symbols-outlined">logout</span>로그아웃</button>
              </c:otherwise>
@@ -254,6 +269,27 @@
        <c:when test="${param.page == 33}"> <!-- 질문과 답변 게시판 -->
         ${questioncontent}
        </c:when> 
+       <c:when test="${param.page == 34}"> <!-- 질문하기 -->
+        ${writequestioncontent}
+       </c:when> 
+       <c:when test="${param.page == 35}"> <!-- 질문 상세 -->
+        ${detailquestioncontent}
+       </c:when>
+       <c:when test="${param.page == 36}"> <!-- 질문 수정 -->
+        ${modifyquestioncontent}
+       </c:when>
+       <c:when test="${param.page == 37}"> <!-- 질문 삭제 -->
+        ${deletequestioncontent}
+       </c:when>
+       <c:when test="${param.page == 38}"> <!-- 답변하기 -->
+        ${writeanswercontent}
+       </c:when>
+       <c:when test="${param.page == 39}">
+       
+       </c:when>
+       <c:when test="${param.page == 40}">
+       
+       </c:when> 
        <c:when test="${param.page == 403}"> <!-- Error 403 -->
         ${error403content}
        </c:when>
@@ -274,7 +310,7 @@
   <H5> 주소: 부산광역시 강서구 미음산단로 327, 303호  </H5>
   <H5> <a href="pdf.jsp?pdfname=personalinformation.pdf"> 개인정보처리방침 </a> </H5>
   <br> 
-  <H6> Last Updated: 2023-11-04 Created By KYS  </H6> 
+  <H6> Last Updated: Sunday, November 12nd, 2023 </H6> 
   <H6> <a href="pdf.jsp?pdfname=Environment.pdf"> 웹사이트 제작기술 안내 </a> </H6>
   <H6> <a href= "https://github.com/KoYoungSuk/AceArtWeb.git">GitHub</a></H6>
 </div>

@@ -105,6 +105,7 @@ public class ModifyNoticeServlet extends HttpServlet {
 		int num = Integer.parseInt(request.getParameter("num"));
 		String title = request.getParameter("title"); 
 	    String content = request.getParameter("content"); 
+	    title = XssPreventer.escape(title); 
 	    content = XssPreventer.escape(content);
 	    
         Timestamp modifydate = new Timestamp(System.currentTimeMillis()); //현재 날짜

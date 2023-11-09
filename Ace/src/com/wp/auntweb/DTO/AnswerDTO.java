@@ -9,10 +9,10 @@ public class AnswerDTO {
 	public void setNum(int num) {
 		this.num = num;
 	}
-	public void getQNum(int q_num) {
+	public void setQNum(int q_num) {
 		this.q_num = q_num; 
 	}
-	public int setQNum() {
+	public int getQNum() {
 		return q_num; 
 	}
 	public String getTitle() {

@@ -24,10 +24,6 @@
     <td>${sessionScope.detailboardlist['content']}</td> 
    </tr>
    <tr>
-    <td><label for="access">접근 권한</label></td>
-    <td>${sessionScope.detailboardlist['access']}</td> 
-   </tr>
-   <tr>
     <td><label for="file">파일 다운로드 </label></td>
     <td><a href="downloadboard.do?num=${sessionScope.detailboardlist['num']}&filename=${sessionScope.detailboardlist['files']}">파일 다운로드(파일명: ${sessionScope.detailboardlist['files']})</a></td> 
    </tr> 

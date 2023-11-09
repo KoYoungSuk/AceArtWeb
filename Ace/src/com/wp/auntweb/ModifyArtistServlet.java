@@ -172,6 +172,7 @@ public class ModifyArtistServlet extends HttpServlet {
 			   int num = Integer.parseInt(multi.getParameter("num"));
 			   String name = multi.getParameter("name");
 			   String career = multi.getParameter("career"); 
+			   name = XssPreventer.escape(name); 
 			   career = XssPreventer.escape(career); 
 			   String old_work1 = multi.getParameter("oldFile1");
 			   String old_work2 = multi.getParameter("oldFile2"); 

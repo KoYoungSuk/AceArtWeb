@@ -133,7 +133,7 @@ public class WriteArtistServlet extends HttpServlet {
 			   
 			   String name = multi.getParameter("name");
 			   String career = multi.getParameter("career");
-			    
+			   name = XssPreventer.escape(name); 
                career = XssPreventer.escape(career); 
                
 				ArtistDTO artistDTO = new ArtistDTO(maxnum, name, career, filesystemName_list[1], filesystemName_list[0], savedate, null);

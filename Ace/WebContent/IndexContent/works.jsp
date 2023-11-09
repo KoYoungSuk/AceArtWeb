@@ -17,28 +17,25 @@
 <table class="table">
  <thead>
    <tr>
-    <th>번호</th>
+    <th></th>
     <th>작품명</th>
     <th>설치날짜</th>
     <th>작성날짜</th>
     <th>수정날짜</th> 
-    <th>삭제</th> 
    </tr>
  </thead>
  <tbody>
-  <c:forEach var="worksDTO" items="${sessionScope.workslist}" varStatus="status"> 
+  <c:forEach var="worksDTO" items="${sessionScope.workslist}" > 
   <tr>  
    <td><c:out value="${worksDTO.num}" /></td>
    <td><a href="detailworks.do?num=${worksDTO.num}">${worksDTO.name}</a></td>
    <td><c:out value="${worksDTO.installdate}" /></td>
    <td><c:out value="${worksDTO.savedate}" /></td>
    <td><c:out value="${worksDTO.modifydate}" /></td> 
-   <c:choose>
-    <c:when test="${sessionScope.id eq 'admin'}">
-      <td><a href="deleteworks.do?num='${worksDTO.num}'">삭제</a></td> 
-    </c:when>
-    <c:otherwise></c:otherwise> 
-   </c:choose> 
+   <td>
+   <!-- <a href="deleteworks.do?num='${worksDTO.num}'">삭제</a>--> 
+   <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='deleteworks.do?num='${worksDTO.num}'"><span class="material-symbols-outlined">delete</span></button>
+   </td> 
   </tr> 
   </c:forEach>
  </tbody>

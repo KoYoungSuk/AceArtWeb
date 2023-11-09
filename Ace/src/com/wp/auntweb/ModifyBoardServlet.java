@@ -145,6 +145,7 @@ public class ModifyBoardServlet extends HttpServlet {
 				String title = multi.getParameter("title");
 				int num = Integer.parseInt(multi.getParameter("num")); 
 				String content = multi.getParameter("content");
+				title = XssPreventer.escape(title); 
 				content = XssPreventer.escape(content);
 				
 				Timestamp modifydate = new Timestamp(System.currentTimeMillis()); //현재 날짜

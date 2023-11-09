@@ -17,11 +17,10 @@
  <table class="table">
    <thead>
      <tr>
-      <th>번호</th>
+      <th></th>
       <th>제목</th>
       <th>작성 날짜</th>
       <th>수정 날짜</th> 
-      <th>삭제</th> 
      </tr>
    </thead>
    <tbody>
@@ -32,13 +31,8 @@
        <td><c:out value="${BoardDTO.savedate}" /></td>
        <td><c:out value="${BoardDTO.modifydate}" /></td>
        <td>
-       <c:choose> 
-       <c:when test="${sessionScope.id eq 'admin'}">
-       <a href="deleteboardlist.do?num=${BoardDTO.num}">삭제</a></td> 
-       </c:when> 
-       <c:otherwise>
-       </c:otherwise>
-       </c:choose> 
+       <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='deleteboardlist.do?num=${BoardDTO.num}'"><span class="material-symbols-outlined">delete</span></button>     
+       <!-- <a href="deleteboardlist.do?num=${BoardDTO.num}">삭제</a></td>--> 
       </tr>
      </c:forEach>
    </tbody>

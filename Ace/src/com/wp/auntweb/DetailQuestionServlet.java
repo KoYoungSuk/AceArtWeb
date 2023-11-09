@@ -1,6 +1,7 @@
 package com.wp.auntweb;
 
 import java.io.IOException;
+
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -12,19 +13,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.wp.auntweb.DAO.BoardDAO;
+import com.wp.auntweb.DAO.QuestionDAO;
 
 /**
- * Servlet implementation class DetailBoardListServlet
+ * Servlet implementation class DetailQuestionServlet
  */
-@WebServlet("/detailboardlist.do")
-public class DetailBoardListServlet extends HttpServlet {
+@WebServlet("/detailquestion.do")
+public class DetailQuestionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DetailBoardListServlet() {
+    public DetailQuestionServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,10 +37,11 @@ public class DetailBoardListServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
+		Global g = new Global(response); 
 		HttpSession session = request.getSession();
-		Global g = new Global(response);
 		String viewName = null;
 		
+		String id = (String)session.getAttribute("id");  //현재 로그인한 ID 
 		int num = Integer.parseInt(request.getParameter("num"));
 		
 		ServletContext application = request.getSession().getServletContext();
@@ -50,17 +52,35 @@ public class DetailBoardListServlet extends HttpServlet {
   	    String db_pw = application.getInitParameter("db_password");
   	    //END - 데이터베이스 연결 준비 (web.xml)
   	    
-  
 		try {
-			BoardDAO boarddao = new BoardDAO(JDBC_Driver, db_url, db_id, db_pw);
-			Map<String, String> boardlist = boarddao.getBoardListByNum(num, true);
+			QuestionDAO questiondao = new QuestionDAO(JDBC_Driver, db_url, db_id, db_pw);
 			
-			if(boardlist != null) {
-				session.setAttribute("detailboardlist", boardlist);
-			    viewName = "index.jsp?page=23"; 
-			}
-			else {
-				g.jsmessage("Null Error Message");
+			Map<String, String> questionlist = questiondao.getDetailQuestion(num, true);
+			
+			
+			if(questionlist != null) {
+				if(questionlist.get("access") != null) {
+					if(questionlist.get("access").equals("secret")) { //비밀 질문 
+						if(id != null) {
+							if(questionlist.get("user").equals(id) || id.equals("admin")) {
+								session.setAttribute("detailquestionlist", questionlist);
+								session.setAttribute("user", questionlist.get("user"));
+								viewName = "index.jsp?page=35"; 
+							}
+							else {
+								g.jsmessage("비밀 질문입니다. (관리자 및 작성자만 확인가능) "); 
+							}
+						}
+						else {
+							g.jsmessage("비밀 질문입니다. (관리자 및 작성자만 확인가능) ");
+						}
+					}
+				}
+				else {
+					session.setAttribute("detailquestionlist", questionlist);
+					session.setAttribute("user", questionlist.get("user"));
+					viewName = "index.jsp?page=35"; 
+				}
 			}
 		}
 		catch(Exception ex) {
@@ -69,10 +89,7 @@ public class DetailBoardListServlet extends HttpServlet {
 		
 		if(viewName != null) {
 			RequestDispatcher view = request.getRequestDispatcher(viewName);
- 		    view.forward(request, response);
-		}
-		else {
-			g.jsmessage("자료실 정보를 불러오는데 오류가 발생하였습니다.");
+	 		view.forward(request, response);
 		}
 	}
 

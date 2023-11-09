@@ -116,7 +116,9 @@ public class WriteWorksServlet extends HttpServlet {
 				String description = multi.getParameter("description");
 				String installdate = multi.getParameter("installdate");
 				
+				name = XssPreventer.escape(name); 
 				description = XssPreventer.escape(description);
+				installdate = XssPreventer.escape(installdate); 
 				
 			    Enumeration<?> files = multi.getFileNames();
 				    

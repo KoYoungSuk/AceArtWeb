@@ -129,8 +129,8 @@ public class WriteBoardServlet extends HttpServlet {
 				
 			    String title = multi.getParameter("title");
 			    String content = multi.getParameter("content");
-			    String access = multi.getParameter("access"); 
 			    
+			    title = XssPreventer.escape(title); 
 			    content = XssPreventer.escape(content);
 			    
 			    Enumeration<?> files = multi.getFileNames();
@@ -143,7 +143,7 @@ public class WriteBoardServlet extends HttpServlet {
 			    	filesystemName = multi.getFilesystemName(element);
 			    }
 			    
-			    BoardDTO boarddto = new BoardDTO(maxnum, title, content, access, filesystemName, savedate, null); 
+			    BoardDTO boarddto = new BoardDTO(maxnum, title, content, null, filesystemName, savedate, null); 
 			    
 			    int result = boarddao.insertBoard(boarddto);
 			    

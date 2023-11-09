@@ -146,8 +146,11 @@ public class ModifyWorksServlet extends HttpServlet {
 				int num = Integer.parseInt(multi.getParameter("num")); 
 				String name = multi.getParameter("name");
 				String description = multi.getParameter("description");
-				description = XssPreventer.escape(description); 
 				String installdate = multi.getParameter("installdate");
+				
+				name = XssPreventer.escape(name);
+				description = XssPreventer.escape(description); 
+				installdate = XssPreventer.escape(installdate);
 				
 			    Enumeration<?> files = multi.getFileNames();
 				    
