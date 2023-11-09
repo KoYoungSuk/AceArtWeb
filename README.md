@@ -24,7 +24,9 @@ Actually development environment is not Ubuntu. it is Windows 10/11!.
  
  Main Screen 
  
-![image](https://github.com/KoYoungSuk/AceArtWeb/assets/58511486/c7ed53a7-0eae-4331-85ca-21fcf6b2ddc9)
+![image](https://github.com/KoYoungSuk/AceArtWeb/assets/58511486/e802fcc5-5c73-483a-ae81-fd2c5ce04bc4)
+
+
 
 
 
