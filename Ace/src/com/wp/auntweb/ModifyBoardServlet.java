@@ -199,7 +199,7 @@ public class ModifyBoardServlet extends HttpServlet {
 			   int result = boarddao.updateBoard(boarddto);
 			   
 			   if(result != 0) {
-				   viewName = "totalboardlist.do?desc=0";  
+				   viewName = "totalboardlist.do";  
 			   }
 			   else {
 				   g.jsmessage("Unknown Error Message"); 

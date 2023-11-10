@@ -1,7 +1,7 @@
 package com.wp.auntweb;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -12,20 +12,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.wp.auntweb.DAO.AnswerDAO;
 import com.wp.auntweb.DAO.QuestionDAO;
-import com.wp.auntweb.DTO.QuestionDTO;
 
 /**
- * Servlet implementation class QuestionTotalListServlet
+ * Servlet implementation class DetailAnswerServlet
  */
-@WebServlet("/totalquestionlist.do")
-public class QuestionTotalListServlet extends HttpServlet {
+@WebServlet("/detailanswer.do")
+public class DetailAnswerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public QuestionTotalListServlet() {
+    public DetailAnswerServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,10 +37,13 @@ public class QuestionTotalListServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
-		Global g = new Global(response);
 		String viewName = null;
+		Global g = new Global(response);
 		HttpSession session = request.getSession();
 		
+		int num = Integer.parseInt(request.getParameter("num")); 
+        String id = (String)session.getAttribute("id");  //현재 로그인한 아이디 
+        
 		ServletContext application = request.getSession().getServletContext();
 		//START - 데이터베이스 연결 준비 (web.xml) 
     	String JDBC_Driver = application.getInitParameter("jdbc_driver");
@@ -49,53 +52,42 @@ public class QuestionTotalListServlet extends HttpServlet {
   	    String db_pw = application.getInitParameter("db_password");
   	    //END - 데이터베이스 연결 준비 (web.xml)
   	    
-  	    int page_count = 1; //현재 페이지 번호
-  	    
-  	    String page_count_str = request.getParameter("page_count");
-  	    
-  	    if(page_count_str != null) {
-  	    	page_count = Integer.parseInt(page_count_str); 
+  	    try {
+  	    	AnswerDAO answerdao = new AnswerDAO(JDBC_Driver, db_url, db_id, db_pw);
+  	    	QuestionDAO questiondao = new QuestionDAO(JDBC_Driver, db_url, db_id, db_pw); 
+  	    	
+  	    	Map<String, String> detailanswerlist = answerdao.getAnswerList(num, true); 
+  	    	Map<String, String> detailquestionlist = questiondao.getDetailQuestion(Integer.parseInt(detailanswerlist.get("q_num")), false); 
+  	    	
+  	    	String user = detailquestionlist.get("user"); 
+  	    	
+  	    	if(detailanswerlist != null) {
+  	    		if(detailanswerlist.get("access") != null) {
+  	    			if(detailanswerlist.get("access").equals("secret")) {
+  	    				if(id.equals(user) || id.equals("admin")) {
+  	    					viewName = "index.jsp?page=39";
+  	  	    				session.setAttribute("detailanswerlist", detailanswerlist); 
+  	    				}
+  	    				else {
+  	    					g.jsmessage("비밀 모드에서는 작성자 및 관리자만 답변을 확인 가능합니다.");
+  	    				}
+  	    			}
+  	    		}
+  	    		else {
+  	    			viewName = "index.jsp?page=39";
+  	    			session.setAttribute("detailanswerlist", detailanswerlist); 
+  	    		}
+  	    	}
+  	    	
+  	    }
+  	    catch(Exception ex) {
+  	    	g.jsmessage(ex.getMessage());
   	    }
   	    
-  	   
-		try {
-			QuestionDAO questiondao = new QuestionDAO(JDBC_Driver, db_url, db_id, db_pw);
-			
-			int countnum = questiondao.getCountNum();
-			
-			List<QuestionDTO> totalquestionlist = questiondao.getTotalquestionList();
-
-			
-			if(totalquestionlist != null) {
-				int pagenum = countnum / 5;  //페이지를 5개씩 나누기
-				int pagenum_rest = countnum % 5; 
-				session.setAttribute("pagenum_question", pagenum + 1); //5개씩 나눈 페이지 개수 + 1 
-				session.setAttribute("beginnumber_question", (page_count - 1) * 5); //시작번호
-				if(page_count == pagenum + 1) { //마지막 페이지일때 
-					session.setAttribute("endnumber_question", ((page_count -1) * 5) + 4 + pagenum_rest); //끝번호 (마지막 페이지일때 나머지를 더한다.) 
-				}
-				else {
-					session.setAttribute("endnumber_question", ((page_count -1) * 5) + 4); //끝번호 
-				}
-				
-				session.setAttribute("totalquestionlist", totalquestionlist);
-				viewName = "index.jsp?page=33"; 
-			}
-			else {
-				g.jsmessage("Unknown Error Message");
-			}
-		}
-		catch(Exception ex) {
-			g.jsmessage(ex.getMessage()); 
-		}
-		
-		if(viewName != null) {
-			RequestDispatcher view = request.getRequestDispatcher(viewName);
+  	    if(viewName != null) {
+  	    	RequestDispatcher view = request.getRequestDispatcher(viewName);
 	 		view.forward(request, response);
-		}
-		else {
-			g.jsmessage("질문 전체 리스트를 불러오는데 오류가 발생하였습니다.");
-		}
+  	    }
 	}
 
 	/**

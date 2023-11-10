@@ -1,6 +1,7 @@
 package com.wp.auntweb;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -12,19 +13,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.wp.auntweb.DAO.QuestionDAO;
+import com.nhncorp.lucy.security.xss.XssPreventer;
+import com.wp.auntweb.DAO.AnswerDAO;
+import com.wp.auntweb.DTO.QuestionDTO;
 
 /**
- * Servlet implementation class DeleteQuestionServlet
+ * Servlet implementation class ModifyAnswerServlet
  */
-@WebServlet("/deletequestion.do")
-public class DeleteQuestionServlet extends HttpServlet {
+@WebServlet("/modifyanswer.do")
+public class ModifyAnswerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DeleteQuestionServlet() {
+    public ModifyAnswerServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,12 +39,12 @@ public class DeleteQuestionServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
-		HttpSession session = request.getSession();
 		String viewName = null;
+		HttpSession session = request.getSession();
 		Global g = new Global(response);
 		
-		String id = (String)session.getAttribute("id");
-		int num = Integer.parseInt(request.getParameter("num"));
+		String id = (String)session.getAttribute("id"); 
+		int num = Integer.parseInt(request.getParameter("num")); 
 		
 		ServletContext application = request.getSession().getServletContext();
 		//START - 데이터베이스 연결 준비 (web.xml) 
@@ -51,22 +54,20 @@ public class DeleteQuestionServlet extends HttpServlet {
   	    String db_pw = application.getInitParameter("db_password");
   	    //END - 데이터베이스 연결 준비 (web.xml)
   	    
+  	    
 		try {
-			QuestionDAO questiondao = new QuestionDAO(JDBC_Driver, db_url, db_id, db_pw);
-			
-			Map<String, String> questionlist = questiondao.getDetailQuestion(num, true);
-			
-			if(questionlist != null) {
-				if(questionlist.get("user").equals(id)) {
-					session.setAttribute("detailquestionlist", questionlist); 
-					viewName = "index.jsp?page=37"; 
-				}
-				else {
-					g.jsmessage("작성자만 질문 정보 삭제가 가능합니다.");
+			if(id.equals("admin")) {
+				AnswerDAO answerdao = new AnswerDAO(JDBC_Driver, db_url, db_id, db_pw);
+				
+				Map<String, String> detailanswerlist = answerdao.getAnswerList(num, false); 
+				
+				if(detailanswerlist != null) {
+					session.setAttribute("detailanswerlist", detailanswerlist); 
+					viewName = "index.jsp?page=40"; 
 				}
 			}
 			else {
-				g.jsmessage("Unknown Error Message");
+				g.jsmessage("관리자만 답변 수정이 가능합니다.");
 			}
 		}
 		catch(Exception ex) {
@@ -86,18 +87,18 @@ public class DeleteQuestionServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
-		HttpSession session = request.getSession();
-		String viewName = null;
 		Global g = new Global(response);
+		String viewName = null;
+		HttpSession session = request.getSession();
 		
-		int num = Integer.parseInt(request.getParameter("num"));
 		String id = (String)session.getAttribute("id");
-		String user = request.getParameter("user");
 		
-		System.out.println("num: " + num);
-		System.out.println("id: " + id);
-		System.out.println("user: " + user); 
+		int num = Integer.parseInt(request.getParameter("num")); 
+		String content = request.getParameter("content");
+		content = XssPreventer.escape(content); 
 		
+		Timestamp modifydate = new Timestamp(System.currentTimeMillis()); //현재 날짜
+		 
 		ServletContext application = request.getSession().getServletContext();
 		//START - 데이터베이스 연결 준비 (web.xml) 
     	String JDBC_Driver = application.getInitParameter("jdbc_driver");
@@ -107,30 +108,33 @@ public class DeleteQuestionServlet extends HttpServlet {
   	    //END - 데이터베이스 연결 준비 (web.xml)
   	    
 		try {
-			QuestionDAO questiondao = new QuestionDAO(JDBC_Driver, db_url, db_id, db_pw);
-			
-			if(id.equals(user)) {
-				int result = questiondao.deleteQuestion(num);
+			if(id.equals("admin")) {
+				AnswerDAO answerdao = new AnswerDAO(JDBC_Driver, db_url, db_id, db_pw);
+				QuestionDTO questiondto = new QuestionDTO(num, 0, null, content, null, id, null, modifydate);
 				
-				if(result != 0) {
-					session.removeAttribute("detailquestionlist");
-					viewName = "totalquestionlist.do"; 
-				}
-				else {
-					g.jsmessage("Unknown Error Message");
-				}
+			    int result = answerdao.updateAnswer(questiondto);
+			    
+			    if(result != 0) {
+			    	session.removeAttribute("detailanswerlist");
+			    	viewName = "totalquestionlist.do"; 
+			    }
+			    else {
+			    	g.jsmessage("Unknown Error Message");
+			    }
 			}
 			else {
-				g.jsmessage("작성자만 질문정보 수정이 가능합니다.");
+				g.jsmessage("관리자만 답변 수정이 가능합니다.");
 			}
 		}
 		catch(Exception ex) {
-			ex.printStackTrace(); 
 			g.jsmessage(ex.getMessage());
 		}
 		
 		if(viewName != null) {
-			response.sendRedirect(viewName); 
+			response.sendRedirect(viewName);
+		}
+		else {
+			g.jsmessage("답변 정보를 수정하는데 오류가 발생하였습니다."); 
 		}
 	}
 

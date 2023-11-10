@@ -139,7 +139,7 @@ public class DeleteBoardServlet extends HttpServlet {
   	    		int result = boarddao.deleteBoard(num);
   	    		
   	    		if(result != 0) {
-  	    			viewName = "totalboardlist.do?desc=0";
+  	    			viewName = "totalboardlist.do";
   	    			session.removeAttribute("detailboardlist");
   	    		}
   	    		else {

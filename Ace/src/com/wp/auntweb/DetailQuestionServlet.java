@@ -55,6 +55,8 @@ public class DetailQuestionServlet extends HttpServlet {
 		try {
 			QuestionDAO questiondao = new QuestionDAO(JDBC_Driver, db_url, db_id, db_pw);
 			
+			int answercount = questiondao.getCountNumAnswer2(num);
+			
 			Map<String, String> questionlist = questiondao.getDetailQuestion(num, true);
 			
 			
@@ -63,6 +65,7 @@ public class DetailQuestionServlet extends HttpServlet {
 					if(questionlist.get("access").equals("secret")) { //비밀 질문 
 						if(id != null) {
 							if(questionlist.get("user").equals(id) || id.equals("admin")) {
+								session.setAttribute("answercount", answercount); 
 								session.setAttribute("detailquestionlist", questionlist);
 								session.setAttribute("user", questionlist.get("user"));
 								viewName = "index.jsp?page=35"; 
@@ -77,6 +80,7 @@ public class DetailQuestionServlet extends HttpServlet {
 					}
 				}
 				else {
+					session.setAttribute("answercount", answercount); 
 					session.setAttribute("detailquestionlist", questionlist);
 					session.setAttribute("user", questionlist.get("user"));
 					viewName = "index.jsp?page=35"; 

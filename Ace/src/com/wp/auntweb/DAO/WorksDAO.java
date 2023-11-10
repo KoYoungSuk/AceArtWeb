@@ -108,6 +108,23 @@ public class WorksDAO {
 		   return result; 
 	   }
 	   
+	   public int getCountnum() throws ClassNotFoundException, SQLException{
+			  connectDB();
+			  int countnum = 0;
+			  String sql = "select count(num) as countnum from works";
+			  Statement sm = null;
+			  ResultSet rs = null;
+			  sm = conn.createStatement();
+			  rs = sm.executeQuery(sql);
+			  if(rs.next()) {
+				  countnum = rs.getInt("countnum"); 
+			  }
+			  rs.close();
+			  sm.close();
+			  disconnectDB();
+			  return countnum; 
+	   }
+	   
 	   public int getMaxNum() throws SQLException, ClassNotFoundException{
 		   connectDB();
 		   int maxnum = 0;

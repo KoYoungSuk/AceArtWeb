@@ -76,6 +76,13 @@ public class QuestionDAO {
 		   psm.setInt(5, questiondto.getNum());
 		   psm.setString(6, questiondto.getUser());
 		   result = psm.executeUpdate();
+		   if(result != 0) {
+			   int answercount = getCountNumAnswer2(questiondto.getNum());
+			   if(answercount > 0) { //만약 이미 답변이 존재하는 질문일 경우 질문 제목과 접근모드를 수정했을 경우 답변에도 반영되어야 한다. 
+				   AnswerDAO answerdao = new AnswerDAO(jdbc_driver, db_url, db_id, db_pw); 
+				   result = answerdao.updateAnswer("RE: " + questiondto.getTitle(), questiondto.getAccess(), questiondto.getNum()); 
+			   }
+		   }
 		   psm.close(); 
 		   disconnectDB();
 		   return result; 
@@ -90,8 +97,9 @@ public class QuestionDAO {
 		   psm.setInt(1, num);
 		   result = psm.executeUpdate();
 		   if(result != 0) {
+			   System.out.println("getCountNumAnswer2: " + getCountNumAnswer2(num)); 
 			   if(getCountNumAnswer2(num) > 0) { //답변 게시판에 글이 있으면 
-				   psm.close(); 
+				   connectDB(); 
 				   psm = conn.prepareStatement(sql2);
 				   psm.setInt(1, num);
 				   result = psm.executeUpdate(); 
@@ -126,6 +134,7 @@ public class QuestionDAO {
 				   questiondto.setTitle2(rs.getString("title2"));
 				   questiondto.setContent2(rs.getString("content2"));
 				   questiondto.setAccess2(rs.getString("access2"));
+				   questiondto.setUser2(rs.getString("user2")); 
 				   questiondto.setSavedate2(rs.getTimestamp("savedate2"));
 				   questiondto.setModifydate2(rs.getTimestamp("modifydate2")); 
 				   questionlist.add(questiondto); 

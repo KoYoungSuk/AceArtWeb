@@ -42,6 +42,9 @@
 <c:import url="IndexContent/modifyquestion.jsp" var="modifyquestioncontent"></c:import> 
 <c:import url="IndexContent/deletequestion.jsp" var="deletequestioncontent"></c:import> 
 <c:import url="IndexContent/writeanswer.jsp" var="writeanswercontent"></c:import> 
+<c:import url="IndexContent/detailanswer.jsp" var="detailanswercontent"></c:import> 
+<c:import url="IndexContent/modifyanswer.jsp" var="modifyanswercontent"></c:import> 
+<c:import url="IndexContent/deleteanswer.jsp" var="deleteanswercontent"></c:import> 
 <!--  파라미터에 따라 사이트 제목 정하기 -->
 <c:choose>
  <c:when test="${param.page == 1}"><c:set var="titlename" value="에이스도시조형에 오신 것을 환영합니다." /></c:when>
@@ -82,6 +85,9 @@
  <c:when test="${param.page == 36}"><c:set var="titlename" value="질문 수정" /></c:when> 
  <c:when test="${param.page == 37}"><c:set var="titlename" value="질문 삭제" /></c:when>
  <c:when test="${param.page == 38}"><c:set var="titlename" value="답변하기" /></c:when>
+ <c:when test="${param.page == 39}"><c:set var="titlename" value="답변 상세" /></c:when>
+ <c:when test="${param.page == 40}"><c:set var="titlename" value="답변 수정" /></c:when> 
+ <c:when test="${param.page == 41}"><c:set var="titlename" value="답변 삭제" /></c:when> 
  <c:when test="${param.page == 403}"><c:set var="titlename" value="403 Forbidden" /></c:when>
  <c:when test="${param.page == 404}"><c:set var="titlename" value="404 Not Found" /></c:when>
  <c:when test="${param.page == 500}"><c:set var="titlename" value="500 Internal Server Error" /></c:when> 
@@ -284,11 +290,14 @@
        <c:when test="${param.page == 38}"> <!-- 답변하기 -->
         ${writeanswercontent}
        </c:when>
-       <c:when test="${param.page == 39}">
-       
+       <c:when test="${param.page == 39}"> <!-- 답변 상세 -->
+        ${detailanswercontent}
        </c:when>
-       <c:when test="${param.page == 40}">
-       
+       <c:when test="${param.page == 40}"> <!-- 답변 수정 -->
+        ${modifyanswercontent}
+       </c:when> 
+       <c:when test="${param.page == 41}"> <!-- 답변 삭제  -->
+        ${deleteanswercontent}
        </c:when> 
        <c:when test="${param.page == 403}"> <!-- Error 403 -->
         ${error403content}

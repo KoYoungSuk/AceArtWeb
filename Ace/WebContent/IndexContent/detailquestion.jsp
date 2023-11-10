@@ -10,7 +10,12 @@
    <c:when test="${sessionScope.id eq sessionScope.user}"> 
    <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='modifyquestion.do?num=${sessionScope.detailquestionlist['num']}'"><span class="material-symbols-outlined">create</span>수정</button>
    <button type="button" class="btn btn-danger btn-sm" onclick="location.href='deletequestion.do?num=${sessionScope.detailquestionlist['num']}'"><span class="material-symbols-outlined">delete</span>삭제</button>
-   <button type="button" class="btn btn-secondary btn-sm" onclick="location.href=''"><span class="material-symbols-outlined">create</span>답변하기</button>
+   <c:choose>
+   <c:when test="${sessionScope.answercount == 0}">
+   <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='index.jsp?page=38'"><span class="material-symbols-outlined">create</span>답변하기</button>'
+   </c:when>
+   <c:otherwise></c:otherwise> 
+   </c:choose>
   </c:when> 
   <c:otherwise></c:otherwise> 
    </c:choose>

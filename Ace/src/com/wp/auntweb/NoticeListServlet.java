@@ -41,14 +41,15 @@ public class NoticeListServlet extends HttpServlet {
 		Global g = new Global(response);
 		String viewName = null;
 		
-		int desc = Integer.parseInt(request.getParameter("desc"));
-		Boolean desc_bool = false; 
 		
-		if(desc == 0) { //오름차순으로 정렬 
-			desc_bool = false; 
+		String page_count_str = request.getParameter("page_count");
+		int page_count = 0;
+		
+		if(page_count_str == null) {
+			page_count = 1; 
 		}
-		else if(desc == 1) { //내림차순으로 정렬 
-			desc_bool = true;
+		else {
+			page_count = Integer.parseInt(page_count_str); 
 		}
 		
 		ServletContext application = request.getSession().getServletContext();
@@ -62,9 +63,21 @@ public class NoticeListServlet extends HttpServlet {
   	    try {
   	    	NoticeDAO noticedao = new NoticeDAO(JDBC_Driver, db_url, db_id, db_pw);
   	    	
-  	    	List<NoticeDTO> noticelist = noticedao.getBoardList(desc_bool); 
+  	    	int countnum = noticedao.getCountBoardNumber();
+  	    	int pagenum = countnum / 10;
+  	    	int pagenum_rest = countnum % 10;
+  	    	
+  	    	List<NoticeDTO> noticelist = noticedao.getBoardList(false); 
   	    	
   	    	if(noticelist != null) {
+  	    		session.setAttribute("pagenum_notice", pagenum + 1); //5개씩 나눈 페이지 개수 + 1 
+				session.setAttribute("beginnumber_notice", (page_count - 1) * 5); //시작번호
+				if(page_count == pagenum + 1) { //마지막 페이지일때 
+					session.setAttribute("endnumber_notice", ((page_count -1) * 5) + 4 + pagenum_rest); //끝번호 (마지막 페이지일때 나머지를 더한다.) 
+				}
+				else {
+					session.setAttribute("endnumber_notice", ((page_count -1) * 5) + 4); //끝번호 
+				}
   	    		session.setAttribute("noticeboardlist", noticelist);
   	    		viewName = "index.jsp?page=6"; 
   	    	}

@@ -68,6 +68,14 @@
       <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='deletequestion.do?num=${QuestionDTO.num}'"><span class="material-symbols-outlined">delete</span></button>
       </td>
       </tr>
+      <tr>
+      <td></td>
+      <td></td>
+      <td><a href="detailanswer.do?num=${QuestionDTO.num2}">${QuestionDTO.title2}</a></td> 
+      <td>${QuestionDTO.user2}</td> 
+      <td>${QuestionDTO.savedate2}</td>
+      <td>${QuestionDTO.modifydate2}</td> 
+      </tr> 
      </c:forEach>
      </tbody> 
    </table>

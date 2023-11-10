@@ -199,6 +199,22 @@ public class ArtistDAO {
 		  return artistlist; 
 	  }
 	  
+	  public int getCountnum() throws ClassNotFoundException, SQLException{
+		  connectDB();
+		  int countnum = 0;
+		  String sql = "select count(num) as countnum from artist";
+		  Statement sm = null;
+		  ResultSet rs = null;
+		  sm = conn.createStatement();
+		  rs = sm.executeQuery(sql);
+		  if(rs.next()) {
+			  countnum = rs.getInt("countnum"); 
+		  }
+		  rs.close();
+		  sm.close();
+		  disconnectDB();
+		  return countnum; 
+	  }
 	  public int getMaxnum() throws ClassNotFoundException, SQLException{
 		  connectDB();
 		  int maxnum = 0;

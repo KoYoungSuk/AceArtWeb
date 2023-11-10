@@ -90,6 +90,23 @@ public class NoticeDAO {
 		  return result; 
 	  }
 	  
+	  public int getCountBoardNumber() throws ClassNotFoundException, SQLException {
+		  connectDB();
+		  int countnum = 0;
+		  ResultSet rs = null;
+		  Statement sm = null;
+		  sm = conn.createStatement();
+		  String sql = "select count(num) as countnum from notice";
+		  rs = sm.executeQuery(sql);
+		  if(rs.next()) {
+			  countnum = rs.getInt("countnum"); 
+		  }
+		  sm.close();
+		  rs.close();
+		  disconnectDB();
+		  return countnum; 
+	  }
+	  
 	  public int getMaxBoardNumber() throws ClassNotFoundException, SQLException{
 		  connectDB();
 		  int maxnumber = 0;

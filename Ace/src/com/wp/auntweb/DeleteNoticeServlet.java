@@ -113,7 +113,7 @@ public class DeleteNoticeServlet extends HttpServlet {
   	    		
   	    		if(result != 0) {
   	    			session.removeAttribute("detailnoticelist");
-  	    			viewName = "noticeboardlist.do?desc=0";
+  	    			viewName = "noticeboardlist.do";
   	    		}
   	    		else {
   	    			g.jsmessage("Unknown Error Message");

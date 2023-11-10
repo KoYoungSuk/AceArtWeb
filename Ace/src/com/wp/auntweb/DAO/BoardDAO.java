@@ -125,7 +125,25 @@ public class BoardDAO {
 		  disconnectDB();
 		  return maxnum; 
 	  }
-	  
+
+	  public int getCountBoard() throws ClassNotFoundException, SQLException {
+		  int count = 0;
+		  connectDB();
+		  String sql = "select count(*) as countnum from board";
+		  Statement sm = null;
+		  ResultSet rs = null;
+		  sm = conn.createStatement();
+		  rs = sm.executeQuery(sql);
+		  
+		  if(rs.next()) {
+			  count = rs.getInt("countnum"); 
+		  }
+		  
+		  sm.close();
+		  rs.close();
+		  disconnectDB();
+		  return count; 
+	  }
 	  public List<BoardDTO> getTotalBoardList(Boolean desc) throws ClassNotFoundException, SQLException{
 		  List<BoardDTO> totalboardlist = null;
 		  connectDB();

@@ -41,13 +41,6 @@ public class WorksListServlet extends HttpServlet {
 		String viewName = null;
 		HttpSession session = request.getSession();
 		
-		int desc = Integer.parseInt(request.getParameter("desc"));
-		Boolean desc_bool = false;
-		
-		if(desc == 1) {
-			desc_bool = true; 
-		}
-		
 		ServletContext application = request.getSession().getServletContext();
 		//START - 데이터베이스 연결 준비 (web.xml) 
     	String JDBC_Driver = application.getInitParameter("jdbc_driver");
@@ -60,7 +53,7 @@ public class WorksListServlet extends HttpServlet {
 		try {
 			WorksDAO worksdao = new WorksDAO(JDBC_Driver, db_url, db_id, db_pw);
 			
-			List<WorksDTO> workslist = worksdao.getTotalWorksList(desc_bool);
+			List<WorksDTO> workslist = worksdao.getTotalWorksList(false);
 			
 			if(workslist != null) {
 				viewName = "index.jsp?page=5";

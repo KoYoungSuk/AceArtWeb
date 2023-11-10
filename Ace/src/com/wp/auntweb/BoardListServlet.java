@@ -42,6 +42,15 @@ public class BoardListServlet extends HttpServlet {
 		String viewName = null;
 		HttpSession session = request.getSession(); 
 
+		String page_count_str = request.getParameter("page_count");
+		int page_count = 0;
+		
+		if(page_count_str == null) {
+			page_count = 1; 
+		}
+		else {
+			page_count = Integer.parseInt(page_count_str); 
+		}
 		
 		ServletContext application = request.getSession().getServletContext();
 		//START - 데이터베이스 연결 준비 (web.xml) 
@@ -54,9 +63,23 @@ public class BoardListServlet extends HttpServlet {
 		try {
 			BoardDAO boarddao = new BoardDAO(JDBC_Driver, db_url, db_id, db_pw);
 			
+			int countnum = boarddao.getCountBoard();
+			int pagenum = countnum / 10;
+			int pagenum_rest = countnum % 10;
+			
 			List<BoardDTO> totalboardlist = boarddao.getTotalBoardList(false); 
+			
 			if(totalboardlist != null) {
 				   session.setAttribute("totalboardlist", totalboardlist);
+				   session.setAttribute("pagenum_board", pagenum + 1); //5개씩 나눈 페이지 개수 + 1 
+				   session.setAttribute("beginnumber_board", (page_count - 1) * 5); //시작번호
+				   if(page_count == pagenum + 1) { //마지막 페이지일때 
+						session.setAttribute("endnumber_board", ((page_count -1) * 5) + 4 + pagenum_rest); //끝번호 (마지막 페이지일때 나머지를 더한다.) 
+				   }
+				   else {
+						session.setAttribute("endnumber_board", ((page_count -1) * 5) + 4); //끝번호 
+				   }
+					
 				   viewName = "index.jsp?page=7"; 
 		    }
 		    else {
