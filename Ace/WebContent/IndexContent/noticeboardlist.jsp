@@ -66,7 +66,6 @@
        <td><c:out value="${NoticeDTO.modifydate}" /></td>
        <td>
         <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='deletenoticeboard.do?num=${NoticeDTO.num}'"><span class="material-symbols-outlined">delete</span></button>
-        <!-- <a href="deletenoticeboard.do?num=${NoticeDTO.num}">삭제</a>--> 
        </td> 
      </tr>
    </c:forEach>
@@ -74,7 +73,14 @@
   </table>
   <div style="text-align: center;">
     <c:forEach var="num" begin="1" end="${sessionScope.pagenum_notice}">
+      <c:choose>
+      <c:when test="${pagecount == num}">
+      <button type="button" class="btn btn-danger" onclick="location.href='noticeboardlist.do?page_count=${num}'">${num}</button>
+      </c:when>
+      <c:otherwise>
       <button type="button" class="btn btn-secondary" onclick="location.href='noticeboardlist.do?page_count=${num}'">${num}</button>
+      </c:otherwise>
+      </c:choose>
     </c:forEach>
    </div>
 </div> 

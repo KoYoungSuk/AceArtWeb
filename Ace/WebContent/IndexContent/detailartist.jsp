@@ -16,26 +16,26 @@
      </div>  
      <table class="table">
        <tr>
-         <td>작가 이름</td>
+         <td style="font-weight: bold; font-size: 20px;">작가 이름</td>
          <td>${sessionScope.artistlist['name']}</td> 
        </tr>
        <tr>
-         <td>작가 학력&경력</td>
+         <td style="font-weight: bold; font-size: 20px;">작가 학력&경력</td>
          <td>${sessionScope.artistlist['career']}</td> 
        </tr>
        <tr>
-        <td>작품</td>
+        <td style="font-weight: bold; font-size: 20px;">작품</td>
         <td>
          <img src="/Artist/${sessionScope.artistlist['num']}/${sessionScope.artistlist['work1']}" width="400" height="350" />&nbsp;&nbsp;
          <img src="/Artist/${sessionScope.artistlist['num']}/${sessionScope.artistlist['work2']}" width="400" height="350" /> 
         </td> 
        </tr>
        <tr>
-        <td>추가 날짜</td> 
+        <td style="font-weight: bold; font-size: 20px;">추가 날짜</td> 
         <td>${sessionScope.artistlist['savedate']}</td> 
        </tr>
        <tr>
-        <td>수정 날짜</td> 
+        <td style="font-weight: bold; font-size: 20px;">수정 날짜</td> 
         <td>${sessionScope.artistlist['modifydate']}</td> 
        </tr> 
      </table>

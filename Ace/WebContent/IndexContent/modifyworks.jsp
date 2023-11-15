@@ -13,22 +13,22 @@
         </div>
         <table class="table">
           <tr>
-           <td>작품명</td>
+           <td style="font-weight: bold;  font-size: 20px;">작품명</td>
            <td>
              <input type="text" class="form-control mr-sm-10" name="name" value='${sessionScope.detailworkslist["name"]}' />
              <input type="hidden" name="num" value="${sessionScope.detailworkslist['num']}" /> 
            </td> 
           </tr>
           <tr>
-           <td>작품설명</td>
-           <td><textarea class="form-control mr-sm-10" rows="20" cols="100" autofocus name="description" wrap="hard" >${sessionScope.detailworkslist["description"]}</textarea></td> 
+           <td style="font-weight: bold;  font-size: 20px;">작품설명</td>
+           <td><textarea class="form-control mr-sm-10" rows="20" cols="80" autofocus name="description" wrap="hard" >${sessionScope.detailworkslist["description"]}</textarea></td> 
           </tr>
           <tr>
-           <td>설치날짜</td>
+           <td style="font-weight: bold;  font-size: 20px;">설치날짜</td>
            <td><input type="text" class="form-control mr-sm-10" name="installdate" value="${sessionScope.detailworkslist['installdate']}" /></td> 
           </tr>
           <tr>
-            <td>사진파일 업로드</td>
+            <td style="font-weight: bold;  font-size: 20px;">사진파일 업로드</td>
             <td><input type="file" name="file" />현재 업로드된 사진파일: ${sessionScope.detailworkslist['picture']}</td> 
           </tr> 
         </table>

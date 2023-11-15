@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <div class="row">
-<div class="col-lg-6" style="padding: 10px; margin: 90px;">
+<div class="col-lg-8" style="padding: 10px; margin: 90px;">
  <c:choose> 
   <c:when test="${sessionScope.id ne null}"> 
   <H2 style="font-weight: bold; ">회원정보 수정</H2>
@@ -10,20 +10,20 @@
   <table class="table">
   <tbody>
    <tr>
-    <td><label for="id">ID:</label></td>
+    <td><label for="id" style="font-weight: bold; font-size: 20px;">ID:</label></td>
     <td>${sessionScope.id}</td>
    </tr>
    <tr>
-    <td><label for="name">이름:</label></td>
+    <td><label for="name" style="font-weight: bold;  font-size: 20px;">이름:</label></td>
     <td><input type="text" class="form-control" name="name" value="${sessionScope.name}" /></td>
    </tr>
    <tr>
-    <td><label for="birthday">생년월일:</label></td>
+    <td><label for="birthday" style="font-weight: bold; font-size: 20px;">생년월일:</label></td>
     <td><input type="text" class="form-control" name="birthday" value="${sessionScope.birthday}" /></td>
    </tr>
    <tr>
-    <td><label for="email">이메일 주소 :</label></td>
-    <td><input type="text" class="form-control" name="email" value="${sessionScope.email}" /></td>
+    <td><label for="email" style="font-weight: bold; font-size: 20px;">이메일 주소 :</label></td>
+    <td><input type="text" class="form-control" name="email" value="${sessionScope.email}" required /></td>
    </tr>
   </tbody>
   </table>
@@ -34,7 +34,10 @@
   </form> 
   </c:when>
   <c:otherwise>
-  <p>로그인이 필요합니다.</p> 
+  <script>
+    alert("로그인이 필요합니다.");
+    history.go(-1); 
+  </script>
   </c:otherwise> 
 </c:choose>
 </div>

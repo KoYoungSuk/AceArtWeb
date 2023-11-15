@@ -274,7 +274,7 @@ public class ModifyArtistServlet extends HttpServlet {
 			   
 			   if(result != 0) {
 				   session.removeAttribute("artistlist");
-				   viewName = "totalartistlist.do?desc=0"; 
+				   viewName = "totalartistlist.do"; 
 			   }
 			   else {
 				   g.jsmessage("Unknown Error Message");

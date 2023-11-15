@@ -13,34 +13,34 @@
        </div>       
        <table class="table">
          <tr>
-           <td>작품명</td>
+           <td style="font-weight: bold; font-size: 20px; ">작품명</td>
            <td>
            ${sessionScope.detailworkslist['name']}
            <input type="hidden" name="num" value="${sessionScope.detailworkslist['num']}" /> 
            </td> 
          </tr>
          <tr>
-          <td>작품사진</td>
+          <td style="font-weight: bold; font-size: 20px;">작품사진</td>
           <td><img src="/Pictures/${sessionScope.detailworkslist['num']}/${sessionScope.detailworkslist['picture']}" width="500" height="350" /></td> 
          </tr>
          <tr>
-          <td>작품 파일명</td>
+          <td style="font-weight: bold; font-size: 20px;">작품 파일명</td>
           <td>${sessionScope.detailworkslist['picture']}</td> 
          </tr> 
          <tr>
-          <td>작품설명</td>
+          <td style="font-weight: bold; font-size: 20px;">작품설명</td>
           <td>${sessionScope.detailworkslist['description']}</td> 
          </tr>
          <tr>
-          <td>설치날짜</td>
+          <td style="font-weight: bold; font-size: 20px;">설치날짜</td>
           <td>${sessionScope.detailworkslist['installdate']}</td> 
          </tr>
          <tr>
-          <td>작성날짜</td>
+          <td style="font-weight: bold; font-size: 20px;">작성날짜</td>
           <td>${sessionScope.detailworkslist['savedate']}</td> 
          </tr> 
          <tr>
-          <td>수정날짜</td>
+          <td style="font-weight: bold; font-size: 20px;">수정날짜</td>
           <td>${sessionScope.detailworkslist['modifydate']}</td> 
          </tr> 
        </table>

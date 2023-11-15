@@ -13,17 +13,17 @@
      </div>  
      <table class="table">
        <tr>
-         <td><label for="name">작가 이름</label></td>
+         <td><label for="name" style="font-weight: bold;  font-size: 20px; ">작가 이름</label></td>
          <td><input type="text" class="form-control mr-sm-10" name="name" value="${sessionScope.artistlist['name']}" />
              <input type="hidden" name="num" value="${sessionScope.artistlist['num']}" /> 
          </td> 
        </tr>
        <tr>
-         <td><label for="career">작가 학력&경력</label></td>
-         <td><textarea class="form-control mr-sm-10" rows="20" cols="100" autofocus name="career" wrap="hard" >${sessionScope.artistlist['career']}</textarea></td> 
+         <td><label for="career" style="font-weight: bold; font-size: 20px; ">작가 학력&경력</label></td>
+         <td><textarea class="form-control mr-sm-10" rows="20" cols="80" autofocus name="career" wrap="hard" >${sessionScope.artistlist['career']}</textarea></td> 
        </tr>
        <tr>
-        <td>작품1 추가</td>
+        <td style="font-weight: bold; font-size: 20px;">작품1 추가</td>
         <td>
           <input type="file" name="uploadFile01" /> 
                     현재 파일명: ${sessionScope.artistlist['work1']}
@@ -31,7 +31,7 @@
         </td> 
        </tr>
        <tr>
-        <td>작품2 추가</td>
+        <td style="font-weight: bold; font-size: 20px;">작품2 추가</td>
         <td>
          <input type="file" name="uploadFile02" />
                    현재 파일명: ${sessionScope.artistlist['work2']}
@@ -42,7 +42,10 @@
      </form> 
      </c:when>
      <c:otherwise>
-      <p>관리자만 작가 정보 수정이 가능합니다.</p> 
+      <script>
+       alert("관리자만 작가 수정이 가능합니다.");
+       history.go(-1); 
+      </script>
      </c:otherwise> 
      </c:choose> 
    </div> 

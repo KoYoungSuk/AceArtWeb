@@ -14,26 +14,26 @@
  <table class="table">
  <tbody>
   <tr>
-  <td>질문 번호</td>
+  <td style="font-weight: bold; font-size: 20px;">질문 번호</td>
   <td>${sessionScope.detailanswerlist["q_num"]}</td> 
   </tr>
   <tr>
-  <td>답변 번호</td>
+  <td style="font-weight: bold; font-size: 20px;">답변 번호</td>
   <td>
   ${sessionScope.detailanswerlist["num"]}
   <input type="hidden" name="num" value="${sessionScope.detailanswerlist['num']}" /> 
   </td> 
   </tr>
   <tr>
-  <td>답변명</td>
+  <td style="font-weight: bold; font-size: 20px;">답변명</td>
   <td>${sessionScope.detailanswerlist["title"]}</td> 
   </tr>
   <tr>
-  <td>답변 내용</td>
+  <td style="font-weight: bold; font-size: 20px;">답변 내용</td>
   <td>${sessionScope.detailanswerlist["content"]}</td> 
   </tr>
   <tr>
-  <td>접근 모드</td>
+  <td style="font-weight: bold; font-size: 20px;">접근 모드</td>
   <td>
   <c:choose>
   <c:when test="${sessionScope.detailanswerlist['access'] eq 'secret'}">
@@ -46,11 +46,11 @@
   </td> 
   </tr>
   <tr>
-  <td>작성 날짜</td>
+  <td style="font-weight: bold; font-size: 20px;" >작성 날짜</td>
   <td>${sessionScope.detailanswerlist["savedate"]}</td>
   </tr> 
   <tr>
-  <td>수정 날짜</td>
+  <td style="font-weight: bold; font-size: 20px;">수정 날짜</td>
   <td>${sessionScope.detailanswerlist["modifydate"]}</td> 
   </tr> 
  </tbody>

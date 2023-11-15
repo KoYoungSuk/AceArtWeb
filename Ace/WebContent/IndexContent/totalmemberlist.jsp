@@ -38,7 +38,10 @@
     </table>
   </c:when>
   <c:otherwise> 
-    <p>관리자 계정으로만 전체 회원정보 관리가 가능합니다.</p> 
+    <script>
+     alert("관리자만 회원정보 관리가 가능합니다.");
+     history.go(-1); 
+    </script>
   </c:otherwise> 
 </c:choose> 
 </div> 

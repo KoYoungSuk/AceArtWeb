@@ -41,6 +41,16 @@ public class ArtistListServlet extends HttpServlet {
 		String viewName = null;
 		Global g = new Global(response);
 		
+		String page_count_str = request.getParameter("page_count"); 
+		int page_count = 0;
+		
+		if(page_count_str != null) {
+			page_count = Integer.parseInt(page_count_str); 
+		}
+		else {
+			page_count = 1; 
+		}
+		
 		ServletContext application = request.getSession().getServletContext();
 		//START - 데이터베이스 연결 준비 (web.xml) 
     	String JDBC_Driver = application.getInitParameter("jdbc_driver");
@@ -53,8 +63,14 @@ public class ArtistListServlet extends HttpServlet {
 			ArtistDAO artistDAO = new ArtistDAO(JDBC_Driver, db_url, db_id, db_pw);
 			List<ArtistDTO> totalartistlist = artistDAO.getTotalartistList(true);
 			
+			int countnum = artistDAO.getCountnum();
+			int pagenum_artist = countnum / 5;
+			
 			if(totalartistlist != null) {
 			    session.setAttribute("totalartistlist", totalartistlist);
+				session.setAttribute("pagenum_artist", pagenum_artist + 1); //5개씩 나눈 페이지 개수 + 1 
+				session.setAttribute("beginnumber_artist", (page_count - 1) * 5); //시작번호
+			    session.setAttribute("endnumber_artist", ((page_count -1) * 5) + 4); //끝번호 
 			    viewName = "index.jsp?page=15"; 
 			}
 			else {

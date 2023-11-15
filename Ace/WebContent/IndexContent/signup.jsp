@@ -12,27 +12,27 @@
 <table class="table">
    <thead>
      <tr>
-       <td><label for="id"><b>아이디:</b></label></td>
+       <td><label for="id" style="font-weight: bold; font-size: 20px;"><b>아이디:</b></label></td>
        <td><input type="text" class="form-control" placeholder="아이디" name="id" ></td>
      </tr>
      <tr>
-       <td><label for="password"><b>비밀번호:</b></label></td>
+       <td><label for="password" style="font-weight: bold; font-size: 20px;"><b>비밀번호:</b></label></td>
        <td><input type="password" class="form-control" placeholder="비밀번호" name="password" required></td>
      </tr>
      <tr>
-      <td><label for="password"><b>비밀번호 확인:</b></label></td>
+      <td><label for="password" style="font-weight: bold; font-size: 20px;"><b>비밀번호 확인:</b></label></td>
       <td><input type="password" class="form-control" placeholder="비밀번호 확인" name="cpassword" required></td>
      </tr>
      <tr>
-      <td><label for="email"><b>이메일 주소(필수):</b></label></td>
-      <td><input type="text" class="form-control" placeholder="이메일 주소" name="email"></td> 
+      <td><label for="email" style="font-weight: bold; font-size: 20px;"><b>이메일 주소(필수):</b></label></td>
+      <td><input type="text" class="form-control" placeholder="이메일 주소" name="email" required></td> 
      </tr>
      <tr>
-       <td><label for="name"><b>이름(선택):</b></label></td>
+       <td><label for="name" style="font-weight: bold; font-size: 20px;"><b>이름(선택):</b></label></td>
        <td><input type="text" class="form-control" placeholder="이름" name="name"></td>
      </tr>
      <tr>
-     <td> <label for="birthday"><b> 생년월일(선택/YYYY-MM-DD): </b></label> </td>
+     <td> <label for="birthday" style="font-weight: bold; font-size: 20px;"><b> 생년월일(선택/YYYY-MM-DD): </b></label> </td>
      <td> <input type="text" class="form-control" placeholder="생년월일(YYYY-MM-DD)" name="birthday"> </td>
      </tr>
    </tbody>
@@ -47,7 +47,10 @@
 </form>
 </c:when>
 <c:otherwise> <!-- 로그인되어 있을 때  -->
- <p>로그인한 사용자는 회원가입이 불가능합니다.</p> 
+ <script>
+   alert("로그인한 사용자는 회원가입이 불가능합니다.");
+   history.go(-1); 
+ </script>
 </c:otherwise>
 </c:choose>
 </div>

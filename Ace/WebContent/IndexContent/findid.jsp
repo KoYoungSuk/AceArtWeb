@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <div class="row">
- <div class="col-lg-4" style="margin: 90px; padding: 10px;">
+ <div class="col-lg-6" style="margin: 90px; padding: 10px;">
    <c:choose>
      <c:when test="${sessionScope.id eq null}"> <!-- 로그인되어 있지 않을 때  -->
        <H2 style="font-weight: bold">아이디 찾기 </H2>
@@ -17,7 +17,10 @@
        </form>
      </c:when>
      <c:otherwise> <!-- 로그인되어 있을 때  -->
-       <p>로그인한 사용자는 아이디 찾기 기능을 이용할 수 없습니다.</p> 
+       <script>
+         alert("로그인한 사용자는 아이디 찾기 기능을 사용할 수 없습니다.");
+         history.go(-1); 
+       </script>
      </c:otherwise>
    </c:choose> 
  </div>

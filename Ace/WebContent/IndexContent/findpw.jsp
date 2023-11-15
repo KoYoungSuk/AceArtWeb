@@ -12,12 +12,12 @@
      <table class="table">
       <tbody>
        <tr>
-         <td><label for="id">아이디: </label></td>
-         <td><input type="text" class="form-control" name="id" /></td>
+         <td><label for="id" style="font-weight: bold; font-size: 20px;">아이디: </label></td>
+         <td><input type="text" class="form-control" name="id" required /></td>
        </tr>
        <tr>
-        <td><label for="email">이메일 주소: </label></td>
-        <td><input type="text" class="form-control" name="email" /></td> 
+        <td><label for="email" style="font-weight: bold; font-size: 20px;">이메일 주소: </label></td>
+        <td><input type="text" class="form-control" name="email" required /></td> 
        </tr>
       </tbody> 
      </table>
@@ -28,7 +28,10 @@
     </form> 
     </c:when>
     <c:otherwise> <!--  로그인되어 있을 때  -->
-     <p>로그인한 사용자는 비밀번호 찾기 기능을 이용할 수 없습니다.</p> 
+     <script>
+       alert("로그인한 사용자는 비밀번호 찾기 기능을 사용할 수 없습니다.");
+       history.go(-1); 
+     </script>
     </c:otherwise>
   </c:choose>
 </div> 

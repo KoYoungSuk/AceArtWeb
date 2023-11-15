@@ -11,23 +11,23 @@
     <table class="table">
      <tbody>
      <tr>
-      <td><label for="id">아이디: </label></td>
+      <td><label for="id" style="font-weight: bold; font-size: 20px;">아이디: </label></td>
       <td>${sessionScope.id}</td>
      </tr>
      <tr>
-      <td><label for="name">이름: </label></td>
+      <td><label for="name" style="font-weight: bold; font-size: 20px;">이름: </label></td>
       <td>${sessionScope.name}</td> 
      </tr>
      <tr>
-      <td><label for="birthday">생년월일: </label></td>
+      <td><label for="birthday" style="font-weight: bold; font-size: 20px;">생년월일: </label></td>
       <td>${sessionScope.birthday}</td>
      </tr>
      <tr>
-      <td><label for="email">이메일: </label></td>
+      <td><label for="email" style="font-weight: bold; font-size: 20px;">이메일: </label></td>
       <td>${sessionScope.email}</td>
      </tr>
      <tr>
-      <td><label for="joindate">가입 날짜: </label></td>
+      <td><label for="joindate" style="font-weight: bold; font-size: 20px;">가입 날짜: </label></td>
       <td>${sessionScope.joindate}</td> 
      </tr>
      </tbody>
@@ -39,7 +39,10 @@
     </form> 
    </c:when>
    <c:otherwise>
-    <p>회원정보를 삭제하려면 먼저 로그인을 해야 합니다.</p> 
+   <script>
+    alert("회원정보를 삭제하려면 먼저 로그인을 해야 합니다.");
+    history.go(-1); 
+   </script>
    </c:otherwise> 
   </c:choose> 
 </div> 

@@ -13,26 +13,29 @@
       </div> 
       <table class="table">
        <tr>
-         <td><label for="title">작품명</label></td>
+         <td><label for="title" style="font-weight: bold; font-size: 20px; ">작품명</label></td>
          <td><input type="text" class="form-control mr-sm-10" name="name" /></td> 
        </tr>
        <tr>
-         <td><label for="content">작품 설명</label></td>
+         <td><label for="content" style="font-weight: bold; font-size: 20px;">작품 설명</label></td>
          <td><textarea class="form-control mr-sm-10" rows="20" cols="100" autofocus name="description" wrap="hard" ></textarea></td> 
        </tr>
        <tr>
-         <td><label for="installdate">설치 날짜</label></td>
+         <td><label for="installdate" style="font-weight: bold;  font-size: 20px;">설치 날짜</label></td>
          <td><input type="text" class="form-control mr-sm-10" name="installdate" /></td> 
        </tr>
        <tr>
-         <td><label for="fileupload">작품 사진 업로드</label></td> 
+         <td><label for="fileupload" style="font-weight: bold; font-size: 20px;">작품 사진 업로드</label></td> 
          <td><input type="file" name="file" /></td> 
        </tr> 
       </table>
       </form> 
     </c:when>
     <c:otherwise>
-      <p>관리자만 작품 등록이 가능합니다.</p> 
+     <script>
+             alert("관리자만 작품 등록이 가능합니다.");
+             history.go(-1); 
+     </script>
     </c:otherwise>
   </c:choose> 
 </div>

@@ -18,20 +18,20 @@
  <table class="table">
  <tbody>
   <tr> 
-  <td>답변명</td>
+  <td style="font-weight: bold; font-size: 20px;">답변명</td>
   <td>
   <input type="hidden" name="num" value="${sessionScope.detailanswerlist['num']}" /> 
   <input class="form-control" type="text" name="title" value="${sessionScope.detailanswerlist['title']}" readonly /> 
   </td> 
   </tr>
   <tr>
-  <td>답변 내용</td>
+  <td style="font-weight: bold;  font-size: 20px;">답변 내용</td>
   <td>
   <textarea class="form-control" rows="15" cols="60" autofocus name="content" wrap="hard" > ${sessionScope.detailanswerlist["content"]}</textarea>
   </td> 
   </tr>
   <tr>
-  <td>접근 모드</td>
+  <td style="font-weight: bold;  font-size: 20px;">접근 모드</td>
   <td>
   <c:choose>
   <c:when test="${sessionScope.detailanswerlist['access'] eq 'secret'}">

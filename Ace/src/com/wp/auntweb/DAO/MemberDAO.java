@@ -197,5 +197,19 @@ public class MemberDAO {
 		   return id; 
 	   }
 	   
-	   
+	  public int checkemail(String email) throws ClassNotFoundException, SQLException{
+		   int num = 0;
+		   connectDB();
+		   String sql = "select count(*) as countnum from member where email = ?";
+		   PreparedStatement psm = conn.prepareStatement(sql);
+		   psm.setString(1, email);
+		   ResultSet rs = psm.executeQuery();
+		   if(rs.next()) {
+			   num = rs.getInt("countnum"); 
+		   }
+		   rs.close();
+		   psm.close();
+		   disconnectDB();
+		   return num; 
+	  }
 }

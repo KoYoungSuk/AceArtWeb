@@ -97,6 +97,7 @@ public class DeleteMemberServlet extends HttpServlet {
 	    HttpSession session = request.getSession();
 	    
 	    String id = (String)session.getAttribute("id"); 
+		String id2 = request.getParameter("ID"); 
 		
 		ServletContext application = request.getSession().getServletContext();
 		//START - 데이터베이스 연결 준비 (web.xml) 
@@ -108,7 +109,13 @@ public class DeleteMemberServlet extends HttpServlet {
   	    
   	    try {
   	    	MemberDAO memberdao = new MemberDAO(JDBC_Driver, db_url, db_id, db_pw); 
-  	    	int result = memberdao.deleteMember(id);
+  	    	int result = 0; 
+  	    	if(id2 != null) {
+  	    		result = memberdao.deleteMember(id2);
+  	    	}
+  	    	else {
+  	    		result = memberdao.deleteMember(id);
+  	    	}
   	    	
   	    	if(result != 0) {
   	    		session.invalidate();

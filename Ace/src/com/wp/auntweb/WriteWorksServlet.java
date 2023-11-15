@@ -135,7 +135,7 @@ public class WriteWorksServlet extends HttpServlet {
 				int result = worksdao.insertWorks(worksdto);
 				
 				if(result != 0) {
-					viewName = "workslist.do?desc=0"; 
+					viewName = "workslist.do"; 
 				}
 				else {
 					g.jsmessage("Unknown Error Message"); 

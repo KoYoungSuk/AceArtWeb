@@ -41,6 +41,17 @@ public class WorksListServlet extends HttpServlet {
 		String viewName = null;
 		HttpSession session = request.getSession();
 		
+		String page_count_str = request.getParameter("page_count");
+		
+		int page_count = 0;
+		
+		if(page_count_str != null) {
+			page_count = Integer.parseInt(page_count_str); 
+		}
+		else {
+			page_count = 1; 
+		}
+		
 		ServletContext application = request.getSession().getServletContext();
 		//START - 데이터베이스 연결 준비 (web.xml) 
     	String JDBC_Driver = application.getInitParameter("jdbc_driver");
@@ -54,10 +65,17 @@ public class WorksListServlet extends HttpServlet {
 			WorksDAO worksdao = new WorksDAO(JDBC_Driver, db_url, db_id, db_pw);
 			
 			List<WorksDTO> workslist = worksdao.getTotalWorksList(false);
+			int maxnum = worksdao.getCountnum();
+			
+			int page_num = maxnum / 10; //10개씩 나눈다. 
 			
 			if(workslist != null) {
 				viewName = "index.jsp?page=5";
 				session.setAttribute("workslist", workslist); 
+				session.setAttribute("pagenum_works", page_num + 1); //5개씩 나눈 페이지 개수 + 1 
+				session.setAttribute("beginnumber_works", (page_count - 1) * 5); //시작번호
+			    session.setAttribute("endnumber_works", ((page_count -1) * 5) + 4); //끝번호 
+				
 			}
 			else {
 				g.jsmessage("Unknown Error Message");

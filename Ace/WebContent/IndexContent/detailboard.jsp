@@ -16,23 +16,23 @@
  </div>
  <table class="table">
    <tr>
-     <td><label for="title">제목 </label></td>
+     <td><label for="title" style="font-weight: bold; font-size: 20px;">제목 </label></td>
      <td>${sessionScope.detailboardlist['title']}</td> 
    </tr>
    <tr>
-    <td><label for="content">내용</label></td>
+    <td><label for="content" style="font-weight: bold; font-size: 20px;">내용</label></td>
     <td>${sessionScope.detailboardlist['content']}</td> 
    </tr>
    <tr>
-    <td><label for="file">파일 다운로드 </label></td>
+    <td><label for="file" style="font-weight: bold; font-size: 20px;">파일 다운로드 </label></td>
     <td><a href="downloadboard.do?num=${sessionScope.detailboardlist['num']}&filename=${sessionScope.detailboardlist['files']}">파일 다운로드(파일명: ${sessionScope.detailboardlist['files']})</a></td> 
    </tr> 
    <tr>
-    <td><label for="savedate">작성 날짜 </label></td>
+    <td><label for="savedate" style="font-weight: bold; font-size: 20px;"> 작성 날짜 </label></td>
     <td>${sessionScope.detailboardlist['savedate']}</td> 
    </tr>
    <tr>
-    <td><label for="modifydate">수정 날짜 </label></td>
+    <td><label for="modifydate" style="font-weight: bold; font-size: 20px;">수정 날짜 </label></td>
     <td>${sessionScope.detailboardlist['modifydate']}</td> 
    </tr> 
  </table>

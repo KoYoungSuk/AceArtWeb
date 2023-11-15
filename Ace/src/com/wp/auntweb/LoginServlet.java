@@ -72,6 +72,7 @@ public class LoginServlet extends HttpServlet {
   	    	{
   	    		MemberDAO memberdao = new MemberDAO(JDBC_Driver, db_url, db_id, db_pw);
   	  	    	Map<String, String> memberlist = memberdao.GetMemberListById(id); 
+  	  	    	
   	  	    	if(memberlist != null)
   	  	    	{
   	  	    		String password_db = memberlist.get("password"); 
@@ -89,7 +90,7 @@ public class LoginServlet extends HttpServlet {
   	    	}
   	    }
   	    catch(Exception e)
-  	    {
+  	    { 
   	    	g.jsmessage(e.getMessage());
   	    }
   	    

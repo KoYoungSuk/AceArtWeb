@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <div class="row">
-<div class="col-lg-6" style="padding: 10px; margin: 90px;">
+<div class="col-lg-8" style="padding: 10px; margin: 90px;">
   <H2 style="font-weight: bold;">질문 삭제</H2>
   <hr>
   <H6>경고: 삭제하면 다시 복구할 수 없습니다. 계속하시겠습니까? </H6>
@@ -15,7 +15,7 @@
  <table class="table">
  <tbody>
   <tr>
-  <td>번호</td>
+  <td style="font-weight: bold; font-size: 20px;">번호</td>
   <td>
   <input type="hidden" name="num" value="${sessionScope.detailquestionlist['num']}" /> 
   <input type="hidden" name="user" value="${sessionScope.detailquestionlist['user']}" /> 
@@ -23,15 +23,15 @@
   </td> 
   </tr>
   <tr>
-  <td>질문명</td>
+  <td style="font-weight: bold; font-size: 20px;">질문명</td>
   <td>${sessionScope.detailquestionlist["title"]}</td> 
   </tr>
   <tr>
-  <td>질문 내용</td>
+  <td style="font-weight: bold; font-size: 20px;">질문 내용</td>
   <td>${sessionScope.detailquestionlist["content"]}</td> 
   </tr>
   <tr>
-  <td>접근 모드</td>
+  <td style="font-weight: bold; font-size: 20px;">접근 모드</td>
   <td>
   <c:choose>
   <c:when test="${sessionScope.detailquestionlist['access'] eq 'secret'}">
@@ -44,11 +44,11 @@
   </td> 
   </tr>
   <tr>
-  <td>작성 날짜</td>
+  <td style="font-weight: bold; font-size: 20px;">작성 날짜</td>
   <td>${sessionScope.detailquestionlist["savedate"]}</td>
   </tr> 
   <tr>
-  <td>수정 날짜</td>
+  <td style="font-weight: bold; font-size: 20px;">수정 날짜</td>
   <td>${sessionScope.detailquestionlist["modifydate"]}</td> 
   </tr> 
  </tbody>

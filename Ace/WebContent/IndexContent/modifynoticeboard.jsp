@@ -13,30 +13,33 @@
     </div> 
     <table class="table">
       <tr>
-        <td><label for="title">번호</label></td>
+        <td><label for="title" style="font-weight: bold; font-size: 20px;">번호</label></td>
         <td><input type="hidden" name="num" value="${sessionScope.detailnoticelist['num']}" />${sessionScope.detailnoticelist['num']}</td> 
       </tr>
       <tr>
-        <td><label for="title">제목</label></td>
+        <td><label for="title" style="font-weight: bold; font-size: 20px;">제목</label></td>
         <td><input class="form-control mr-sm-10" type="text" name="title" required value="${sessionScope.detailnoticelist['title']}"/></td> 
       </tr>
       <tr>
-        <td><label for="content">내용</label></td>
+        <td><label for="content" style="font-weight: bold; font-size: 20px;">내용</label></td>
         <td><textarea class="form-control mr-sm-10" rows="20" cols="100" autofocus name="content" wrap="hard" >${sessionScope.detailnoticelist['content']}</textarea></td>
       </tr>
       <tr>
-       <td><label for="savedate">작성 날짜</label></td>
+       <td><label for="savedate" style="font-weight: bold; font-size: 20px;">작성 날짜</label></td>
        <td>${sessionScope.detailnoticelist['savedate']}</td>
       </tr>
       <tr>
-       <td><label for="modifydate">수정 날짜</label></td>
+       <td><label for="modifydate" style="font-weight: bold; font-size: 20px;">수정 날짜</label></td>
        <td>${sessionScope.detailnoticelist['modifydate']}</td> 
       </tr> 
     </table>
     </form> 
   </c:when>
   <c:otherwise>
-    <p>관리자 계정으로만 공지사항 수정이 가능합니다. </p> 
+    <script>
+      alert("관리자만 공지사항 수정이 가능합니다.");
+      history.go(-1); 
+    </script>
   </c:otherwise> 
 </c:choose>
 </div> 

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <div class="row">
-<div class="col-lg-6" style="padding: 10px; margin: 90px;">
+<div class="col-lg-8" style="padding: 10px; margin: 90px;">
   <H2 style="font-weight: bold;">질문 상세</H2>
   <hr>
   <div style="text-align: right;">
@@ -23,19 +23,19 @@
  <table class="table">
  <tbody>
   <tr>
-  <td>번호</td>
+  <td style="font-weight: bold; font-size: 20px;">번호</td>
   <td>${sessionScope.detailquestionlist["num"]}</td> 
   </tr>
   <tr>
-  <td>질문명</td>
+  <td style="font-weight: bold; font-size: 20px;">질문명</td>
   <td>${sessionScope.detailquestionlist["title"]}</td> 
   </tr>
   <tr>
-  <td>질문 내용</td>
+  <td style="font-weight: bold; font-size: 20px;">질문 내용</td>
   <td>${sessionScope.detailquestionlist["content"]}</td> 
   </tr>
   <tr>
-  <td>접근 모드</td>
+  <td style="font-weight: bold; font-size: 20px;">접근 모드</td>
   <td>
   <c:choose>
   <c:when test="${sessionScope.detailquestionlist['access'] eq 'secret'}">
@@ -48,11 +48,11 @@
   </td> 
   </tr>
   <tr>
-  <td>작성 날짜</td>
+  <td style="font-weight: bold; font-size: 20px;">작성 날짜</td>
   <td>${sessionScope.detailquestionlist["savedate"]}</td>
   </tr> 
   <tr>
-  <td>수정 날짜</td>
+  <td style="font-weight: bold; font-size: 20px;">수정 날짜</td>
   <td>${sessionScope.detailquestionlist["modifydate"]}</td> 
   </tr> 
  </tbody>

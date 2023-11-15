@@ -76,22 +76,38 @@ public class SignupServlet extends HttpServlet {
   	    
   	    try
   	    {
-  	    	//비밀번호와 비밀번호 확인이 같은지 검사
-  	    	if(password.equals(password_confirmed))
-  	    	{
-  	    		MemberDTO memberdto = new MemberDTO(id, password_hass, name, birthday, joindate, email); 
-  	    		MemberDAO memberdao = new MemberDAO(JDBC_Driver, db_url, db_id, db_pw); 
-  	    		
-  	    		int result = memberdao.insertMember(memberdto);
-  	    		
-  	    		if(result != 0)
-  	    		{
-  	    			viewName = "index.jsp?page=1"; 
-  	    		}
+  	    	if(password != null) {
+  	    	    //비밀번호와 비밀번호 확인이 같은지 검사
+  	    		if(password.equals(password_confirmed))
+  	  	    	{ 
+  	  	    		MemberDAO memberdao = new MemberDAO(JDBC_Driver, db_url, db_id, db_pw); 
+  	  	    		
+  	  	    		if(email != null) {
+  	  	    			int countnum = memberdao.checkemail(email); //이메일 중복 검사 
+  	  	  	    		
+  	  	  	    		if(countnum == 0) {
+  	  	  	    			MemberDTO memberdto = new MemberDTO(id, password_hass, name, birthday, joindate, email); 
+  	  	  	    	    	
+  	  	  	  	    		int result = memberdao.insertMember(memberdto);
+  	  	  	  	    		
+  	  	  	  	    		if(result != 0)
+  	  	  	  	    		{
+  	  	  	  	    			viewName = "index.jsp?page=1"; 
+  	  	  	  	    		}
+  	  	  	    		}
+  	  	  	    		else {
+  	  	  	    			g.jsmessage("중복된 이메일이 존재합니다."); 
+  	  	  	    		}
+  	  	    		}
+  	  	    		g.jsmessage("이메일 주소는 필수입니다."); 
+  	  	    	}
+  	  	    	else
+  	  	    	{
+  	  	    		g.jsmessage("비밀번호와 비밀번호 확인이 올바르지 않음.");
+  	  	    	}
   	    	}
-  	    	else
-  	    	{
-  	    		g.jsmessage("비밀번호와 비밀번호 확인이 올바르지 않음.");
+  	    	else {
+  	    		g.jsmessage("비밀번호는 필수입니다.");
   	    	}
   	    }
   	    catch(Exception ex)

@@ -83,7 +83,7 @@ public class DeleteArtistServlet extends HttpServlet {
 				int result = artistdao.deleteArtist(num);
 				
 				if(result != 0) {
-					viewName = "totalartistlist.do?desc=0"; 
+					viewName = "totalartistlist.do"; 
 				}
 				else {
 					g.jsmessage("Unknown Error Message");

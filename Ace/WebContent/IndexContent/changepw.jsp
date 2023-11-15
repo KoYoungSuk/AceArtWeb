@@ -9,16 +9,16 @@
    <form action="changepw.do" method="POST">
    <table class="table">
     <tr>
-     <td><label for="currentpassword">현재 비밀번호: </label></td>
-     <td><input type="password" class="form-control" name="currentpassword" /></td>
+     <td><label for="currentpassword" style="font-weight: bold; font-size: 20px;">현재 비밀번호: </label></td>
+     <td><input type="password" class="form-control" name="currentpassword" required /></td>
     </tr>
     <tr>
-     <td><label for="newpassword">새 비밀번호: </label></td>
-     <td><input type="password" class="form-control" name="newpassword" /></td> 
+     <td><label for="newpassword" style="font-weight: bold; font-size: 20px; ">새 비밀번호: </label></td>
+     <td><input type="password" class="form-control" name="newpassword"  required /></td> 
     </tr>
     <tr>
-     <td><label for="newpasswordc">새 비밀번호 확인: </label></td>
-     <td><input type="password" class="form-control" name="newpasswordc" /></td> 
+     <td><label for="newpasswordc" style="font-weight: bold; font-size: 20px; ">새 비밀번호 확인: </label></td>
+     <td><input type="password" class="form-control" name="newpasswordc"  required /></td> 
     </tr> 
    </table>
    <div style="text-align: right;">
@@ -29,7 +29,10 @@
    </form>
  </c:when>
  <c:otherwise> <!--  로그인되어 있지 않을때  -->
-  <p>로그인한 사용자만 비밀번호 변경이 가능합니다.</p> 
+  <script>
+   alert("로그인한 사용자만 비밀번호 변경이 가능합니다.");
+   history.go(-1); 
+  </script>
  </c:otherwise> 
 </c:choose> 
 </div>

@@ -15,7 +15,10 @@
   </div>
   </c:when>
   <c:otherwise>
-  <p>아이디 및 비밀번호 찾기 기능은 로그인되어 있을 때는 사용할 수 없습니다.</p> 
+  <script>
+     alert("아이디 및 비밀번호 찾기 기능은 로그인되어 있을때는 사용할 수 없습니다.");
+     history.go(-1); 
+  </script>
   </c:otherwise>
   </c:choose>
 </div>

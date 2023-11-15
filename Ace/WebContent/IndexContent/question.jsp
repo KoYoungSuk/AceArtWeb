@@ -82,7 +82,14 @@
    <hr>
    <div style="text-align: center;">
     <c:forEach var="num" begin="1" end="${sessionScope.pagenum_question}">
+      <c:choose>
+      <c:when test="${pagecount == num}">
+      <button type="button" class="btn btn-danger" onclick="location.href='totalquestionlist.do?page_count=${num}'">${num}</button>
+      </c:when>
+      <c:otherwise>
       <button type="button" class="btn btn-secondary" onclick="location.href='totalquestionlist.do?page_count=${num}'">${num}</button>
+      </c:otherwise>
+      </c:choose>
     </c:forEach>
    </div>
  </div> 

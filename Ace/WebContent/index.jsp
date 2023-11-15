@@ -319,7 +319,7 @@
   <H5> 주소: 부산광역시 강서구 미음산단로 327, 303호  </H5>
   <H5> <a href="pdf.jsp?pdfname=personalinformation.pdf"> 개인정보처리방침 </a> </H5>
   <br> 
-  <H6> Last Updated: Sunday, November 12nd, 2023 </H6> 
+  <H6> Last Updated: Wednesday, November 15th, 2023 </H6> 
   <H6> <a href="pdf.jsp?pdfname=Environment.pdf"> 웹사이트 제작기술 안내 </a> </H6>
   <H6> <a href= "https://github.com/KoYoungSuk/AceArtWeb.git">GitHub</a></H6>
 </div>

@@ -199,7 +199,7 @@ public class ModifyWorksServlet extends HttpServlet {
 				
 				if(result != 0) {
 					session.removeAttribute("detailworkslist");
-					viewName = "workslist.do?desc=0"; 
+					viewName = "workslist.do"; 
 				}
 				else {
 					g.jsmessage("Unknown Error Message");

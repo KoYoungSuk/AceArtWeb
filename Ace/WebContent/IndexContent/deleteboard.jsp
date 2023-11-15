@@ -40,7 +40,10 @@
  </form>
  </c:when>
  <c:otherwise>
-  <p>관리자 계정으로만 자료실 정보 삭제가 가능합니다.</p> 
+  <script>
+   alert("관리자 계정으로만 자료실 정보 삭제가 가능합니다.");
+   history.go(-1); 
+  </script>
  </c:otherwise> 
  </c:choose>
 </div>

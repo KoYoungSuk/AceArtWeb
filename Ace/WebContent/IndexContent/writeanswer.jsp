@@ -13,7 +13,7 @@
        </div>
        <table class="table">
         <tr>
-          <td><label for="title">답변 제목 </label></td>
+          <td style="font-weight: bold; font-size: 20px;"><label for="title">답변 제목 </label></td>
           <td>
           <input type="text" class="form-control" name="title" value="RE:  ${sessionScope.detailquestionlist['title']}" readonly />
           <input type="hidden" name="access" value="${sessionScope.detailquestionlist['access']}" /> 
@@ -21,7 +21,7 @@
           </td> 
         </tr> 
         <tr>
-         <td><label for="content">답변 내용</label></td>
+         <td style="font-weight: bold; font-size: 20px;"><label for="content">답변 내용</label></td>
          <td><textarea class="form-control" rows="15" cols="60" autofocus name="content" wrap="hard" ></textarea></td>
         </tr>
        </table>

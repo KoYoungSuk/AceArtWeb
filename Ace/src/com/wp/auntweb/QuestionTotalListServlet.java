@@ -68,15 +68,10 @@ public class QuestionTotalListServlet extends HttpServlet {
 			
 			if(totalquestionlist != null) {
 				int pagenum = countnum / 5;  //페이지를 5개씩 나누기
-				int pagenum_rest = countnum % 5; 
+
 				session.setAttribute("pagenum_question", pagenum + 1); //5개씩 나눈 페이지 개수 + 1 
 				session.setAttribute("beginnumber_question", (page_count - 1) * 5); //시작번호
-				if(page_count == pagenum + 1) { //마지막 페이지일때 
-					session.setAttribute("endnumber_question", ((page_count -1) * 5) + 4 + pagenum_rest); //끝번호 (마지막 페이지일때 나머지를 더한다.) 
-				}
-				else {
-					session.setAttribute("endnumber_question", ((page_count -1) * 5) + 4); //끝번호 
-				}
+			    session.setAttribute("endnumber_question", ((page_count -1) * 5) + 4); //끝번호 
 				
 				session.setAttribute("totalquestionlist", totalquestionlist);
 				viewName = "index.jsp?page=33"; 

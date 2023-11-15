@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <div class="row">
-<div class="col-lg-6" style="padding: 10px; margin: 90px;">
+<div class="col-lg-8" style="padding: 10px; margin: 90px;">
  <H2 style="font-weight: bold;">질문 수정</H2>
  <hr>
  <form action="modifyquestion.do" method="POST">
@@ -12,7 +12,7 @@
  <table class="table">
  <tbody>
   <tr>
-  <td>질문명</td>
+  <td style="font-weight: bold; font-size: 20px;">질문명</td>
   <td>
   <input type="hidden" name="num" value="${sessionScope.detailquestionlist['num']}" />
   <input type="hidden" name="user" value="${sessionScope.detailquestionlist['user']}" /> 
@@ -20,7 +20,7 @@
   </td> 
   </tr>
   <tr>
-  <td>질문 내용</td>
+  <td style="font-weight: bold; font-size: 20px;">질문 내용</td>
   <td>
   <textarea class="form-control" rows="15" cols="60" autofocus name="content" wrap="hard" >
   ${sessionScope.detailquestionlist["content"]}
@@ -28,7 +28,7 @@
   </td> 
   </tr>
   <tr>
-  <td>접근 모드</td>
+  <td style="font-weight: bold; font-size: 20px;">접근 모드</td>
   <td>
   <div style="text-align: right;"> 
   <c:choose>

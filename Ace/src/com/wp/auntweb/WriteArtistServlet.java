@@ -141,7 +141,7 @@ public class WriteArtistServlet extends HttpServlet {
 				int result = artistdao.insertArtist(artistDTO);
 				
 				if(result != 0) {
-					viewName = "totalartistlist.do?desc=0";
+					viewName = "totalartistlist.do";
 				}
 				else {
 					g.jsmessage("Unknown Error Message");

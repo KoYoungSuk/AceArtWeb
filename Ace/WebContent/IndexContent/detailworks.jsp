@@ -16,27 +16,27 @@
     </div>
     <table class="table">
       <tr>
-        <td><label for="name">이름</label></td>
+        <td><label for="name" style="font-weight: bold;  font-size: 20px;">이름</label></td>
         <td>${sessionScope.detailworkslist['name']}</td> 
       </tr>
       <tr>
-       <td><label for="pictures">사진</label></td>
+       <td><label for="pictures" style="font-weight: bold;  font-size: 20px; ">사진</label></td>
        <td><img src="/Pictures/${sessionScope.detailworkslist['num']}/${sessionScope.detailworkslist['picture']}" width="500" height="350" /></td>
       </tr>
       <tr>
-       <td><label for="description">설명 </label></td>
+       <td><label for="description" style="font-weight: bold; font-size: 20px;">설명 </label></td>
        <td>${sessionScope.detailworkslist['description']}</td>
       </tr>
       <tr>
-       <td><label for="installdate">설치 날짜</label></td>
+       <td><label for="installdate" style="font-weight: bold; font-size: 20px;">설치 날짜</label></td>
        <td>${sessionScope.detailworkslist['installdate']}</td>
       </tr>
       <tr>
-       <td><label for="savedate">작성 날짜</label></td>
+       <td><label for="savedate" style="font-weight: bold;  font-size: 20px;">작성 날짜</label></td>
        <td>${sessionScope.detailworkslist['savedate']}</td>
       </tr>
       <tr>
-       <td><label for="modifydate">수정 날짜</label></td>
+       <td><label for="modifydate" style="font-weight: bold;  font-size: 20px;">수정 날짜</label></td>
        <td>${sessionScope.detailworkslist['modifydate']}</td>
       </tr> 
     </table> 

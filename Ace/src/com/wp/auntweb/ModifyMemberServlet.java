@@ -118,15 +118,43 @@ public class ModifyMemberServlet extends HttpServlet {
   	    
 		try
 		{
-			MemberDTO memberdto = new MemberDTO(id, null, name, birthday, null, email); 
+			String email_id = ""; 
 			MemberDAO memberdao = new MemberDAO(JDBC_Driver, db_url, db_id, db_pw);
-			int result = memberdao.updateMember(memberdto);
-			
-			if(result != 0) {
-				viewName = "index.jsp?page=1";
+			Map<String, String> memberlist = memberdao.GetMemberListById(id); 
+		    if(memberlist != null) {
+		    	email_id = memberlist.get("email"); //현재 로그인한 ID의 이메일 추출 
+		    	if(email_id == null) {
+		    		email_id = ""; //Null이면 그냥 빈 값으로 정함. 
+		    	}
+		    }
+		    
+			if(email != null) {
+				int countnum = 0; 
+				if(email_id.equals(email)) { //현재 로그인한 ID의 이메일과 입력한 이메일이 같다. -> 이메일을 고치지 않다는 뜻으로 생각. 
+					countnum = 0; 
+				}
+				else { //그게 아니면 이메일 주소는 중복되서는 안됨. 
+					countnum = memberdao.checkemail(email); 
+				}
+				
+				if(countnum == 0) {
+					MemberDTO memberdto = new MemberDTO(id, null, name, birthday, null, email); 
+					
+					int result = memberdao.updateMember(memberdto);
+					
+					if(result != 0) {
+						viewName = "index.jsp?page=1";
+					}
+					else {
+						g.jsmessage("Unknown Error Message."); 
+					}
+				}
+				else {
+					g.jsmessage("이메일은 중복되서는 안됩니다.");
+				}
 			}
 			else {
-				g.jsmessage("Unknown Error Message."); 
+				g.jsmessage("이메일은 필수입니다.");
 			}
 		}
 		catch(Exception ex) {
