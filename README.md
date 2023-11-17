@@ -47,7 +47,7 @@ Server Environment:
  
  Main Screen 
  
-![image](https://github.com/KoYoungSuk/AceArtWeb/assets/58511486/e802fcc5-5c73-483a-ae81-fd2c5ce04bc4)
+![image](https://github.com/KoYoungSuk/AceArtWeb/assets/58511486/da4389c8-c7bd-4229-9d01-653c6d49c787)
 
 
 
