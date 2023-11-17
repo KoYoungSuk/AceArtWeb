@@ -72,14 +72,17 @@ public class ModifyWorksServlet extends HttpServlet {
                 Map<String, String> detailworkslist = worksdao.getWorksListByNum(num, false); 
 				
                 if(detailworkslist != null) {
-                	session.setAttribute("detailworkslist", detailworkslist);
-                	viewName = "index.jsp?page=28"; 
+                	if(detailworkslist.get("num") != null) {
+                		session.setAttribute("detailworkslist", detailworkslist);
+                    	viewName = "index.jsp?page=28"; 
+                	}         	
                 }
                 else {
                 	g.jsmessage("Unknown Error Message");
                 }
 			}
 			else {
+				session.invalidate(); 
 				g.jsmessage("관리자로만 작품 정보 수정이 가능합니다.");
 			}
 		}
@@ -206,6 +209,7 @@ public class ModifyWorksServlet extends HttpServlet {
 				}
 			}
 			else {
+				session.invalidate(); 
 				g.jsmessage("관리자만 작품 정보 수정이 가능합니다.");
 			}
 		}

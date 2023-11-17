@@ -66,6 +66,7 @@ public class DeleteAnswerServlet extends HttpServlet {
 				}
 			}
 			else {
+				session.invalidate(); 
 				g.jsmessage("관리자만 답변 삭제가 가능합니다."); 
 			}
 		}
@@ -116,6 +117,7 @@ public class DeleteAnswerServlet extends HttpServlet {
   	    		}
   	    	}
   	    	else {
+  	    		session.invalidate(); 
   	    		g.jsmessage("관리자만 답변 삭제가 가능합니다."); 
   	    	}
   	    }

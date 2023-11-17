@@ -37,7 +37,10 @@
     <button class="btn btn-danger btn-sm"onclick="location.href='deletemember.do'"><span class="material-symbols-outlined">delete</span>회원정보 삭제</button>
     </c:when>
     <c:otherwise> <!--  로그인하지 않았을 때  -->
-     <p>회원정보를 확인하려면 먼저 로그인해 주세요.</p> 
+     <script>
+       alert("회원정보를 확인하려면 먼저 로그인해 주세요.");
+       history.go(-1); 
+     </script>
     </c:otherwise> 
     </c:choose>
 </div>

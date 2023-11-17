@@ -56,8 +56,14 @@ public class DetailArtistServlet extends HttpServlet {
 			Map<String, String> artistlist = artistdao.getArtistlistByNum(num, true); 
 			
 			if(artistlist != null) {
-				session.setAttribute("artistlist", artistlist); 
-				viewName = "index.jsp?page=31"; 
+				String num_new = artistlist.get("num");
+				if(num_new != null) {
+					session.setAttribute("artistlist", artistlist); 
+					viewName = "index.jsp?page=31"; 
+				}
+				else {
+					g.jsmessage("Artist Information Not Found");
+				}
 			}
 			else {
 				g.jsmessage("Unknown Error Message"); 

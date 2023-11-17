@@ -89,6 +89,7 @@ public class WriteQuestionServlet extends HttpServlet {
 			    }
 			}
 			else {
+				session.invalidate(); 
 				g.jsmessage("로그인한 사용자만 질문하기 기능을 사용할 수 있습니다.");
 			}
 		}

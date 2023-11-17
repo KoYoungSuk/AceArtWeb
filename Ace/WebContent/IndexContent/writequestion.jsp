@@ -18,7 +18,7 @@
         </tr> 
         <tr>
          <td><label for="content" style="font-weight: bold; font-size: 20px;">질문 내용</label></td>
-         <td><textarea class="form-control" rows="15" cols="60" autofocus name="content" wrap="hard" ></textarea></td>
+         <td><textarea class="form-control" rows="15" cols="68" autofocus name="content" wrap="hard" ></textarea></td>
         </tr>
         <tr>
          <td><label for="access" style="font-weight: bold; font-size: 20px;">접근모드</label></td>

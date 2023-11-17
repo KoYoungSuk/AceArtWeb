@@ -94,10 +94,6 @@ public class DeleteQuestionServlet extends HttpServlet {
 		String id = (String)session.getAttribute("id");
 		String user = request.getParameter("user");
 		
-		System.out.println("num: " + num);
-		System.out.println("id: " + id);
-		System.out.println("user: " + user); 
-		
 		ServletContext application = request.getSession().getServletContext();
 		//START - 데이터베이스 연결 준비 (web.xml) 
     	String JDBC_Driver = application.getInitParameter("jdbc_driver");
@@ -121,6 +117,7 @@ public class DeleteQuestionServlet extends HttpServlet {
 				}
 			}
 			else {
+				session.invalidate(); 
 				g.jsmessage("작성자만 질문정보 수정이 가능합니다.");
 			}
 		}

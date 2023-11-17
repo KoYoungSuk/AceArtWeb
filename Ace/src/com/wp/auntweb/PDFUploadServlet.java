@@ -86,6 +86,7 @@ public class PDFUploadServlet extends HttpServlet {
 			   viewName = "pdf.jsp?pdfname=" + filesystemName; 
 			}
 			else {
+				session.invalidate(); 
 				g.jsmessage("Administrator Only");
 			}
 		}

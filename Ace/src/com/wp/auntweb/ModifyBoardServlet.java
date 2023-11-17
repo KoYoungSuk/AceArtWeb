@@ -65,20 +65,31 @@ public class ModifyBoardServlet extends HttpServlet {
   	    //END - 데이터베이스 연결 준비 (web.xml)
   	    
 		try {
-			if(id.equals("admin")) {
-				BoardDAO boarddao = new BoardDAO(JDBC_Driver, db_url, db_id, db_pw);
-				Map<String, String> boardlist = boarddao.getBoardListByNum(num, false);
-				
-				if(boardlist != null) {
-					session.setAttribute("detailboardlist", boardlist);
-					viewName = "index.jsp?page=25"; 
+			if(id != null) {
+				if(id.equals("admin")) {
+					BoardDAO boarddao = new BoardDAO(JDBC_Driver, db_url, db_id, db_pw);
+					Map<String, String> boardlist = boarddao.getBoardListByNum(num, false);
+					
+					if(boardlist != null) {
+						String num_new = boardlist.get("num");
+						
+						if(num_new != null) {
+							session.setAttribute("detailboardlist", boardlist);
+							viewName = "index.jsp?page=25"; 
+						}
+					}
+					else {
+						g.jsmessage("Unknown Error Message");
+					}
 				}
 				else {
-					g.jsmessage("Unknown Error Message");
+					session.invalidate(); 
+					g.jsmessage("관리자 계정으로만 자료실 정보를 수정할 수 있습니다."); 
 				}
 			}
 			else {
-				g.jsmessage("관리자 계정으로만 자료실 정보를 수정할 수 있습니다."); 
+				session.invalidate(); 
+				g.jsmessage("Null Error Message");
 			}
 		}
 		catch(Exception ex) {
@@ -107,8 +118,6 @@ public class ModifyBoardServlet extends HttpServlet {
 		
 	    String id = (String)session.getAttribute("id"); 
 	    
-	    
-	    
 		ServletContext application = request.getSession().getServletContext();
 		//START - 데이터베이스 연결 준비 (web.xml) 
     	String JDBC_Driver = application.getInitParameter("jdbc_driver");
@@ -131,82 +140,89 @@ public class ModifyBoardServlet extends HttpServlet {
   	    }
   	   
 		try {
-			if(id.equals("admin")) {
-				
-				int maxSize = 1024 * 1024 * 1024 * 5;
-				
-				//먼저 파일 업로드 
-				MultipartRequest multi = new MultipartRequest(request,
-		 			      location,
-						  maxSize,
-						  "utf-8",
-						  new DefaultFileRenamePolicy());
-				
-				String title = multi.getParameter("title");
-				int num = Integer.parseInt(multi.getParameter("num")); 
-				String content = multi.getParameter("content");
-				title = XssPreventer.escape(title); 
-				content = XssPreventer.escape(content);
-				
-				Timestamp modifydate = new Timestamp(System.currentTimeMillis()); //현재 날짜
-				
-				Enumeration<?> files = multi.getFileNames();
-				    
-				String element = "";
-				String filesystemName = "";
-				 
-				if(files.hasMoreElements()) {
-				      element = (String)files.nextElement();
-				      filesystemName = multi.getFilesystemName(element); //서버에 업로드한 파일명 
-				}
-				 
-			    String newlocation = null;
-			    
-			    if(filesystemName != null) { //파일을 수정했을 경우 그 수정한 파일이 업로드되는데, 그 경로를 바꿔줘야 한다. 
-			    	 //번호에 맞춰서 경로를 바꿔준다. 
-			    	 
-			    	 newlocation = location + num; 
-
-			    	 File file = new File(newlocation);
-			    	 
-			    	 if(file.exists()) {
-			    		 FileUtils.cleanDirectory(file); //기존에 있는 파일들은 삭제 
-			    	 }
-			    	 
-			    	 if(os.equals("Windows 10")) {
-			    		 newlocation = newlocation + "\\" + filesystemName; 
-			    	 }
-			    	 else if(os.equals("Linux")) {
-			    		 newlocation = newlocation + "/" + filesystemName;  
-			    	 }
-			    	 else if(os.equals("Mac")) {
-			    		 //맥북사면 수정예정 
-			    	 }
-			    	 
-			    	 location = location + filesystemName;  
-			    	 
-					 Path oldfile = Paths.get(location); //임시로 파일을 업로드한 경로 
-					 Path newfile = Paths.get(newlocation); ///옮겨야 할 경로 (번호 경로) 
-
-					 //번호 경로로 옮기기 
-					 Files.move(oldfile, newfile, StandardCopyOption.REPLACE_EXISTING); 
+			if(id != null) {
+				if(id.equals("admin")) {
+					
+					int maxSize = 1024 * 1024 * 1024 * 5;
+					
+					//먼저 파일 업로드 
+					MultipartRequest multi = new MultipartRequest(request,
+			 			      location,
+							  maxSize,
+							  "utf-8",
+							  new DefaultFileRenamePolicy());
+					
+					String title = multi.getParameter("title");
+					int num = Integer.parseInt(multi.getParameter("num")); 
+					String content = multi.getParameter("content");
+					title = XssPreventer.escape(title); 
+					content = XssPreventer.escape(content);
+					
+					Timestamp modifydate = new Timestamp(System.currentTimeMillis()); //현재 날짜
+					
+					Enumeration<?> files = multi.getFileNames();
+					    
+					String element = "";
+					String filesystemName = "";
 					 
-			   }
-			   
-			   BoardDAO boarddao = new BoardDAO(JDBC_Driver, db_url, db_id, db_pw); 
-			   BoardDTO boarddto = new BoardDTO(num, title, content, null, filesystemName, null, modifydate);
-			   
-			   int result = boarddao.updateBoard(boarddto);
-			   
-			   if(result != 0) {
-				   viewName = "totalboardlist.do";  
-			   }
-			   else {
-				   g.jsmessage("Unknown Error Message"); 
-			   }
+					if(files.hasMoreElements()) {
+					      element = (String)files.nextElement();
+					      filesystemName = multi.getFilesystemName(element); //서버에 업로드한 파일명 
+					}
+					 
+				    String newlocation = null;
+				    
+				    if(filesystemName != null) { //파일을 수정했을 경우 그 수정한 파일이 업로드되는데, 그 경로를 바꿔줘야 한다. 
+				    	 //번호에 맞춰서 경로를 바꿔준다. 
+				    	 
+				    	 newlocation = location + num; 
+
+				    	 File file = new File(newlocation);
+				    	 
+				    	 if(file.exists()) {
+				    		 FileUtils.cleanDirectory(file); //기존에 있는 파일들은 삭제 
+				    	 }
+				    	 
+				    	 if(os.equals("Windows 10")) {
+				    		 newlocation = newlocation + "\\" + filesystemName; 
+				    	 }
+				    	 else if(os.equals("Linux")) {
+				    		 newlocation = newlocation + "/" + filesystemName;  
+				    	 }
+				    	 else if(os.equals("Mac")) {
+				    		 //맥북사면 수정예정 
+				    	 }
+				    	 
+				    	 location = location + filesystemName;  
+				    	 
+						 Path oldfile = Paths.get(location); //임시로 파일을 업로드한 경로 
+						 Path newfile = Paths.get(newlocation); ///옮겨야 할 경로 (번호 경로) 
+
+						 //번호 경로로 옮기기 
+						 Files.move(oldfile, newfile, StandardCopyOption.REPLACE_EXISTING); 
+						 
+				   }
+				   
+				   BoardDAO boarddao = new BoardDAO(JDBC_Driver, db_url, db_id, db_pw); 
+				   BoardDTO boarddto = new BoardDTO(num, title, content, null, filesystemName, null, modifydate);
+				   
+				   int result = boarddao.updateBoard(boarddto);
+				   
+				   if(result != 0) {
+					   viewName = "totalboardlist.do";  
+				   }
+				   else {
+					   g.jsmessage("Unknown Error Message"); 
+				   }
+				}
+				else {
+					session.invalidate(); 
+					g.jsmessage("관리자 계정으로만 자료실 정보를 수정할 수 있습니다.");
+				}
 			}
 			else {
-				g.jsmessage("관리자 계정으로만 자료실 정보를 수정할 수 있습니다.");
+				session.invalidate(); 
+				g.jsmessage("Null Error Message");
 			}
 		}
 		catch(Exception ex) {

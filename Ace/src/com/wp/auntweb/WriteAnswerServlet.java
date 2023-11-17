@@ -72,26 +72,29 @@ public class WriteAnswerServlet extends HttpServlet {
   	    Timestamp savedate = new Timestamp(System.currentTimeMillis()); //현재 날짜
   	  
 		try {
-			if(id.equals("admin")) {
-				AnswerDAO answerdao = new AnswerDAO(JDBC_Driver, db_url, db_id, db_pw);
-				
-				int num2 = answerdao.getMaxnum();
-				
-				num2 = num2 + 1; 
-				
-				QuestionDTO questiondto = new QuestionDTO(num2, qnum, title, content, access, id, savedate, null); 
-				
-				int result = answerdao.insertAnswer(questiondto);
-				
-				if(result != 0) {
-					viewName = "totalquestionlist.do"; 
+			if(id != null) {
+				if(id.equals("admin")) {
+					AnswerDAO answerdao = new AnswerDAO(JDBC_Driver, db_url, db_id, db_pw);
+					
+					int num2 = answerdao.getMaxnum();
+					
+					num2 = num2 + 1; 
+					
+					QuestionDTO questiondto = new QuestionDTO(num2, qnum, title, content, access, id, savedate, null); 
+					
+					int result = answerdao.insertAnswer(questiondto);
+					
+					if(result != 0) {
+						viewName = "totalquestionlist.do"; 
+					}
+					else {
+						g.jsmessage("Unknown Error Message");
+					}
 				}
 				else {
-					g.jsmessage("Unknown Error Message");
+					session.invalidate(); 
+					g.jsmessage("관리자만 답변할 수 있습니다."); 
 				}
-			}
-			else {
-				g.jsmessage("관리자만 답변할 수 있습니다."); 
 			}
 		}
 		catch(Exception ex) {

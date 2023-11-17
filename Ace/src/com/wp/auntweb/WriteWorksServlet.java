@@ -142,6 +142,7 @@ public class WriteWorksServlet extends HttpServlet {
 				}
 			}
 			else {
+				session.invalidate(); 
 				g.jsmessage("관리자만 작품 등록이 가능합니다.");
 			}
 		}

@@ -61,8 +61,10 @@ public class ModifyQuestionServlet extends HttpServlet {
 			
 			if(questionlist != null) {
 				if(questionlist.get("user").equals(id)) {
-					 session.setAttribute("detailquestionlist", questionlist);
-					 viewName = "index.jsp?page=36"; 
+					 if(questionlist.get("num") != null) {
+						 session.setAttribute("detailquestionlist", questionlist);
+						 viewName = "index.jsp?page=36"; 
+					 }
 				}
 				else {
 					g.jsmessage("작성자만 수정이 가능합니다.");

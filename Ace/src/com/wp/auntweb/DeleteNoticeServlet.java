@@ -66,6 +66,7 @@ public class DeleteNoticeServlet extends HttpServlet {
   	    	    }
   	    	}
   	    	else {
+  	    		session.invalidate(); 
   	    		g.jsmessage("관리자 모드로만 공지사항 정보 삭제가 가능합니다. ");
   	    	}
   	    }
@@ -120,6 +121,7 @@ public class DeleteNoticeServlet extends HttpServlet {
   	    		}
   	    	}
   	    	else {
+  	    		session.invalidate(); 
   	    		g.jsmessage("관리자 계정으로만 회원정보 삭제가 가능합니다.");
   	    	}
   	    }

@@ -54,8 +54,10 @@ public class NoticeDetailServlet extends HttpServlet {
   	    	Map<String, String> detailnoticelist = noticedao.getBoardListByNum(num, true); //br:true (HTML)
   	    	
   	    	if(detailnoticelist != null) {
-  	    		session.setAttribute("detailnoticelist", detailnoticelist);
-  	    		viewName = "index.jsp?page=18"; 
+  	    		if(detailnoticelist.get("num") != null) {
+  	    			session.setAttribute("detailnoticelist", detailnoticelist);
+  	  	    		viewName = "index.jsp?page=18"; 
+  	    		}
   	    	}
   	    	else {
   	    		g.jsmessage("Null Error Message"); 

@@ -69,6 +69,7 @@ public class DeleteWorksServlet extends HttpServlet {
 				}
 			}
 			else {
+				session.invalidate(); 
 				g.jsmessage("관리자만 작품 정보 삭제가 가능합니다.");
 			}
 		}
@@ -151,8 +152,6 @@ public class DeleteWorksServlet extends HttpServlet {
 			}
 		}
 		catch(Exception ex) {
-			
-		    ex.printStackTrace(); 
 			g.jsmessage(ex.getMessage());
 		}
 		

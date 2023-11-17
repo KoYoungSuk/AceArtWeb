@@ -56,8 +56,11 @@ public class DetailBoardListServlet extends HttpServlet {
 			Map<String, String> boardlist = boarddao.getBoardListByNum(num, true);
 			
 			if(boardlist != null) {
-				session.setAttribute("detailboardlist", boardlist);
-			    viewName = "index.jsp?page=23"; 
+				String num_new = boardlist.get("num");
+				if(num_new != null) {
+					session.setAttribute("detailboardlist", boardlist);
+				    viewName = "index.jsp?page=23"; 
+				}
 			}
 			else {
 				g.jsmessage("Null Error Message");

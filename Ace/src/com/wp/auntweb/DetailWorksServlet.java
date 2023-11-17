@@ -57,8 +57,11 @@ public class DetailWorksServlet extends HttpServlet {
 			Map<String, String> workslist = worksdao.getWorksListByNum(num, true);
 			
 			if(workslist != null) {
-				session.setAttribute("detailworkslist", workslist);
-				viewName = "index.jsp?page=27"; 
+				String num_new = workslist.get("num");
+				if(num_new != null) {
+					session.setAttribute("detailworkslist", workslist);
+					viewName = "index.jsp?page=27"; 
+				}
 			}
 			else {
 				g.jsmessage("Unknown Error Message");

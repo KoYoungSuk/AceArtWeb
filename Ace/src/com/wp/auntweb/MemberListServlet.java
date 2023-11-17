@@ -52,21 +52,28 @@ public class MemberListServlet extends HttpServlet {
   	    //END - 데이터베이스 연결 준비 (web.xml)
 		
 		try {
-			if(id.equals("admin")) {
-				 MemberDAO memberdao = new MemberDAO(JDBC_Driver, db_url, db_id, db_pw);
-				    
-				 List<MemberDTO> totalmemberlist = memberdao.GetTotalMemberList();
-				    
-				 if(totalmemberlist != null) {
-				    	viewName = "index.jsp?page=21";
-				    	session.setAttribute("totalmemberlist", totalmemberlist); 
-				 }
-				 else {
-					 g.jsmessage("Unknown Error Message");
-				 }
+			if(id != null) {
+				if(id.equals("admin")) {
+					 MemberDAO memberdao = new MemberDAO(JDBC_Driver, db_url, db_id, db_pw);
+					    
+					 List<MemberDTO> totalmemberlist = memberdao.GetTotalMemberList();
+					    
+					 if(totalmemberlist != null) {
+					    	viewName = "index.jsp?page=21";
+					    	session.setAttribute("totalmemberlist", totalmemberlist); 
+					 }
+					 else {
+						 g.jsmessage("Unknown Error Message");
+					 }
+				}
+				else {
+					session.invalidate(); 
+					g.jsmessage("관리자 계정으로만 사용이 가능합니다."); 
+				}
 			}
 			else {
-				g.jsmessage("관리자 계정으로만 사용이 가능합니다."); 
+				session.invalidate();
+				g.jsmessage("Null Error");
 			}
 		}
 		catch(Exception ex) {

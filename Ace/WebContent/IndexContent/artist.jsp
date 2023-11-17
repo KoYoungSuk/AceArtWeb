@@ -51,7 +51,7 @@
       </tr>
       <tr>
        <td style="font-weight: bold; font-size: 20px;">작가 경력</td>
-       <td><c:out value="${artistDTO.career}" /></td> 
+       <td><button class="btn btn-secondary btn-sm" onclick="location.href='detailartistlist.do?num=${artistDTO.num}'"><span class="material-symbols-outlined">details</span>자세히 보기</button></td> 
       </tr>
       <tr>
        <td style="font-weight: bold; font-size: 20px;">작품</td>
@@ -63,7 +63,6 @@
       <tr>
        <td style="font-weight: bold; font-size: 20px;"></td>
        <td>
-           <button class="btn btn-secondary btn-sm" onclick="location.href='detailartistlist.do?num=${artistDTO.num}'"><span class="material-symbols-outlined">details</span>자세히 보기</button>
            <c:choose>
            <c:when test="${sessionScope.id eq 'admin'}">
            <button class="btn btn-secondary btn-sm" onclick="location.href='modifyartist.do?num=${artistDTO.num}'"><span class="material-symbols-outlined">create</span>수정</button>
@@ -76,7 +75,7 @@
     </c:forEach>
   </table>
   <div style="text-align: center;">
-    <c:forEach var="num" begin="1" end="${sessionScope.pagenum_artist}">\
+    <c:forEach var="num" begin="1" end="${sessionScope.pagenum_artist}">
      <c:choose>
      <c:when test="${pagecount == num }">
       <button type="button" class="btn btn-danger" onclick="location.href='totalartistlist.do?page_count=${num}'">${num}</button>

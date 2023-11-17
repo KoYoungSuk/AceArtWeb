@@ -58,10 +58,12 @@ public class SelectedMemberServlet extends HttpServlet {
   	    	
   	    	if(memberlist != null)
   	    	{
-  	    		viewName = "index.jsp?page=9"; 
-  	    		session.setAttribute("birthday", memberlist.get("birthday"));
-  	    		session.setAttribute("joindate", memberlist.get("joindate"));
-  	    		session.setAttribute("email", memberlist.get("email")); 
+  	    		if(memberlist.get("id") != null) {
+  	    			viewName = "index.jsp?page=9"; 
+  	  	    		session.setAttribute("birthday", memberlist.get("birthday"));
+  	  	    		session.setAttribute("joindate", memberlist.get("joindate"));
+  	  	    		session.setAttribute("email", memberlist.get("email")); 
+  	    		}
   	    	}
   	    	else
   	    	{

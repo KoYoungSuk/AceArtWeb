@@ -97,9 +97,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- Ignore Internet Explorer 8 Compatible Mode -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />	
 <!-- Mobile Friendly Meta -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap 4.4 CSS -->
 <link rel="stylesheet" href="./BS/bootstrap.min.css">
 <link rel="stylesheet" href="./BS/bootstrap.css">
 <!--  Javascript for Hamburger Button -->
@@ -128,6 +130,10 @@
       background-color: #f5f5dc; 
   }
 </style>
+<script>
+
+
+</script>
 </head>
 <body>
 <div class="jumbotron" >
@@ -143,15 +149,10 @@
      <div class="collapse navbar-collapse" id="ToggleMenu">
        <div class="navbar-nav">
              <a class="nav-item nav-link active" href="index.jsp?page=4">회사소개&연혁</a>
-             <a class="nav-item nav-link active">|</a>
              <a class="nav-item nav-link active" href="totalartistlist.do?desc=0">작가소개</a>
-             <a class="nav-item nav-link active">|</a>
              <a class="nav-item nav-link active" href="workslist.do?desc=0">작품</a>
-             <a class="nav-item nav-link active">|</a>
              <a class="nav-item nav-link active" href="noticeboardlist.do?desc=0">공지사항</a>
-             <a class="nav-item nav-link active">|</a>
              <a class="nav-item nav-link active" href="totalboardlist.do?desc=0">자료실</a> 
-             <a class="nav-item nav-link active">|</a>
              <a class="nav-item nav-link active" href="totalquestionlist.do">Q&A</a>
        </div> 
        <div class="navbar-nav ml-auto">

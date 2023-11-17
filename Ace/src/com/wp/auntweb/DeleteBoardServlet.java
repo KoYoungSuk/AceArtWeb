@@ -67,6 +67,7 @@ public class DeleteBoardServlet extends HttpServlet {
 			    }
 			}
 			else {
+				session.invalidate(); 
 				g.jsmessage("관리자 계정으로만 자료실 삭제가 가능합니다."); 
 			}
 		}
@@ -147,6 +148,7 @@ public class DeleteBoardServlet extends HttpServlet {
   	    		}
   	    	}
   	    	else {
+  	    		session.invalidate(); 
   	    		g.jsmessage("관리자 계정으로만 자료실 삭제가 가능합니다."); 
   	    	}
   	    }

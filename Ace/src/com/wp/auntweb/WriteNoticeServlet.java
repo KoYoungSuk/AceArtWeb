@@ -65,27 +65,29 @@ public class WriteNoticeServlet extends HttpServlet {
   	    //END - 데이터베이스 연결 준비 (web.xml)
   	    
   	    try {
-  	    	if(id.equals("admin")) {
-  	    		title = XssPreventer.escape(title); 
-  	    		content = XssPreventer.escape(content); //Lucy XSS Filter 적용(크로스사이트 스크립팅 방지: 스크립트 태그를 HTML로 인식못하게 변환) 
-  	    	   
-  	    		NoticeDAO noticedao = new NoticeDAO(JDBC_Driver, db_url, db_id, db_pw); 
-  	  	    		
-  	  	    	int maxnumber = noticedao.getMaxBoardNumber();
-  	  	    		
-  	  	        NoticeDTO noticedto = new NoticeDTO(maxnumber + 1, title, content, joindate, null);
-  	  	            
-  	  	        int result = noticedao.insertBoard(noticedto);
-  	  	            
-  	  	        if(result != 0) {
-  	  	            viewName = "noticeboardlist.do?desc=0"; 
-  	  	        }
-  	  	        else {
-  	  	            g.jsmessage("Unknown Error Message");
-  	  	        }
-  	    	}
-  	    	else {
-  	    		g.jsmessage("Administrator Only!");
+  	    	if(id != null) {
+  	    		if(id.equals("admin")) {
+  	  	    		title = XssPreventer.escape(title); 
+  	  	    		content = XssPreventer.escape(content); //Lucy XSS Filter 적용(크로스사이트 스크립팅 방지: 스크립트 태그를 HTML로 인식못하게 변환) 
+  	  	    	   
+  	  	    		NoticeDAO noticedao = new NoticeDAO(JDBC_Driver, db_url, db_id, db_pw); 
+  	  	  	    		
+  	  	  	    	int maxnumber = noticedao.getMaxBoardNumber();
+  	  	  	    		
+  	  	  	        NoticeDTO noticedto = new NoticeDTO(maxnumber + 1, title, content, joindate, null);
+  	  	  	            
+  	  	  	        int result = noticedao.insertBoard(noticedto);
+  	  	  	            
+  	  	  	        if(result != 0) {
+  	  	  	            viewName = "noticeboardlist.do?desc=0"; 
+  	  	  	        }
+  	  	  	        else {
+  	  	  	            g.jsmessage("Unknown Error Message");
+  	  	  	        }
+  	  	    	}
+  	  	    	else {
+  	  	    		g.jsmessage("Administrator Only!");
+  	  	    	}
   	    	}
   	    }
   	    catch(Exception ex) {

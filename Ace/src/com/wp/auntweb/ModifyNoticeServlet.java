@@ -62,8 +62,10 @@ public class ModifyNoticeServlet extends HttpServlet {
   	  	    	Map<String, String> detailnoticelist = noticedao.getBoardListByNum(num, false);
   	  	    	
   	  	    	if(detailnoticelist != null) {
-  	  	    		session.setAttribute("detailnoticelist", detailnoticelist);
-  	  	    		viewName = "index.jsp?page=20"; 
+  	  	    		if(detailnoticelist.get("num") != null) {
+  	  	    		    session.setAttribute("detailnoticelist", detailnoticelist);
+  	  	    		    viewName = "index.jsp?page=20"; 
+  	  	    		}
   	  	    	}
   	  	    	else {
   	  	    		g.jsmessage("Null Error Message");

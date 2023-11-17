@@ -53,17 +53,19 @@ public class ModifyMemberServlet extends HttpServlet {
   	    //END - 데이터베이스 연결 준비 (web.xml)
   	    
   	    try
-  	    {
+  	    { 
   	    	MemberDAO memberdao = new MemberDAO(JDBC_Driver, db_url, db_id, db_pw);
   	    	
   	    	Map<String, String> memberlist = memberdao.GetMemberListById(id);
   	    	
   	    	if(memberlist != null)
   	    	{
-  	    		viewName = "index.jsp?page=10"; 
-  	    		session.setAttribute("birthday", memberlist.get("birthday"));
-  	    		session.setAttribute("joindate", memberlist.get("joindate"));
-  	    		session.setAttribute("email", memberlist.get("email")); 
+  	    		if(memberlist.get("id") != null) {
+  	    			viewName = "index.jsp?page=10"; 
+  	  	    		session.setAttribute("birthday", memberlist.get("birthday"));
+  	  	    		session.setAttribute("joindate", memberlist.get("joindate"));
+  	  	    		session.setAttribute("email", memberlist.get("email")); 
+  	    		}
   	    	}
   	    	else
   	    	{

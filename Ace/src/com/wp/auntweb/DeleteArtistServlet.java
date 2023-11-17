@@ -90,6 +90,7 @@ public class DeleteArtistServlet extends HttpServlet {
 				}
 			}
 			else {
+				session.invalidate(); 
 				g.jsmessage("관리자만 작가 정보를 삭제할 수 있습니다.");
 			}
 		}

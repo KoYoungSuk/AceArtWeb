@@ -22,12 +22,14 @@
      <button class="btn btn-secondary btn-sm" onclick="location.href='noticeboardlist.do'"><span class="material-symbols-outlined">refresh</span>새로고침</button>
   </div> 
   <hr> 
+  <!-- 
   <div style="text-align: right;">
    <form action="searchnotice.do" method="POST">
     <input type="text" class="form-control-sm" name="word" placeholder="Search Title" value="" />
     <button type="submit" class="btn btn-secondary btn-sm"><span class="material-symbols-outlined">search</span>검색</button>
    </form>
   </div> 
+  --> 
   <hr>
   <div style="text-align: center;">
           <H4 style="font-weight: bold;">

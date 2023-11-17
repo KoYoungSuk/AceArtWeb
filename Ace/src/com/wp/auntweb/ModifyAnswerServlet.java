@@ -56,18 +56,27 @@ public class ModifyAnswerServlet extends HttpServlet {
   	    
   	    
 		try {
-			if(id.equals("admin")) {
-				AnswerDAO answerdao = new AnswerDAO(JDBC_Driver, db_url, db_id, db_pw);
-				
-				Map<String, String> detailanswerlist = answerdao.getAnswerList(num, false); 
-				
-				if(detailanswerlist != null) {
-					session.setAttribute("detailanswerlist", detailanswerlist); 
-					viewName = "index.jsp?page=40"; 
+			if(id != null) {
+				if(id.equals("admin")) {
+					AnswerDAO answerdao = new AnswerDAO(JDBC_Driver, db_url, db_id, db_pw);
+					
+					Map<String, String> detailanswerlist = answerdao.getAnswerList(num, false); 
+					
+					if(detailanswerlist != null) {
+						String num_new = detailanswerlist.get("num"); 
+						if(num_new != null) {
+							session.setAttribute("detailanswerlist", detailanswerlist); 
+							viewName = "index.jsp?page=40"; 
+						}
+					}
+				}
+				else {
+					g.jsmessage("관리자만 답변 수정이 가능합니다.");
 				}
 			}
 			else {
-				g.jsmessage("관리자만 답변 수정이 가능합니다.");
+				session.invalidate();
+				g.jsmessage("Null Error Message"); 
 			}
 		}
 		catch(Exception ex) {
@@ -108,22 +117,29 @@ public class ModifyAnswerServlet extends HttpServlet {
   	    //END - 데이터베이스 연결 준비 (web.xml)
   	    
 		try {
-			if(id.equals("admin")) {
-				AnswerDAO answerdao = new AnswerDAO(JDBC_Driver, db_url, db_id, db_pw);
-				QuestionDTO questiondto = new QuestionDTO(num, 0, null, content, null, id, null, modifydate);
-				
-			    int result = answerdao.updateAnswer(questiondto);
-			    
-			    if(result != 0) {
-			    	session.removeAttribute("detailanswerlist");
-			    	viewName = "totalquestionlist.do"; 
-			    }
-			    else {
-			    	g.jsmessage("Unknown Error Message");
-			    }
+			if(id != null) {
+				if(id.equals("admin")) {
+					AnswerDAO answerdao = new AnswerDAO(JDBC_Driver, db_url, db_id, db_pw);
+					QuestionDTO questiondto = new QuestionDTO(num, 0, null, content, null, id, null, modifydate);
+					
+				    int result = answerdao.updateAnswer(questiondto);
+				    
+				    if(result != 0) {
+				    	session.removeAttribute("detailanswerlist");
+				    	viewName = "totalquestionlist.do"; 
+				    }
+				    else {
+				    	g.jsmessage("Unknown Error Message");
+				    }
+				}
+				else {
+					session.invalidate(); 
+					g.jsmessage("관리자만 답변 수정이 가능합니다.");
+				}
 			}
 			else {
-				g.jsmessage("관리자만 답변 수정이 가능합니다.");
+				session.invalidate(); 
+				g.jsmessage("Null Error");
 			}
 		}
 		catch(Exception ex) {

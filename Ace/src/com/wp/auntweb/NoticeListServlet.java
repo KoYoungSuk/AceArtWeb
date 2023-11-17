@@ -65,7 +65,6 @@ public class NoticeListServlet extends HttpServlet {
   	    	
   	    	int countnum = noticedao.getCountBoardNumber();
   	    	int pagenum = countnum / 10;
-  	    	int pagenum_rest = countnum % 10;
   	    	
   	    	List<NoticeDTO> noticelist = noticedao.getBoardList(false); 
   	    	
